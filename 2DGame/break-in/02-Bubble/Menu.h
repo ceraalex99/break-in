@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
+#include "Text.h"
+#include "TexturedQuad.h"
 
 
 
@@ -18,11 +20,17 @@ public:
 
 private:
 	void initShaders();
+	bool play();
 
 private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	int action;
+	Texture backgroundImage, cursorImage;
+	TexturedQuad *background, *cursor;
+	Text text;
+	int count;
 
 };
 #endif
