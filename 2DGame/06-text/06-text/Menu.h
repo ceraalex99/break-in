@@ -20,7 +20,6 @@ public:
 
 private:
 	void initShaders();
-	bool play();
 
 private:
 	ShaderProgram texProgram;
@@ -28,9 +27,8 @@ private:
 	glm::mat4 projection;
 	int action;
 	Text text;
-	Texture imgFondo;
-	TexturedQuad *fondo;
-	int count;
+	Texture backgroundImage;
+	TexturedQuad *background;
 
 };
 #endif

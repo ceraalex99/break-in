@@ -5,11 +5,7 @@
 #include "Game.h"
 #include <GL/glut.h>
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
 
-#define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 25
 
 
 Menu::Menu()
@@ -23,23 +19,21 @@ Menu::~Menu()
 
 void Menu::init()
 {
-	count = 0;
 	initShaders();
 	action = 0;
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH - 1), float(SCREEN_HEIGHT - 1), 0.f);
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(640.f, 480.f) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-	fondo = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-	imgFondo.loadFromFile("images/rocks.jpg", TEXTURE_PIXEL_FORMAT_RGB);
+	background = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	backgroundImage.loadFromFile("images/breakin.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	if (!text.init("fonts/emulogic.ttf"))
-		cout << "Could not load font!" << endl;
+		cout << "Could not load font" << endl;
 	currentTime = 0.0f;
 }
 
 void Menu::update(int deltaTime)
 {
 	currentTime += deltaTime;
-	++count;
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
@@ -68,7 +62,7 @@ void Menu::render(){
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	fondo->render(imgFondo);
+	background->render(backgroundImage);
 
 	if (action == 0) {
 		text.render("Play", glm::vec2(260, 380), 20, glm::vec4(1, 1, 1, 1));
@@ -116,5 +110,3 @@ void Menu::initShaders(){
 	vShader.free();
 	fShader.free();
 }
-
-bool play() { return true; }

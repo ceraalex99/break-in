@@ -7,14 +7,26 @@ void Game::init()
 {
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	//scene.init();
 	menu.init();
+	gameState = 3;
 }
 
 bool Game::update(int deltaTime)
 {
-	//scene.update(deltaTime);
-	menu.update(deltaTime);
+	switch (gameState) {
+		case 0:
+			scene.update(deltaTime);
+			break;
+		case 1:
+			instructions.update(deltaTime);
+			break;
+		case 2:
+			credits.update(deltaTime);
+			break;
+		case 3:
+			menu.update(deltaTime);
+			break;
+	}
 	
 	return bPlay;
 }
@@ -22,19 +34,32 @@ bool Game::update(int deltaTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	/*scene.render();
 
-	if (bolet)
-		scene.show_bolet_text();*/
-	menu.render();
+	switch (gameState) {
+	case 0:
+		scene.render();
+		break;
+	case 1:
+		instructions.render();
+		break;
+	case 2:
+		credits.render();
+		break;
+	case 3:
+		menu.render();
+		break;
+	}
 }
 
 void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
-		bPlay = false;
-	if (key == 'b')
-		bolet = !bolet;
+		if(gameState != 3){
+			gameState = 3;
+		}
+		else {
+			bPlay = false;
+		}
 	keys[key] = true;
 }
 

@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 #include "Menu.h"
+#include "Instructions.h"
+#include "Credits.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -49,9 +51,8 @@ private:
 	Menu menu;
 	Instructions instructions;
 	Credits credits;
+	int gameState;
 	bool keys[256], specialKeys[256];
-	bool bolet = true;// Store key states so that 
-	                                  // we can have access at any time
 
 };
 

@@ -84,7 +84,6 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[1]->render(texs[0]);
 	
-	text.render("Play", glm::vec2(30, 30), 32, glm::vec4(1, 1, 1, 1));
 	text.render("Videogames!!!", glm::vec2(10, CAMERA_HEIGHT-20), 32, glm::vec4(1, 1, 1, 1));
 	text.render("Rebots: " + to_string(int(currentTime/500.f/acos(-1.f)+0.5f)), glm::vec2(10, 30), 32, glm::vec4(1,1,1,1));
 	
