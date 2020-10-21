@@ -26,7 +26,7 @@ void Menu::init()
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 	background = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	backgroundImage.loadFromFile("images/breakin.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	if (!text.init("fonts/emulogic.ttf"))
+	if (!text.init("fonts/8-bit-pusab.ttf"))
 		cout << "Could not load font" << endl;
 	currentTime = 0.0f;
 }
@@ -65,19 +65,19 @@ void Menu::render(){
 	background->render(backgroundImage);
 
 	if (action == 0) {
-		text.render("Play", glm::vec2(260, 380), 20, glm::vec4(1, 1, 1, 1));
-		text.render("Instructions", glm::vec2(220, 420), 14, glm::vec4(1, 1, 1, 1));
-		text.render("Credits", glm::vec2(250, 460), 14, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(276, 360), 36, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(220, 410), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(266, 460), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else if (action == 1) {
-		text.render("Play", glm::vec2(270, 380), 14, glm::vec4(1, 1, 1, 1));
-		text.render("Instructions", glm::vec2(180, 420), 20, glm::vec4(1, 1, 1, 1));
-		text.render("Credits", glm::vec2(250, 460), 14, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(295, 360), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(165, 410), 36, glm::vec4(0.5, 0.4, 1, 1));
+		text.render("CREDITS", glm::vec2(266, 460), 24, glm::vec4(1, 1, 1, 1));
 	}
 	else{
-		text.render("Play", glm::vec2(270, 380), 14, glm::vec4(1, 1, 1, 1));
-		text.render("Instructions", glm::vec2(220, 420), 14, glm::vec4(1, 1, 1, 1));
-		text.render("Credits", glm::vec2(220, 460), 20, glm::vec4(1, 1, 1, 1));
+		text.render("PLAY", glm::vec2(295, 360), 24, glm::vec4(1, 1, 1, 1));
+		text.render("INSTRUCTIONS", glm::vec2(220, 410), 24, glm::vec4(1, 1, 1, 1));
+		text.render("CREDITS", glm::vec2(235, 460), 36, glm::vec4(0.5, 0.4, 1, 1));
 	}
 
 }

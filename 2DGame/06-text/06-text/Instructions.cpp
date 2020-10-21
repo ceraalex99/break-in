@@ -23,7 +23,7 @@ void Instructions::init() {
 	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(640.f, 480.f) };
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 	background = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-	if (!text.init("fonts/emulogic.ttf"))
+	if (!text.init("fonts/8-bit-pusab.ttf"))
 		cout << "Could not load font" << endl;
 	instructionsImage.loadFromFile("images/instructions.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	currentTime = 0.f;
@@ -44,7 +44,7 @@ void Instructions::render() {
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	background->render(instructionsImage);
 
-	text.render("Press ESC to exit to menu screen", glm::vec2(240, 450), 10, glm::vec4(1.f,1.f,1.f,1.f));
+	text.render("PRESS ESC TO EXIT TO MENU SCREEN", glm::vec2(240, 450), 10, glm::vec4(1.f,1.f,1.f,1.f));
 
 }
 

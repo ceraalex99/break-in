@@ -1,202 +1,163 @@
+﻿FontStruct Non-Commercial Software End User License Agreement 1.0
 
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+This software end user license agreement (hereinafter “Agreement”) is made
+between you or, if you represent a legal entity, that legal entity (hereinafter
+“You”) and “lSPl”, the copyright holder and designer (hereinafter
+“Font Designer”) of the font software named “8-bit pusab” (hereinafter
+“Font Software”).
 
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+1. BINDING AGREEMENT
+This Agreement is a binding agreement between You and the Font Designer and
+shall set forth the terms and conditions under which You can use the Font
+Software. For the purposes of this Agreement, Font Software shall mean the Font
+Software, and any parts or copies of it.
 
-   1. Definitions.
+2. GRANT OF NON-EXCLUSIVE AND LICENCE
+The Font Designer hereby grants You a non-exclusive, non-transferable licence to
+use the Font Software provided that You comply with all terms and conditions of
+this Agreement.
 
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
+2.1 PERSONAL USE
+You may use the Fonts Software only for Your own Personal Purposes and for Your
+Work. For the purposes of this Agreement, “Personal Purposes” shall mean any
+private use of the Font Software by you. “Work” shall mean any work or
+result created by You or on Your behalf with the Font Software. For the
+avoidance of doubt, the use for Personal Purposes does not allow any use of the
+Font Software and/or any Work for commercial purposes (see Section 2.2) and/or
+as a web-font (see Section 2.6).
 
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
+2.2 NO COMMERCIAL USE
+Neither the Font Software, nor any of its individual components or any Work, may
+be used by You for any form of profit-making or otherwise commercial projects,
+without express prior written permission from the Font Designer.
 
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
+2.3 NO SALE OR DISTRIBUTION
+You may not sell, rent, license, sublicense, distribute, redistribute, give-away
+or make available (in any other way) the Font Software alone or as part of any
+collection, product or service to any third party. 
 
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
+2.4 NO MODIFICATION
+You may not modify, adapt, rename, translate, reverse engineer, decompile,
+disassemble, alter, or attempt to discover the source code of the Font Software.
 
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
+2.5 EMBEDDING
+You may embed the Font Software in documents, applications or devices either as
+a rasterized representation of the Font Software (e.g., a GIF or JPEG) or as a
+subset of the Font Software as long as the document, application or device is
+distributed in a secure format that permits only the viewing and printing but
+not the editing of the text.
 
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
+2.6 NO USE AS A WEBFONT
+You may not make the Font Software accessible on a web server in order to enable
+a web browser to render the content of Websites using the respective Font
+Software.
 
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
+2.7 BACKUP
+You may make backup copies of the Font Software for archival purposes only,
+provided that You retain exclusive custody and control over such copies. Any
+backup copy of the Font Software must contain the same copyright, trademark, and
+other proprietary information as the original.
 
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
+2.8 PRINT SHOPS AND SERVICE BUREAUS
+You may provide a copy of the Font Software used in Your Work to a print shop,
+service bureau, etc. for printing or otherwise outputting Your Work. Afterwards,
+the print shop, service bureau, etc. must destroy and/or delete all copies of
+the Font Software.
 
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, "submitted"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
+3. ATTRIBUTION
+If You make Your Work publicly accessible in any form, You must keep intact all
+copyright notices for the Font Software and display, reasonable to the medium or
+means You are utilizing for Your Work, an attribution notice (hereinafter “The
+Attribution Notice”) comprising of:
 
-      "Contributor" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
+the name of the Font Designer or pseudonym, if applicable (“lSPl”);
+the title of the Font Software (“8-bit pusab”); and
+to the extent reasonably practicable, the URI
+(https://fontstruct.com/fontstructions/show/1238305) from where the Font was
+originally downloaded.
 
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
+The Attribution Notice may be implemented in any reasonable manner. For the
+avoidance of doubt, You may only use the credit required by this Section for the
+purpose of attribution in the manner set out above and, by exercising Your
+rights under this License, You may not implicitly or explicitly assert or imply
+any connection with, sponsorship or endorsement by the Font Designer of You or
+Your Work.
 
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
+4. YOUR REPRESENTATIONS AND INDEMNIFICATIONS
+You represent, warrant, and covenant that You shall use the Font Software only
+in accordance with the terms of this Agreement and keep the Font Designer fully
+indemnified against all actions, claims, costs, proceedings and damages
+whatsoever incurred by any breach of any of the aforesaid representations,
+warranties of this Agreement.
 
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
+5. OWNERSHIP AND RIGHTS TO THE FONT SOFTWARE
+The Font Designer reserves all rights not expressly granted to You in this
+Agreement (hereinafter “Reserved Rights”). The Font Software is protected by
+copyright and other intellectual property laws and treaties. You acknowledge
+that the Font Designer shall be the sole owner of the Font Software, of the
+copyright and all Reserved Rights of whatever kind and nature in the Font
+Software.
 
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
+6. WARRANTY
+The Font Software is made available “as is” WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT.THE FONT DESIGNER DOES NOT AND
+CANNOT GUARANTEE THE PERFORMANCE OR RESULTS YOU MAY OBTAIN BY USING THE FONT
+SOFTWARE.
+THE FONT DESIGNER SHALL IN NO EVENT BE LIABLE TO YOU FOR ANY CONSEQUENTIAL,
+INCIDENTAL OR SPECIAL DAMAGES, INCLUDING ANY LOST PROFITS OR LOST SAVINGS, OR
+FOR ANY CLAIM BY ANY THIRD PARTY, ARISING OUT OF THE USE OR INABILITY TO USE THE
+FONT SOFTWARE.
 
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
+7. TERMINATION / CONDITION PRECEDENT
+You may use the Font Software only as set forth in this Agreement. Any use of
+the Font Software that is not expressly allowed in this Agreement will
+automatically terminate Your rights to use the Font Software under this
+Agreement.  If Your right to use the Font Software is terminated You shall
+immediately stop using the Font Software, call back or change any Work that is
+used in the public, and delete/destroy any copies of the Font Software. The
+termination of the Agreement shall not affect the right of the Font Designer to
+claim damages or other rights.
 
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
+8. WAIVER
+A waiver by either Party of any term or condition of this Agreement shall not be
+deemed or construed to be a waiver of such term or condition for the future or
+any subsequent breach thereof.  All remedies, rights, undertakings, obligations
+and agreements contained in this Agreement shall be cumulative and none of them
+shall be in limitation of any other remedy, right, undertaking, obligation or
+agreement of either Party.
 
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
+9. GOVERNING LAW, PLACE OF JURISDICTION
+This Agreement shall be construed and shall take effect in accordance with the
+laws of the Federal Republic of Germany excluding the United Nations Convention
+on Contracts for the International Sales of Goods (CISG).  To the extent
+permitted by law, the Courts of Berlin, Germany shall have exclusive
+jurisdiction to resolve any dispute which may arise.
 
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
+10. ENTIRE AGREEMENT
+This Agreement contains the entire agreement between the Parties. No variation
+of any of the terms or conditions of this Agreement may be made unless such
+variation is agreed in writing and signed by You and the Font Designer.
 
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
+11. SEVERABILITY
+If any provision of this Agreement is adjudged by a court to be invalid or
+unenforceable, such provision shall in no way affect any other provision of this
+Agreement, the application of such provision in any other circumstance or the
+validity or enforceability of this Agreement.  The Parties will negotiate in
+good faith about a provision that will replace the invalid or unenforceable
+provision.
 
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
+FontStruct Notice: FontStruct no Party to this Agreement
 
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
+Please note that FontStruct (www.fontstruct.com) is not a party to this
+Agreement between You and the Font Designer.
 
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
+FontStruct makes no warranty of any kind in connection with the Font Software,
+its use or the results that You may obtain by using the Font Software.
 
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
+FontStruct shall in no event be liable to You or any third party for any damages
+whatsoever arising out of or relating to this Agreement or the use of the Font
+Software, including but not limited to incidental, special damages, any lost
+profits or lost savings or any claim made by a third party.
 
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "[]"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same "printed page" as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright [yyyy] [name of copyright owner]
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.

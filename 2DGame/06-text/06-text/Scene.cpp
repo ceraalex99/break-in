@@ -41,7 +41,7 @@ void Scene::init()
 	currentTime = 0.0f;
 	
 	// Select which font you want to use
-	if(!text.init("fonts/OpenSans-Regular.ttf"))
+	if(!text.init("fonts/8-bit-pusab.ttf"))
 	//if(!text.init("fonts/OpenSans-Bold.ttf"))
 	//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
