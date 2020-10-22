@@ -7,6 +7,7 @@
 #include "Quad.h"
 #include "TexturedQuad.h"
 #include "Text.h"
+#include "Player.h"
 
 
 #define CAMERA_WIDTH 640
@@ -27,7 +28,6 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void show_bolet_text();
 
 private:
 	void initShaders();
@@ -40,6 +40,9 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	Text text;
+	Player *player;
+	TileMap *map;
+	bool haveKey;
 
 };
 
