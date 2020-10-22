@@ -34,26 +34,26 @@ void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 		posPlayer.x -= 2;
-		if (map->collisionMoveLeft(posPlayer, glm::ivec2(32, 32))) {
+		if (posPlayer.x < -16) {
 			posPlayer.x += 2;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 		posPlayer.x += 2;
-		if (map->collisionMoveRight(posPlayer, glm::ivec2(32, 32))) {
+		if (posPlayer.x > 400) {
 			posPlayer.x -= 2;
 		}
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		posPlayer.y -= 2;
-		if (map->collisionMoveUp(posPlayer, glm::ivec2(32, 32))) {
+		if (posPlayer.y < 0) {
 			posPlayer.y += 2;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		posPlayer.y += 2;
-		if (map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y)) {
+		if (posPlayer.y > 400) {
 			posPlayer.y -= 2;
 		}
 	}

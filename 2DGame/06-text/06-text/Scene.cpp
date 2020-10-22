@@ -20,9 +20,8 @@ Scene::~Scene()
 {
 	if(quad != NULL)
 		delete quad;
-	for(int i=0; i<3; i++)
-		if(texQuad[i] != NULL)
-			delete texQuad[i];
+	if(arrows != NULL)
+		delete arrows;
 	if (map != NULL)
 		delete map;
 	if (player != NULL)
@@ -32,13 +31,22 @@ Scene::~Scene()
 
 void Scene::init()
 {
-	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(128.f, 128.f)};
+	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f)};
 	glm::vec2 texCoords[2] = {glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f)};
+	haveKey = false;
+
+	
 
 	initShaders();
+	
+	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
+	arrows = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	arrowsTexture.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	arrowsTexture.setMagFilter(GL_NEAREST);
+
 	quad = Quad::createQuad(0.f, 0.f, 160.f, 16.f, simpleProgram);
 
-	map = TileMap::createTileMap("alevels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
@@ -115,26 +123,31 @@ void Scene::render()
 	quad->render();
 	
 	if (haveKey) {
-		
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(160.f, 0.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		arrows->render(arrowsTexture);
 	}
 	else {
-		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 160.f, 0.f));
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(160.f, 0.f, 0.f));
 		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
 		//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
 		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
 		simpleProgram.setUniformMatrix4f("modelview", modelview);
 		quad->render();
+
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+		modelview = glm::mat4(1.0f);
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	}
 
-
-
-	texProgram.use();
-	texProgram.setUniformMatrix4f("projection", projection);
-	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-	modelview = glm::mat4(1.0f);
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	map->render();
 	player->render();
 	

@@ -34,8 +34,8 @@ private:
 
 private:
 	Quad *quad;
-	Texture texs[2];
-	TexturedQuad *texQuad[3];
+	Texture arrowsTexture;
+	TexturedQuad *arrows;
 	ShaderProgram simpleProgram, texProgram;
 	float currentTime;
 	glm::mat4 projection;
@@ -43,6 +43,7 @@ private:
 	Player *player;
 	TileMap *map;
 	bool haveKey;
+	
 
 };
 
