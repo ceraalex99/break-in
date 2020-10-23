@@ -43,7 +43,7 @@ private:
 	GLint posLocation, texCoordLocation;
 	glm::ivec2 position, mapSize, tilesheetSize;
 	int tileSize, blockSize;
-	Texture tilesheet;
+	Texture tilesheet, borderTilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
 

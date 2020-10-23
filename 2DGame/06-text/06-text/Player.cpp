@@ -18,7 +18,7 @@ Player::~Player()
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	spritesheet.loadFromFile("images/player.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(1, 1), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(1, 1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(1);
 	
 	sprite->setAnimationSpeed(0, 8);
@@ -34,26 +34,26 @@ void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 		posPlayer.x -= 2;
-		if (posPlayer.x < -16) {
+		if (posPlayer.x < 22) {
 			posPlayer.x += 2;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 		posPlayer.x += 2;
-		if (posPlayer.x > 400) {
+		if (posPlayer.x > 412) {
 			posPlayer.x -= 2;
 		}
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
 		posPlayer.y -= 2;
-		if (posPlayer.y < 0) {
+		if (posPlayer.y < 40) {
 			posPlayer.y += 2;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 		posPlayer.y += 2;
-		if (posPlayer.y > 400) {
+		if (posPlayer.y > 432) {
 			posPlayer.y -= 2;
 		}
 	}

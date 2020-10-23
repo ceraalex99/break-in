@@ -3,11 +3,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
+#define SCREEN_X 0
+#define SCREEN_Y 0
 
-#define INIT_PLAYER_X_TILES 4
-#define INIT_PLAYER_Y_TILES 25
+#define INIT_PLAYER_X_TILES 5
+#define INIT_PLAYER_Y_TILES 20
 
 Scene::Scene()
 {
@@ -49,12 +49,12 @@ void Scene::init()
 	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() / 2));
 	player->setTileMap(map);
 
 	ball = new Ball();
 	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize()+8, (INIT_PLAYER_Y_TILES-1) * map->getTileSize()));
+	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize()+8, (INIT_PLAYER_Y_TILES-1) * map->getTileSize() / 2));
 	ball->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
@@ -78,54 +78,6 @@ void Scene::render()
 {
 	glm::mat4 modelview;
 
-	simpleProgram.use();
-	simpleProgram.setUniformMatrix4f("projection", projection);
-	simpleProgram.setUniform4f("color", 0.77f, 0.78f, 0.1f, 1.f);
-
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 0.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
-
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(320.f, 0.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
-
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 464.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
-
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(320.f, 464.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
-
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 224.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	modelview = glm::rotate(modelview, glm::radians(-90.f), glm::vec3(0.f, 0.f, 1.f));
-	modelview = glm::scale(modelview, glm::vec3(3.f, 1.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
-
-	
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(464.f, 224.f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-	modelview = glm::rotate(modelview, glm::radians(-90.f), glm::vec3(0.f, 0.f, 1.f));
-	modelview = glm::scale(modelview, glm::vec3(3.f, 1.f, 1.f));
-	modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	quad->render();
 	
 	if (haveKey) {
 		texProgram.use();
