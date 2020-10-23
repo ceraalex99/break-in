@@ -8,6 +8,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Player.h"
+#include "Ball.h"
 
 
 #define CAMERA_WIDTH 640
@@ -43,6 +44,7 @@ private:
 	Player *player;
 	TileMap *map;
 	bool haveKey;
+	Ball *ball;
 	
 
 };

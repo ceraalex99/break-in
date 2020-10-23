@@ -52,7 +52,11 @@ void Scene::init()
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	player->setTileMap(map);
 
-	
+	ball = new Ball();
+	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize()+8, (INIT_PLAYER_Y_TILES-1) * map->getTileSize()));
+	ball->setTileMap(map);
+
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 	
@@ -67,6 +71,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	ball->update(deltaTime);
 }
 
 void Scene::render()
@@ -150,6 +155,7 @@ void Scene::render()
 
 	map->render();
 	player->render();
+	ball->render();
 	
 }
 
