@@ -1,12 +1,19 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "Game.h"
+#include <irrKlang.h>
+#include <iostream>
 
 
 void Game::init()
 {
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	soundEngine = irrklang::createIrrKlangDevice();
+	if (!soundEngine) {
+		cout << "Could not start engine" << endl;
+	}
+	soundEngine->setSoundVolume(0.5f);
 	menu.init();
 	gameState = 3;
 }
@@ -55,7 +62,7 @@ void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		if(gameState != 3){
-			gameState = 3;
+			startAction(3);
 		}
 		else {
 			bPlay = false;
@@ -104,6 +111,7 @@ void Game::startAction(int action) {
 	
 	switch (action) {
 		case 0:
+			scene.setSoundEngine(soundEngine);
 			scene.init();
 			break;
 		case 1:
@@ -111,6 +119,7 @@ void Game::startAction(int action) {
 		case 2:
 			credits.init();
 		case 3:
+			soundEngine->stopAllSounds();
 			menu.init();
 			break;
 	}

@@ -1,0 +1,7 @@
+﻿cl : Línea de comandos warning D9035: La opción 'Gm' está desusada y se quitará en próximas versiones
+  main.cpp
+c:\users\alex\desktop\irrklang-1.6.0\examples\01.helloworld\main.cpp(67): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  d:\windows kits\10\include\10.0.16299.0\ucrt\conio.h(452): note: vea la declaración de 'getch'
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(C:\Users\Alex\Desktop\irrKlang-1.6.0\examples\01.HelloWorld\Debug\01.HelloWorld.exe) no coincide con el valor de la propiedad OutputFile de Linker (C:\Users\Alex\Desktop\irrKlang-1.6.0\bin\win32-visualstudio\01.HelloWorld.exe). Esto puede hacer que el proyecto no se compile correctamente. Para solucionar este problema, asegúrese de que los valores de propiedad $(OutDir), $(TargetName) y $(TargetExt) coinciden con el valor especificado en %(Link.OutputFile).
+main.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
+  01.HelloWorld.vcxproj -> C:\Users\Alex\Desktop\irrKlang-1.6.0\examples\01.HelloWorld\Debug\01.HelloWorld.exe

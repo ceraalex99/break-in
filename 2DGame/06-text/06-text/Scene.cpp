@@ -31,6 +31,9 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	soundEngine->stopAllSounds();
+	soundEngine->play2D("sounds/backgroundMusic.wav", true);
+
 	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f)};
 	glm::vec2 texCoords[2] = {glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f)};
 	haveKey = false;
@@ -61,7 +64,7 @@ void Scene::init()
 	currentTime = 0.0f;
 	
 	// Select which font you want to use
-	if(!text.init("fonts/8-bit-pusab.ttf"))
+	if(!text.init("fonts/ARCADEPI.ttf"))
 	//if(!text.init("fonts/OpenSans-Bold.ttf"))
 	//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
@@ -90,13 +93,6 @@ void Scene::render()
 		arrows->render(arrowsTexture);
 	}
 	else {
-		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(160.f, 0.f, 0.f));
-		modelview = glm::translate(modelview, glm::vec3(64.f, 64.f, 0.f));
-		//modelview = glm::scale(modelview, glm::vec3(30.f, 30.f, 1.f));
-		modelview = glm::translate(modelview, glm::vec3(-64.f, -64.f, 0.f));
-		simpleProgram.setUniformMatrix4f("modelview", modelview);
-		quad->render();
-
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
 		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
@@ -108,6 +104,19 @@ void Scene::render()
 	map->render();
 	player->render();
 	ball->render();
+
+	text.render("MONEY:", glm::vec2(528, 22), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("0000000", glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
+	text.render("POINTS:", glm::vec2(512, 120), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("0000000", glm::vec2(500, 142), 22, glm::vec4(0, 1, 0, 1));
+	text.render("LIVES:", glm::vec2(526, 240), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("04", glm::vec2(585, 264), 22, glm::vec4(0, 1, 0, 1));
+	text.render("BANK:", glm::vec2(540, 320), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("01", glm::vec2(585, 344), 22, glm::vec4(0, 1, 0, 1));
+	text.render("BATMODE", glm::vec2(500, 390), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("SMALL", glm::vec2(517, 414), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("ROOM:", glm::vec2(540, 450), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	text.render("01", glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
 	
 }
 
@@ -164,3 +173,6 @@ void Scene::initShaders()
 	texProgram.bindFragmentOutput("outColor");
 }
 
+void Scene::setSoundEngine(irrklang::ISoundEngine* eng) {
+	soundEngine = eng;
+}

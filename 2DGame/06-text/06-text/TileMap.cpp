@@ -222,6 +222,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) con
 			return true;
 		}
 	}
+	return false;
 }
 
 

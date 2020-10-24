@@ -1,11 +1,13 @@
 #ifndef _GAME_INCLUDE
 #define _GAME_INCLUDE
 
-
+#include <irrKlang.h>
 #include "Scene.h"
 #include "Menu.h"
 #include "Instructions.h"
 #include "Credits.h"
+#pragma comment(lib, "irrKlang.lib")
+
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application
@@ -53,7 +55,7 @@ private:
 	Credits credits;
 	int gameState;
 	bool keys[256], specialKeys[256];
-
+	irrklang::ISoundEngine* soundEngine;
 };
 
 

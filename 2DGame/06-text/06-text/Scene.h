@@ -9,6 +9,7 @@
 #include "Text.h"
 #include "Player.h"
 #include "Ball.h"
+#include <irrKlang.h>
 
 
 #define CAMERA_WIDTH 640
@@ -29,6 +30,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void setSoundEngine(irrklang::ISoundEngine* eng);
 
 private:
 	void initShaders();
@@ -46,7 +48,7 @@ private:
 	bool haveKey;
 	Ball *ball;
 	
-
+	irrklang::ISoundEngine* soundEngine;
 };
 
 
