@@ -33,6 +33,9 @@ public:
 	void setSoundEngine(irrklang::ISoundEngine* eng);
 	void catchKey();
 
+	void nextRoom();
+	void previousRoom();
+
 private:
 	void initShaders();
 
@@ -44,11 +47,12 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map;
-	bool haveKey;
+	TileMap *map[3];
+	bool haveKey[3];
 	Ball *ball;
 	Texture meshTexture;
 	TexturedQuad *mesh;
+	int currentRoom;
 	
 	irrklang::ISoundEngine* soundEngine;
 };

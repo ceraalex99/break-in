@@ -34,6 +34,7 @@ public:
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 
 	void openExit(ShaderProgram texProgram);
+	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);
 	
 private:
 	bool loadLevel(const string &levelFile);

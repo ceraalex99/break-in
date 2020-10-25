@@ -232,6 +232,9 @@ void TileMap::openExit(ShaderProgram texProgram) {
 	prepareArrays(glm::vec2(0,0), texProgram);
 }
 
+void TileMap::moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram) {
+	prepareArrays(minCoords, texProgram);
+}
 
 
 

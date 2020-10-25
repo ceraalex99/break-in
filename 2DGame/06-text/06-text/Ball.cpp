@@ -77,3 +77,15 @@ void Ball::setPosition(const glm::vec2 &pos) {
 void Ball::setSticky(bool s) {
 	sticky = s;
 }
+
+glm::vec2 Ball::getPosition() {
+	return posBall;
+}
+
+glm::vec2 Ball::getDirection(){
+	return direction;
+}
+
+void Ball::setDirection(glm::vec2 dir) {
+	direction = dir;
+}

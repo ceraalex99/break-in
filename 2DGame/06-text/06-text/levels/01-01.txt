@@ -7,7 +7,7 @@ EEEEEEEEEEEE
 G         AF
 G         BF
 G         CF
-G         DF
+G   H     DF
 GA  AAA  AAF
 G   A A A BF
 G         CF
