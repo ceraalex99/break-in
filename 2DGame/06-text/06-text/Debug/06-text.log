@@ -1,6 +1,4 @@
 ﻿  Scene.cpp
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(24): warning C4156: eliminación de expresión de matriz sin utilizar el formato de matriz de 'delete'; formato de matriz sustituido
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(24): warning C4154: eliminación de una expresión de matriz; suministrada una conversión a puntero
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración

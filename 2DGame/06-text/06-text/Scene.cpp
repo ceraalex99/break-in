@@ -20,8 +20,6 @@ Scene::~Scene()
 {
 	if(arrows != NULL)
 		delete arrows;
-	if (map[0] != NULL || map[1] != NULL || map[2] != NULL)
-		delete map;
 	if (player != NULL)
 		delete player;
 }
