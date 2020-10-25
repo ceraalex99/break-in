@@ -31,12 +31,12 @@ public:
 	void update(int deltaTime);
 	void render();
 	void setSoundEngine(irrklang::ISoundEngine* eng);
+	void catchKey();
 
 private:
 	void initShaders();
 
 private:
-	Quad *quad;
 	Texture arrowsTexture;
 	TexturedQuad *arrows;
 	ShaderProgram simpleProgram, texProgram;
@@ -47,6 +47,8 @@ private:
 	TileMap *map;
 	bool haveKey;
 	Ball *ball;
+	Texture meshTexture;
+	TexturedQuad *mesh;
 	
 	irrklang::ISoundEngine* soundEngine;
 };

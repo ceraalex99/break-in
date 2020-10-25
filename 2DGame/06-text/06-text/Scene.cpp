@@ -3,23 +3,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 
-#define SCREEN_X 0
-#define SCREEN_Y 0
 
 #define INIT_PLAYER_X_TILES 5
 #define INIT_PLAYER_Y_TILES 20
 
 Scene::Scene()
 {
-	quad = NULL;
 	player = NULL;
 	map = NULL;
 }
 
 Scene::~Scene()
 {
-	if(quad != NULL)
-		delete quad;
 	if(arrows != NULL)
 		delete arrows;
 	if (map != NULL)
@@ -47,16 +42,19 @@ void Scene::init()
 	arrowsTexture.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	arrowsTexture.setMagFilter(GL_NEAREST);
 
-	quad = Quad::createQuad(0.f, 0.f, 160.f, 16.f, simpleProgram);
+	geom[1] = glm::vec2(480.f, 480.f);
+	mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	meshTexture.loadFromFile("images/mesh.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	meshTexture.setMagFilter(GL_NEAREST);
 
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(0, 0), texProgram);
 	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize() / 2));
 	player->setTileMap(map);
 
 	ball = new Ball();
-	ball->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	ball->init(glm::ivec2(0, 0), texProgram);
 	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize()+8, (INIT_PLAYER_Y_TILES-1) * map->getTileSize() / 2));
 	ball->setTileMap(map);
 
@@ -68,6 +66,7 @@ void Scene::init()
 	//if(!text.init("fonts/OpenSans-Bold.ttf"))
 	//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
+
 }
 
 void Scene::update(int deltaTime)
@@ -82,25 +81,14 @@ void Scene::render()
 	glm::mat4 modelview;
 
 	
-	if (haveKey) {
-		texProgram.use();
-		texProgram.setUniformMatrix4f("projection", projection);
-		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(160.f, 0.f, 0.f));
-		texProgram.setUniformMatrix4f("modelview", modelview);
-		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-		arrows->render(arrowsTexture);
-	}
-	else {
-		texProgram.use();
-		texProgram.setUniformMatrix4f("projection", projection);
-		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-		modelview = glm::mat4(1.0f);
-		texProgram.setUniformMatrix4f("modelview", modelview);
-		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	}
-
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+	modelview = glm::mat4(1.0f);
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	
+	mesh->render(meshTexture);
 	map->render();
 	player->render();
 	ball->render();
@@ -118,6 +106,16 @@ void Scene::render()
 	text.render("ROOM:", glm::vec2(540, 450), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("01", glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
 	
+	if (haveKey) {
+		texProgram.use();
+		texProgram.setUniformMatrix4f("projection", projection);
+		texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(160.f, 0.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+		arrows->render(arrowsTexture);
+	}
 }
 
 void Scene::initShaders()
@@ -175,4 +173,9 @@ void Scene::initShaders()
 
 void Scene::setSoundEngine(irrklang::ISoundEngine* eng) {
 	soundEngine = eng;
+}
+
+void Scene::catchKey() {
+	haveKey = true;
+	map->openExit(texProgram);
 }
