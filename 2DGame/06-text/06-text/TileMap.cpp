@@ -165,8 +165,8 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 7) || (pos.x < 22)) {
-			if (map[y*mapSize.x + x] != 7 && map[y*mapSize.x + x] != 5) {
+		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13) || (pos.x < 22)) {
+			if (map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 9) {
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
@@ -186,8 +186,8 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 6) || (pos.x > 430)) {
-			if (map[y*mapSize.x + x] != 6 && map[y*mapSize.x + x] != 5) {
+		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 10) || (pos.x > 430)) {
+			if (map[y*mapSize.x + x] != 10 && map[y*mapSize.x + x] != 9) {
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
@@ -207,9 +207,9 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / (tileSize / 2);
 	for (int x = x0; x <= x1; x++)
 	{
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 7 && map[y*mapSize.x + x] != 6) || (pos.y > 460))
+		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10) || (pos.y > 460))
 		{
-			if (map[y*mapSize.x + x] != 5) {
+			if (map[y*mapSize.x + x] != 9) {
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
@@ -228,9 +228,9 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	y = pos.y / (tileSize / 2);
 
 	for (int x = x0; x <= x1; x++) {
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 7 && map[y*mapSize.x + x] != 6)) {
+		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10)) {
 			if (map[(y + 1)*mapSize.x + x] == 0) {
-				if (map[y*mapSize.x + x] != 5) {
+				if (map[y*mapSize.x + x] != 9) {
 					map[y*mapSize.x + x] = 0;
 					prepareArrays(glm::vec2(0, 0), texProgram);
 				}
