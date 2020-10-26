@@ -1,30 +1,30 @@
 TILEMAP
 12 24							-- Size of tile map in tiles
 40 40							-- Tile size & block size
-images/blocks.png 	-- Tilesheet
+images/blocks.png 	-- TileSheet
 4 8								-- Number of tiles in tilesheet
-EEEEEEEEEEEE
-G         AF
-G         BF
-G         CF
-G   H     DF
-GA  AAA  AAF
-G   A A A BF
-G         CF
-G    BB   DF
-G  BBB    AF
-GAA  C   ABF
-G         CF
-G         DF
-G         AF
-G         BF
-G         CF
-G         DF
-G         AF
-G         BF
-G         CF
-G         DF
-G         AF
-G         BF
-EEEE    EEEE
+IIIIIIIIIIII
+M          J
+M          J
+M    N     J
+M EGG  GGE J
+ME   GG   EJ
+MEEEE  EEEEJ
+MDDDDGGDDDDJ
+MD         J
+MDDDDGGDDDDJ
+MFFFF  FFFFJ
+MF   GG   FJ
+M FGG  GGF J
+M          J
+M          J
+M          J
+M          J
+M          J
+MEE      EEJ
+MD        DJ
+MFF      FFJ
+M          J
+M          J
+IIII    IIII
 

@@ -50,8 +50,8 @@ private:
 	TileMap *map[3];
 	bool haveKey[3];
 	Ball *ball;
-	Texture meshTexture;
-	TexturedQuad *mesh;
+	Texture meshTexture, lettersTexture;
+	TexturedQuad *mesh, *letters;
 	int currentRoom;
 	
 	irrklang::ISoundEngine* soundEngine;

@@ -41,7 +41,7 @@ void Scene::init()
 
 	initShaders();
 	
-	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
+	
 	arrows = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	arrowsTexture.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	arrowsTexture.setMagFilter(GL_NEAREST);
@@ -50,6 +50,11 @@ void Scene::init()
 	mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	meshTexture.loadFromFile("images/mesh.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	meshTexture.setMagFilter(GL_NEAREST);
+
+	geom[1] = glm::vec2(160.f, 480.f);
+	lettersTexture.loadFromFile("images/letters.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	letters = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	lettersTexture.setMagFilter(GL_NEAREST);
 
 	map[0] = TileMap::createTileMap("levels/01-01.txt", glm::vec2(0, 0), texProgram);
 	map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
@@ -117,17 +122,26 @@ void Scene::render()
 	player->render();
 	ball->render();
 
-	text.render("MONEY:", glm::vec2(528, 22), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	texProgram.use();
+	texProgram.setUniformMatrix4f("projection", projection);
+	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(480.f, 0.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	letters->render(lettersTexture);
+
+	//text.render("MONEY:", glm::vec2(528, 22), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("0000000", glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
-	text.render("POINTS:", glm::vec2(512, 120), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("POINTS:", glm::vec2(512, 120), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("0000000", glm::vec2(500, 142), 22, glm::vec4(0, 1, 0, 1));
-	text.render("LIVES:", glm::vec2(526, 240), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("LIVES:", glm::vec2(526, 240), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("04", glm::vec2(585, 264), 22, glm::vec4(0, 1, 0, 1));
-	text.render("BANK:", glm::vec2(540, 320), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("BANK:", glm::vec2(540, 320), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("01", glm::vec2(585, 344), 22, glm::vec4(0, 1, 0, 1));
-	text.render("BATMODE", glm::vec2(500, 390), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("SMALL", glm::vec2(517, 414), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("ROOM:", glm::vec2(540, 450), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("BATMODE", glm::vec2(500, 390), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("SMALL", glm::vec2(517, 414), 22, glm::vec4(0.28, 0.39, 0.84, 1));
+	//text.render("ROOM:", glm::vec2(540, 450), 22, glm::vec4(0.28, 0.39, 0.84, 1));
 	text.render("01", glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
 	
 	if (haveKey[currentRoom]) {

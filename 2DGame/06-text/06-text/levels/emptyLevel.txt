@@ -7,16 +7,16 @@ IIIIIIIIIIII
 M          J
 M          J
 M          J
-MDGGDGGDGGDJ
 M          J
-MG  G  G  GJ
-M DD    DD J
-M EE DD EE J
-MD E GG ECDJ
-MDNE CC ECDJ
-M FF    FF J
-M GG    GG J
-M DD    DD J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
 M          J
 M          J
 M          J
