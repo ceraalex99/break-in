@@ -23,7 +23,7 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
-	speed = 2;
+	speed = 3;
 	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 }
@@ -46,7 +46,7 @@ void Ball::update(int deltaTime) {
 			}
 		}
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-			direction = glm::vec2(0.f, -1.f);
+			direction = glm::vec2(1.f, -1.f);
 			sticky = false;
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
@@ -54,7 +54,19 @@ void Ball::update(int deltaTime) {
 			if (posBall.y > 380) {
 				posBall.y -= 2;
 			}
-		} 
+		}
+	}
+	else {
+		if (posBall.y > 480) direction.y = -direction.y;
+
+		if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
+			direction.y = -direction.y;
+			posBall.y += direction.y * speed;
+		}
+		if ((direction.x > 0 && map->collisionMoveRight(posBall, glm::ivec2(24, 24))) || (direction.x < 0 && map->collisionMoveLeft(posBall, glm::ivec2(24, 24)))) {
+			direction.x = -direction.x;
+			posBall.x += direction.x * speed;
+		}
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
