@@ -28,12 +28,13 @@ public:
 	
 	int getTileSize() const { return tileSize; }
 
-	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
-	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size);
+	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size);
+	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
+	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
 
 	void openExit(ShaderProgram texProgram);
+	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);
 	
 private:
@@ -49,6 +50,7 @@ private:
 	Texture tilesheet, borderTilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
+	ShaderProgram texProgram;
 
 };
 
