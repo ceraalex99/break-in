@@ -57,7 +57,7 @@ void Ball::update(int deltaTime) {
 		}
 	}
 	else {
-		if (posBall.y > 480) direction.y = -direction.y;
+		if (posBall.y > 450) Game::instance().loseLife();
 
 		if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
 			direction.y = -direction.y;
@@ -100,4 +100,16 @@ glm::vec2 Ball::getDirection(){
 
 void Ball::setDirection(glm::vec2 dir) {
 	direction = dir;
+}
+
+void Ball::stop() {
+	speed = 0;
+}
+
+void Ball::reset(const glm::vec2 &pos) {
+	sticky = true;
+	speed = 4;
+	direction = glm::vec2(0.f, 0.f);
+	posBall = pos;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 }

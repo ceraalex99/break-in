@@ -3,10 +3,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Scene.h"
 #include "Game.h"
+#include <iomanip>
+#include <sstream>
 
 
 #define INIT_PLAYER_X_TILES 5
 #define INIT_PLAYER_Y_TILES 20
+
+enum State {
+	PLAYING, GAME_OVER, GAME_WIN, LOSE_LIFE
+};
+
+State state;
 
 Scene::Scene()
 {
@@ -28,7 +36,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	soundEngine->stopAllSounds();
-	soundEngine->play2D("sounds/backgroundMusic.wav", true);
+	soundEngine->play2D("sounds/backgroundMusicLow.wav", true);
 
 	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f)};
 	glm::vec2 texCoords[2] = {glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f)};
@@ -36,7 +44,7 @@ void Scene::init()
 	haveKey[1] = false;
 	haveKey[2] = false;
 	currentRoom = 0;
-
+	lives = 4;
 	
 
 	initShaders();
@@ -62,6 +70,9 @@ void Scene::init()
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
+	map[0]->setSoundEngine(soundEngine);
+	map[1]->setSoundEngine(soundEngine);
+	map[2]->setSoundEngine(soundEngine);
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -81,6 +92,12 @@ void Scene::init()
 	//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
 
+	reloadMoney();
+	reloadPoints();
+	reloadLives();
+	reloadBank();
+	reloadRoom();
+
 }
 
 void Scene::update(int deltaTime)
@@ -88,6 +105,13 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+
+	if (state == LOSE_LIFE) {
+		if (loseTime + 2000 < currentTime) {
+			state = PLAYING;
+			resetPlayer();
+		}
+	}
 
 	if (Game::instance().getKey('p')) {
 		Game::instance().keyReleased('p');
@@ -134,18 +158,18 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	letters->render(lettersTexture);
 
-	//text.render("MONEY:", glm::vec2(528, 22), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("0000000", glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
-	//text.render("POINTS:", glm::vec2(512, 120), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("0000000", glm::vec2(500, 142), 22, glm::vec4(0, 1, 0, 1));
-	//text.render("LIVES:", glm::vec2(526, 240), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("04", glm::vec2(585, 264), 22, glm::vec4(0, 1, 0, 1));
-	//text.render("BANK:", glm::vec2(540, 320), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("01", glm::vec2(585, 344), 22, glm::vec4(0, 1, 0, 1));
-	//text.render("BATMODE", glm::vec2(500, 390), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	//text.render("SMALL", glm::vec2(517, 414), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	//text.render("ROOM:", glm::vec2(540, 450), 22, glm::vec4(0.28, 0.39, 0.84, 1));
-	text.render("01", glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
+	
+	
+	text.render(moneyStr.str(), glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
+	
+	text.render(pointsStr.str(), glm::vec2(500, 142), 22, glm::vec4(0, 1, 0, 1));
+	
+	text.render(livesStr.str(), glm::vec2(585, 264), 22, glm::vec4(0, 1, 0, 1));
+	
+	
+	text.render(bankStr.str(), glm::vec2(585, 344), 22, glm::vec4(0, 1, 0, 1));
+	
+	text.render(roomStr.str(), glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
 	
 	if (haveKey[currentRoom]) {
 		texProgram.use();
@@ -259,4 +283,46 @@ void Scene::previousRoom() {
 	ball->setPosition(glm::vec2(ball->getPosition().x, 0));
 	player->setTileMap(map[currentRoom]);
 	ball->setTileMap(map[currentRoom]);
+}
+
+void Scene::reloadMoney() {
+	moneyStr.str(string());
+	moneyStr << setfill('0') << setw(7) << Game::instance().getMoney() << endl;
+}
+
+void Scene::reloadPoints() {
+	pointsStr.str(string());
+	pointsStr << setfill('0') << setw(7) << Game::instance().getPoints() << endl;
+}
+
+void Scene::reloadLives() {
+	livesStr.str(string());
+	livesStr << setfill('0') << setw(2) << lives << endl;
+}
+
+void Scene::reloadRoom() {
+	roomStr.str(string());
+	roomStr << setfill('0') << setw(2) << currentRoom + 1 << endl;
+}
+
+void Scene::reloadBank() {
+	bankStr.str(string());
+	bankStr << setfill('0') << setw(2) << Game::instance().getCurrentBank() << endl;
+}
+
+void Scene::loseLife() {
+	if (state != LOSE_LIFE) {
+		state = LOSE_LIFE;
+		lives--;
+		reloadLives();
+		ball->stop();
+		player->stop();
+		soundEngine->play2D("sounds/gameover.wav");
+		loseTime = currentTime;
+	}
+}
+
+void Scene::resetPlayer() {
+	ball->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 8, (INIT_PLAYER_Y_TILES - 1) * map[0]->getTileSize() / 2));
+	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 }

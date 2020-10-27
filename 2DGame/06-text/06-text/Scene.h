@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Ball.h"
 #include <irrKlang.h>
+#include <sstream>
 
 
 #define CAMERA_WIDTH 640
@@ -36,6 +37,18 @@ public:
 	void nextRoom();
 	void previousRoom();
 
+	void reloadMoney();
+
+	void reloadPoints();
+
+	void reloadLives();
+
+	void reloadRoom();
+
+	void reloadBank();
+
+	void loseLife();
+	void resetPlayer();
 private:
 	void initShaders();
 
@@ -53,8 +66,11 @@ private:
 	Texture meshTexture, lettersTexture;
 	TexturedQuad *mesh, *letters;
 	int currentRoom;
-	
+	stringstream pointsStr, moneyStr, livesStr, bankStr, roomStr;
+
 	irrklang::ISoundEngine* soundEngine;
+	float loseTime;
+	int lives;
 };
 
 

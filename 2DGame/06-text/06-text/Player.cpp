@@ -27,34 +27,34 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	
+	speed = 6;
 }
 
 void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-		posPlayer.x -= 6;
+		posPlayer.x -= speed;
 		if (posPlayer.x < 22) {
-			posPlayer.x += 6;
+			posPlayer.x += speed;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
-		posPlayer.x += 6;
+		posPlayer.x += speed;
 		if (posPlayer.x > 412) {
-			posPlayer.x -= 6;
+			posPlayer.x -= speed;
 		}
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		posPlayer.y -= 6;
+		posPlayer.y -= speed;
 		if (posPlayer.y < 40) {
-			posPlayer.y += 6;
+			posPlayer.y += speed;
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		posPlayer.y += 6;
+		posPlayer.y += speed;
 		if (posPlayer.y > 432) {
-			posPlayer.y -= 6;
+			posPlayer.y -= speed;
 		}
 	}
 
@@ -71,6 +71,16 @@ void Player::setTileMap(TileMap *tileMap) {
 }
 
 void Player::setPosition(const glm::vec2 &pos) {
+	posPlayer = pos;
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+}
+
+void Player::stop() {
+	speed = 0;
+}
+
+void Player::reset(const glm::vec2 &pos) {
+	speed = 6;
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }

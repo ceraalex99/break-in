@@ -3,6 +3,8 @@
 #include <sstream>
 #include <vector>
 #include "TileMap.h"
+#include <irrKlang.h>
+#include "Game.h"
 
 
 using namespace std;
@@ -167,9 +169,14 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	{
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13) || (pos.x < 22)) {
 			if (map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 9) {
+				if (map[y*mapSize.x + x] == 14)
+					Game::instance().catchKey();
+				Game::instance().breakBrick();
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
+			else if (pos.x < 22)
+				soundEngine->play2D("sounds/wall.wav");
 			return true;
 		}
 
@@ -188,9 +195,14 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	{
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 10) || (pos.x > 430)) {
 			if (map[y*mapSize.x + x] != 10 && map[y*mapSize.x + x] != 9) {
+				if (map[y*mapSize.x + x] == 14)
+					Game::instance().catchKey();
+				Game::instance().breakBrick();
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
+			else if (pos.x > 430)
+				soundEngine->play2D("sounds/wall.wav");
 			return true;
 		}
 
@@ -210,6 +222,9 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10) || (pos.y > 460))
 		{
 			if (map[y*mapSize.x + x] != 9) {
+				if (map[y*mapSize.x + x] == 14)
+					Game::instance().catchKey();
+				Game::instance().breakBrick();
 				map[y*mapSize.x + x] = 0;
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
@@ -231,6 +246,9 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10)) {
 			if (map[(y + 1)*mapSize.x + x] == 0) {
 				if (map[y*mapSize.x + x] != 9) {
+					if (map[y*mapSize.x + x] == 14)
+						Game::instance().catchKey();
+					Game::instance().breakBrick();
 					map[y*mapSize.x + x] = 0;
 					prepareArrays(glm::vec2(0, 0), texProgram);
 				}
@@ -256,6 +274,9 @@ void TileMap::moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram) 
 	prepareArrays(minCoords, texProgram);
 }
 
+void TileMap::setSoundEngine(irrklang::ISoundEngine* eng) {
+	soundEngine = eng;
+}
 
 
 
