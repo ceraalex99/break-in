@@ -46,6 +46,13 @@ public:
 	bool getSpecialKey(int key) const;
 
 	void startAction(int action);
+	void catchKey();
+	void breakBrick();
+
+	int getPoints();
+	int getMoney();
+	int getCurrentBank();
+	void loseLife();
 
 private:
 	bool bPlay;                       // Continue to play game?
@@ -56,6 +63,7 @@ private:
 	int gameState;
 	bool keys[256], specialKeys[256];
 	irrklang::ISoundEngine* soundEngine;
+	int points, money, currentBank;
 };
 
 

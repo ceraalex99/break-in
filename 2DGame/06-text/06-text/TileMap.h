@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include "Texture.h"
 #include "ShaderProgram.h"
+#include <irrKlang.h>
+
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -41,6 +43,7 @@ public:
 	void openExit(ShaderProgram texProgram);
 	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);
+	void setSoundEngine(irrklang::ISoundEngine* eng);
 	
 private:
 	bool loadLevel(const string &levelFile);
@@ -56,6 +59,8 @@ private:
 	glm::vec2 tileTexSize;
 	int *map;
 	ShaderProgram texProgram;
+	irrklang::ISoundEngine* soundEngine;
+
 
 };
 

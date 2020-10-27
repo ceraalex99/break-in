@@ -21,6 +21,10 @@ public:
 
 	void setDirection(glm::vec2 dir);
 
+	void stop();
+
+	void reset(const glm::vec2 &pos);
+
 	void setSticky(bool s);
 
 private:

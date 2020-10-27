@@ -111,6 +111,9 @@ void Game::startAction(int action) {
 	
 	switch (action) {
 		case 0:
+			points = 0;
+			money = 0;
+			currentBank = 1;
 			scene.setSoundEngine(soundEngine);
 			scene.init();
 			break;
@@ -127,6 +130,29 @@ void Game::startAction(int action) {
 }
 
 
+void Game::catchKey(){
+	scene.catchKey();
+}
 
+void Game::breakBrick() {
+	points += 100;
+	OutputDebugString(L"hola");
+	scene.reloadPoints();
+	soundEngine->play2D("sounds/brick.wav");
+}
 
+int Game::getPoints() {
+	return points;
+}
 
+int Game::getMoney() {
+	return money;
+}
+
+void Game::loseLife() {
+	scene.loseLife();
+}
+
+int Game::getCurrentBank() {
+	return currentBank;
+}

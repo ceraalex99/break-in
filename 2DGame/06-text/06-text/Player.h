@@ -17,11 +17,16 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 
+	void stop();
+
+	void reset(const glm::vec2 & pos);
+
 private:
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	int speed;
 
 };
 #endif
