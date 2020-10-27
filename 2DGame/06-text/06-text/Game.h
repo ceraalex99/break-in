@@ -53,6 +53,13 @@ public:
 	int getMoney();
 	int getCurrentBank();
 	void loseLife();
+	bool getGodMode();
+
+	void nextRoom();
+
+	int getCurrentRoom();
+
+	void previousRoom();
 
 private:
 	bool bPlay;                       // Continue to play game?
@@ -64,6 +71,7 @@ private:
 	bool keys[256], specialKeys[256];
 	irrklang::ISoundEngine* soundEngine;
 	int points, money, currentBank;
+	bool godMode;
 };
 
 

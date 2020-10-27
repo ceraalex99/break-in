@@ -21,6 +21,8 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
 	loadLevel(levelFile);
+	finalPos = minCoords;
+	currentPos = minCoords;
 	prepareArrays(minCoords, program);
 }
 
@@ -30,6 +32,16 @@ TileMap::~TileMap()
 		delete map;
 }
 
+void TileMap::update(int deltaTime) {
+	if (currentPos.y < finalPos.y) {
+		currentPos.y += 35;
+		prepareArrays(currentPos, texProgram);
+	}
+	else if (currentPos.y > finalPos.y) {
+		currentPos.y -= 35;
+		prepareArrays(currentPos, texProgram);
+	}
+}
 
 void TileMap::render() const
 {
@@ -271,13 +283,14 @@ void TileMap::setShaderProgram(ShaderProgram program) {
 }
 
 void TileMap::moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram) {
+	currentPos = finalPos;
+	finalPos = minCoords;
 	prepareArrays(minCoords, texProgram);
 }
 
 void TileMap::setSoundEngine(irrklang::ISoundEngine* eng) {
 	soundEngine = eng;
 }
-
 
 
 

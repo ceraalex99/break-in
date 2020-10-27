@@ -105,6 +105,9 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	map[0]->update(deltaTime);
+	map[1]->update(deltaTime);
+	map[2]->update(deltaTime);
 
 	if (state == LOSE_LIFE) {
 		if (loseTime + 2000 < currentTime) {
@@ -325,4 +328,8 @@ void Scene::loseLife() {
 void Scene::resetPlayer() {
 	ball->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 8, (INIT_PLAYER_Y_TILES - 1) * map[0]->getTileSize() / 2));
 	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
+}
+
+int Scene::getCurrentRoom() {
+	return currentRoom;
 }

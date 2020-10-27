@@ -25,6 +25,8 @@ public:
 	TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program);
 	~TileMap();
 
+	void update(int deltaTime);
+
 	void render() const;
 	void free();
 	
@@ -55,7 +57,7 @@ private:
 	int *map;
 	ShaderProgram texProgram;
 	irrklang::ISoundEngine* soundEngine;
-
+	glm::vec2 currentPos, finalPos;
 
 };
 
