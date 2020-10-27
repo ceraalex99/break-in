@@ -23,7 +23,7 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
-	speed = 6;
+	speed = 4;
 	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 }
@@ -70,11 +70,24 @@ void Ball::update(int deltaTime) {
 		}
 	}
 	else {
-		speed = 4;
 		
 		if (posBall.y > 450) {
-			Game::instance().loseLife();
-			speed = 0;
+			if (Game::instance().getCurrentRoom() == 0) {
+				if (Game::instance().getGodMode()) {
+					direction.y = -direction.y;
+				}
+				else {
+					Game::instance().loseLife();
+				}
+			}
+			else if (direction.y > 0) {
+				Game::instance().previousRoom();
+			}
+			
+		}
+		else if (posBall.y < 5) {
+			if(direction.y < 0)
+				Game::instance().nextRoom();
 		}
 		else {
 			if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {

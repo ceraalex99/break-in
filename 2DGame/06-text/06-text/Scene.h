@@ -49,6 +49,7 @@ public:
 
 	void loseLife();
 	void resetPlayer();
+	int getCurrentRoom();
 private:
 	void initShaders();
 

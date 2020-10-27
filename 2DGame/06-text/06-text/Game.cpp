@@ -8,6 +8,7 @@
 void Game::init()
 {
 	bPlay = true;
+	godMode = false;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	soundEngine = irrklang::createIrrKlangDevice();
 	if (!soundEngine) {
@@ -67,6 +68,9 @@ void Game::keyPressed(int key)
 		else {
 			bPlay = false;
 		}
+	else if (key == 'g') {
+		godMode = !godMode;
+	}
 	keys[key] = true;
 }
 
@@ -136,7 +140,6 @@ void Game::catchKey(){
 
 void Game::breakBrick() {
 	points += 100;
-	OutputDebugString(L"hola");
 	scene.reloadPoints();
 	soundEngine->play2D("sounds/brick.wav");
 }
@@ -155,4 +158,20 @@ void Game::loseLife() {
 
 int Game::getCurrentBank() {
 	return currentBank;
+}
+
+bool Game::getGodMode() {
+	return godMode;
+}
+
+void Game::nextRoom() {
+	scene.nextRoom();
+}
+
+int Game::getCurrentRoom() {
+	return scene.getCurrentRoom();
+}
+
+void Game::previousRoom() {
+	scene.previousRoom();
 }
