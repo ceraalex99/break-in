@@ -1,4 +1,41 @@
-﻿  TileMap.cpp
+﻿  Ball.cpp
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(38): warning C4244: '-=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(44): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(95): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(99): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(174): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración

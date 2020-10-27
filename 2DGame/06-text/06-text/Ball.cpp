@@ -47,7 +47,7 @@ void Ball::update(int deltaTime) {
 			}
 		}
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-			direction = glm::vec2(1.f, -1.f);
+			direction = normalize(glm::vec2(0.4f, -1.f));
 			sticky = false;
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
@@ -98,9 +98,8 @@ void Ball::update(int deltaTime) {
 				direction.x = -direction.x;
 				posBall.x += direction.x * speed;
 			}
-			else if (direction.y > 0 && collisionPlayer()) {
-				posBall.y -= direction.y * speed;
-				direction.y = -direction.y;
+			else if (direction.y >= -0.3) {
+				collisionPlayer();
 			}
 		}
 		
@@ -140,7 +139,7 @@ glm::vec2 Ball::getDirection(){
 }
 
 void Ball::setDirection(glm::vec2 dir) {
-	direction = dir;
+	direction = normalize(dir);
 }
 
 void Ball::stop() {
@@ -155,7 +154,7 @@ void Ball::reset(const glm::vec2 &pos) {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 }
 
-bool Ball::collisionPlayer() {
+void Ball::collisionPlayer() {
 	glm::ivec2 posPlayer = player->getPosition();
 	int x0Ball = posBall.x;
 	int x1Ball = posBall.x + 23;
@@ -170,9 +169,11 @@ bool Ball::collisionPlayer() {
 
 	if ((x1Ball > x0Player) && (x0Ball < x1Player)) {
 		if ((y1Player > yBall) && (yBall > y0Player)) {
-			direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 24.f;
-			return true;
+			direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 12.f;
+			direction.y = -1.f;
+			posBall.y += direction.y * speed;
+			direction = normalize(direction);
+			
 		}
 	}
-	return false;
 }

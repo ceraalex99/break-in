@@ -14,7 +14,7 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
-	bool collisionPlayer();
+	void collisionPlayer();
 
 	void setTileMap(TileMap *tileMap);
 	void setPlayer(Player *play);
