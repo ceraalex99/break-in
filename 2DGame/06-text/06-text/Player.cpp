@@ -33,9 +33,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-		posPlayer.x -= speed;
+
+		posPlayer.x -= 2;
 		if (posPlayer.x < 22) {
-			posPlayer.x += speed;
+			posPlayer.x += 2;
 		}
 		else {
 			posPlayer.x -= 2;
@@ -51,9 +52,9 @@ void Player::update(int deltaTime) {
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
-		posPlayer.x += speed;
+		posPlayer.x += 2;
 		if (posPlayer.x > 412) {
-			posPlayer.x -= speed;
+			posPlayer.x -= 2;
 		}
 		else {
 			posPlayer.x += 2;
@@ -70,9 +71,9 @@ void Player::update(int deltaTime) {
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		posPlayer.y -= speed;
+		posPlayer.y -= 2;
 		if (posPlayer.y < 40) {
-			posPlayer.y += speed;
+			posPlayer.y += 2;
 		}
 		else {
 			posPlayer.y -= 2;
@@ -88,13 +89,13 @@ void Player::update(int deltaTime) {
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		posPlayer.y += speed;
+		posPlayer.y += 2;
 		if (posPlayer.y > 432) {
-			posPlayer.y -= speed;
+			posPlayer.y -= 2;
 		}
 		else {
 			posPlayer.y += 2;
-			if(posPlayer.y > 432) {
+			if (posPlayer.y > 432) {
 				posPlayer.y -= 2;
 			}
 			else {
@@ -106,6 +107,7 @@ void Player::update(int deltaTime) {
 		}
 
 	}
+
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 

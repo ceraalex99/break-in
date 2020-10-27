@@ -259,45 +259,6 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	return false;
 }
 
-bool TileMap::collisionMoveUpRight(const glm::ivec2 &pos, const glm::ivec2 &size) {
-	int x, y;
-
-	x = (pos.x + 4) / tileSize;
-	y = pos.y / (tileSize / 2);
-
-	for (int x ; x <= x1; x++) {
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10)) {
-			if (map[(y + 1)*mapSize.x + x] == 0) {
-				if (map[y*mapSize.x + x] != 9) {
-					map[y*mapSize.x + x] = 0;
-					prepareArrays(glm::vec2(0, 0), texProgram);
-				}
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool TileMap::collisionMoveUpLeft(const glm::ivec2 &pos, const glm::ivec2 &size) {
-	int x, y;
-
-	x = (pos.x - 4 + size.x - 1) / tileSize;
-	y = pos.y / (tileSize / 2);
-
-	if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10)) {
-		if (map[(y + 1)*mapSize.x + x] == 0) {
-			if (map[y*mapSize.x + x] != 9) {
-				map[y*mapSize.x + x] = 0;
-				prepareArrays(glm::vec2(0, 0), texProgram);
-			}
-			return true;
-		}
-	}
-	return false;
-}
-
-
 void TileMap::openExit(ShaderProgram texProgram) {
 	for (int x = 4; x < 8; x++) {
 		map[x] = 0;

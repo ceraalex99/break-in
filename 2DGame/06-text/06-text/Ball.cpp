@@ -32,7 +32,7 @@ void Ball::update(int deltaTime) {
 	sprite->update(deltaTime);
 	posBall += direction * speed;
 
-	if (sticky) { 
+	if (sticky) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			posBall.x -= speed;
 			if (posBall.x < 34) {
@@ -69,16 +69,14 @@ void Ball::update(int deltaTime) {
 		}
 	}
 	else {
-		if (posBall.y > 450) Game::instance().loseLife();
 		speed = 4;
-		if (posBall.y > 480) direction.y = -direction.y;
-
+		
+		if (posBall.y > 450) {
+			Game::instance().loseLife();
+			speed = 0;
+		}
 		else {
-			if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24)))) { 
-				direction.x = -direction.x;
-				direction.y = -direction.y;
-			}
-			else if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
+			if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
 				direction.y = -direction.y;
 				posBall.y += direction.y * speed;
 			}
