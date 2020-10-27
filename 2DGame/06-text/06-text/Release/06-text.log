@@ -9,7 +9,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(44): warning C
           [
               T=int
           ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(82): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(95): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -18,7 +18,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(82): warning C
           [
               T=int
           ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(86): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(99): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -27,7 +27,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(86): warning C
           [
               T=int
           ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(89): warning C4244: '-=': conversión de 'T' a 'T'; posible pérdida de datos
+c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(102): warning C4244: '-=': conversión de 'T' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -39,7 +39,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(89): warning C
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  3 of 665 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  1 of 671 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
