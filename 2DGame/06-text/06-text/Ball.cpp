@@ -33,6 +33,7 @@ void Ball::update(int deltaTime) {
 	posBall += direction * speed;
 
 	if (sticky) {
+		speed = 6;
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			posBall.x -= speed;
 			if (posBall.x < 34) {
@@ -84,6 +85,10 @@ void Ball::update(int deltaTime) {
 				direction.x = -direction.x;
 				posBall.x += direction.x * speed;
 			}
+			else if (direction.y > 0 && collisionPlayer()) {
+				posBall.y -= direction.y * speed;
+				direction.y = -direction.y;
+			}
 		}
 		
 	}
@@ -98,6 +103,10 @@ void Ball::render() {
 
 void Ball::setTileMap(TileMap *tileMap) {
 	map = tileMap;
+}
+
+void Ball::setPlayer(Player *play) {
+	player = play;
 }
 
 void Ball::setPosition(const glm::vec2 &pos) {
@@ -131,4 +140,26 @@ void Ball::reset(const glm::vec2 &pos) {
 	direction = glm::vec2(0.f, 0.f);
 	posBall = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
+}
+
+bool Ball::collisionPlayer() {
+	glm::ivec2 posPlayer = player->getPosition();
+	int x0Ball = posBall.x;
+	int x1Ball = posBall.x + 23;
+
+	int yBall = posBall.y + 24;
+
+	int x0Player = posPlayer.x;
+	int x1Player = posPlayer.x + 47;
+
+	int y0Player = posPlayer.y;
+	int y1Player = posPlayer.y + 14;
+
+	if ((x1Ball > x0Player) && (x0Ball < x1Player)) {
+		if ((y1Player > yBall) && (yBall > y0Player)) {
+			direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 24.f;
+			return true;
+		}
+	}
+	return false;
 }

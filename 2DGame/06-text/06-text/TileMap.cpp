@@ -259,6 +259,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	return false;
 }
 
+
 void TileMap::openExit(ShaderProgram texProgram) {
 	for (int x = 4; x < 8; x++) {
 		map[x] = 0;

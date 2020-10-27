@@ -3,6 +3,7 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Player.h"
 
 class Ball
 {
@@ -13,8 +14,10 @@ public:
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();
+	bool collisionPlayer();
 
 	void setTileMap(TileMap *tileMap);
+	void setPlayer(Player *play);
 	void setPosition(const glm::vec2 &pos);
 	glm::vec2 getPosition();
 	glm::vec2 getDirection();
@@ -32,6 +35,7 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Player *player;
 
 	glm::vec2 direction;
 	float speed;
