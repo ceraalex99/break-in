@@ -33,6 +33,11 @@ public:
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
 
+	bool collisionMoveUpRight(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveUpLeft(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveDownRight(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveDownLeft(const glm::ivec2 & pos, const glm::ivec2 & size);
+
 	void openExit(ShaderProgram texProgram);
 	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);

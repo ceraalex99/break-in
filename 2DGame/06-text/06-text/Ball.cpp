@@ -23,7 +23,7 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
-	speed = 4;
+	speed = 6;
 	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 }
@@ -32,17 +32,17 @@ void Ball::update(int deltaTime) {
 	sprite->update(deltaTime);
 	posBall += direction * speed;
 
-	if (sticky) {
+	if (sticky) { 
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			posBall.x -= speed;
-			if (posBall.x < 8) {
-				posBall.x += 2;
+			if (posBall.x < 34) {
+				posBall.x += 6;
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 			posBall.x += speed;
-			if (posBall.x > 416) {
-				posBall.x -= 2;
+			if (posBall.x > 428) {
+				posBall.x -= 6;
 			}
 		}
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
@@ -50,23 +50,43 @@ void Ball::update(int deltaTime) {
 			sticky = false;
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-			posBall.y += speed;
-			if (posBall.y > 380) {
+			posBall.y += 2;
+			if (posBall.y > 406) {
 				posBall.y -= 2;
+			}
+			else {
+				posBall.y += 2;
+				if (posBall.y > 406) {
+					posBall.y -= 2;
+				}
+				else {
+					posBall.y += 2;
+					if (posBall.y > 406) {
+						posBall.y -= 2;
+					}
+				}
 			}
 		}
 	}
 	else {
+		speed = 4;
 		if (posBall.y > 480) direction.y = -direction.y;
 
-		if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
-			direction.y = -direction.y;
-			posBall.y += direction.y * speed;
+		else {
+			if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24)))) { 
+				direction.x = -direction.x;
+				direction.y = -direction.y;
+			}
+			else if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
+				direction.y = -direction.y;
+				posBall.y += direction.y * speed;
+			}
+			else if ((direction.x > 0 && map->collisionMoveRight(posBall, glm::ivec2(24, 24))) || (direction.x < 0 && map->collisionMoveLeft(posBall, glm::ivec2(24, 24)))) {
+				direction.x = -direction.x;
+				posBall.x += direction.x * speed;
+			}
 		}
-		if ((direction.x > 0 && map->collisionMoveRight(posBall, glm::ivec2(24, 24))) || (direction.x < 0 && map->collisionMoveLeft(posBall, glm::ivec2(24, 24)))) {
-			direction.x = -direction.x;
-			posBall.x += direction.x * speed;
-		}
+		
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));

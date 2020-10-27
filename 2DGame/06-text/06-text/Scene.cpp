@@ -69,7 +69,7 @@ void Scene::init()
 
 	ball = new Ball();
 	ball->init(glm::ivec2(0, 0), texProgram);
-	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+8, (INIT_PLAYER_Y_TILES-1) * map[0]->getTileSize() / 2));
+	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
 	ball->setTileMap(map[0]);
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);

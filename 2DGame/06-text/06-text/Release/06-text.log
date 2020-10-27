@@ -9,12 +9,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(43): warning C
           [
               T=int
           ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(53): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
-          with
-          [
-              T=int
-          ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(64): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(82): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -23,7 +18,7 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(64): warning C
           [
               T=int
           ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(68): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(86): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
           with
           [
               T=float
@@ -32,10 +27,18 @@ c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(68): warning C
           [
               T=int
           ]
+  Credits.cpp
+  Game.cpp
+  Instructions.cpp
+  Menu.cpp
+  Player.cpp
+  Scene.cpp
+  TileMap.cpp
+  main.cpp
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  2 of 631 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  3 of 632 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
