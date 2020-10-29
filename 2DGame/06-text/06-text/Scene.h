@@ -61,8 +61,8 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map[3];
-	bool haveKey[3];
+	TileMap *map[4];
+	bool haveKey[4];
 	Ball *ball;
 	Texture meshTexture, lettersTexture;
 	TexturedQuad *mesh, *letters;

@@ -179,12 +179,20 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
+		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13) || (pos.x < 22)) {
 			if (map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 9) {
-				if (map[y*mapSize.x + x] == 14)
+				if (currentTile == 18 || currentTile == 22) {
 					Game::instance().catchKey();
-				Game::instance().breakBrick();
+				}
+				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
+					map[(y + 1)*mapSize.x + x] = 0;
+				}
+				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
+					map[(y - 1)*mapSize.x + x] = 0;
+				}
 				map[y*mapSize.x + x] = 0;
+				Game::instance().breakBrick();
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
 			else if (pos.x < 22)
@@ -205,12 +213,20 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
+		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 10) || (pos.x > 430)) {
 			if (map[y*mapSize.x + x] != 10 && map[y*mapSize.x + x] != 9) {
-				if (map[y*mapSize.x + x] == 14)
+				if (currentTile == 18 || currentTile == 22) {
 					Game::instance().catchKey();
-				Game::instance().breakBrick();
+				}
+				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
+					map[(y + 1)*mapSize.x + x] = 0;
+				}
+				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
+					map[(y - 1)*mapSize.x + x] = 0;
+				}
 				map[y*mapSize.x + x] = 0;
+				Game::instance().breakBrick();
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
 			else if (pos.x > 430)
@@ -231,13 +247,21 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / (tileSize / 2);
 	for (int x = x0; x <= x1; x++)
 	{
+		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10) || (pos.y > 460))
 		{
 			if (map[y*mapSize.x + x] != 9) {
-				if (map[y*mapSize.x + x] == 14)
+				if (currentTile == 18 || currentTile == 22) {
 					Game::instance().catchKey();
-				Game::instance().breakBrick();
+				}
+				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
+					map[(y + 1)*mapSize.x + x] = 0;
+				}
+				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
+					map[(y - 1)*mapSize.x + x] = 0;
+				}
 				map[y*mapSize.x + x] = 0;
+				Game::instance().breakBrick();
 				prepareArrays(glm::vec2(0, 0), texProgram);
 			}
 			return true;
@@ -255,13 +279,27 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	y = pos.y / (tileSize / 2);
 
 	for (int x = x0; x <= x1; x++) {
-		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10)) {
+		int currentTile = map[y*mapSize.x + x];
+		if ((currentTile != 0 && currentTile != 13 && currentTile != 10)) {
 			if (map[(y + 1)*mapSize.x + x] == 0) {
-				if (map[y*mapSize.x + x] != 9) {
-					if (map[y*mapSize.x + x] == 14)
+				if (currentTile != 9) {
+					if (currentTile == 18 || currentTile == 22) {
 						Game::instance().catchKey();
-					Game::instance().breakBrick();
+					}
+					else if (currentTile == 11 || currentTile == 15) {
+						Game::instance().gainMoney(100);
+					}
+					else if (currentTile == 12 || currentTile == 16) {
+						Game::instance().gainMoney(400);
+					}
+					if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
+						map[(y + 1)*mapSize.x + x] = 0;
+					}
+					else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
+						map[(y - 1)*mapSize.x + x] = 0;
+					}
 					map[y*mapSize.x + x] = 0;
+					Game::instance().breakBrick();
 					prepareArrays(glm::vec2(0, 0), texProgram);
 				}
 				return true;
@@ -272,7 +310,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 }
 
 
-void TileMap::openExit(ShaderProgram texProgram) {
+void TileMap::openExit() {
 	for (int x = 4; x < 8; x++) {
 		map[x] = 0;
 	}
@@ -283,7 +321,7 @@ void TileMap::setShaderProgram(ShaderProgram program) {
 	texProgram = program;
 }
 
-void TileMap::moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram) {
+void TileMap::moveTileMap(const glm::vec2 &minCoords) {
 	currentPos = finalPos;
 	finalPos = minCoords;
 	prepareArrays(minCoords, texProgram);

@@ -43,6 +43,7 @@ void Scene::init()
 	haveKey[0] = false;
 	haveKey[1] = false;
 	haveKey[2] = false;
+	haveKey[3] = false;
 	currentRoom = 0;
 	lives = 4;
 	
@@ -67,12 +68,15 @@ void Scene::init()
 	map[0] = TileMap::createTileMap("levels/01-01.txt", glm::vec2(0, 0), texProgram);
 	map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
 	map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
+	map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
+	map[3]->setShaderProgram(texProgram);
 	map[0]->setSoundEngine(soundEngine);
 	map[1]->setSoundEngine(soundEngine);
 	map[2]->setSoundEngine(soundEngine);
+	map[3]->setSoundEngine(soundEngine);
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -109,6 +113,7 @@ void Scene::update(int deltaTime)
 	map[0]->update(deltaTime);
 	map[1]->update(deltaTime);
 	map[2]->update(deltaTime);
+	map[3]->update(deltaTime);
 
 	if (state == LOSE_LIFE) {
 		if (loseTime + 2000 < currentTime) {
@@ -119,7 +124,7 @@ void Scene::update(int deltaTime)
 
 	if (Game::instance().getKey('p')) {
 		Game::instance().keyReleased('p');
-		if (currentRoom < 2) {
+		if (currentRoom < 3) {
 			nextRoom();
 			ball->setDirection(glm::vec2(ball->getDirection().x, -abs(ball->getDirection().y)));
 		}
@@ -150,6 +155,7 @@ void Scene::render()
 	map[0]->render();
 	map[1]->render();
 	map[2]->render();
+	map[3]->render();
 	player->render();
 	ball->render();
 
@@ -246,21 +252,29 @@ void Scene::setSoundEngine(irrklang::ISoundEngine* eng) {
 
 void Scene::catchKey() {
 	haveKey[currentRoom] = true;
-	map[currentRoom]->openExit(texProgram);
+	map[currentRoom]->openExit();
 }
 
 void Scene::nextRoom() {
 	currentRoom++;
 	switch (currentRoom) {
 		case 1:
-			map[0]->moveTileMap(glm::vec2(0, 560), texProgram);
-			map[1]->moveTileMap(glm::vec2(0, 0), texProgram);
-			map[2]->moveTileMap(glm::vec2(0, -560), texProgram);
+			map[0]->moveTileMap(glm::vec2(0, 560));
+			map[1]->moveTileMap(glm::vec2(0, 0));
+			map[2]->moveTileMap(glm::vec2(0, -560));
+			map[3]->moveTileMap(glm::vec2(0, -1120));
 			break;
 		case 2:
-			map[0]->moveTileMap(glm::vec2(0, 1120), texProgram);
-			map[1]->moveTileMap(glm::vec2(0, 560), texProgram);
-			map[2]->moveTileMap(glm::vec2(0, 0), texProgram);
+			map[0]->moveTileMap(glm::vec2(0, 1120));
+			map[1]->moveTileMap(glm::vec2(0, 560));
+			map[2]->moveTileMap(glm::vec2(0, 0));
+			map[3]->moveTileMap(glm::vec2(0, -560));
+			break;
+		case 3:
+			map[0]->moveTileMap(glm::vec2(0, 1680));
+			map[1]->moveTileMap(glm::vec2(0, 1120));
+			map[2]->moveTileMap(glm::vec2(0, 560));
+			map[3]->moveTileMap(glm::vec2(0, 0));
 			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -272,16 +286,24 @@ void Scene::nextRoom() {
 void Scene::previousRoom() {
 	currentRoom--;
 	switch (currentRoom) {
-	case 0:
-		map[0]->moveTileMap(glm::vec2(0, 0), texProgram);
-		map[1]->moveTileMap(glm::vec2(0, -560), texProgram);
-		map[2]->moveTileMap(glm::vec2(0, -1120), texProgram);
-		break;
-	case 1:
-		map[0]->moveTileMap(glm::vec2(0, 560), texProgram);
-		map[1]->moveTileMap(glm::vec2(0, 0), texProgram);
-		map[2]->moveTileMap(glm::vec2(0, -560), texProgram);
-		break;
+		case 0:
+			map[0]->moveTileMap(glm::vec2(0, 0));
+			map[1]->moveTileMap(glm::vec2(0, -560));
+			map[2]->moveTileMap(glm::vec2(0, -1120));
+			map[3]->moveTileMap(glm::vec2(0, -1680));
+			break;
+		case 1:
+			map[0]->moveTileMap(glm::vec2(0, 560));
+			map[1]->moveTileMap(glm::vec2(0, 0));
+			map[2]->moveTileMap(glm::vec2(0, -560));
+			map[3]->moveTileMap(glm::vec2(0, -1120));
+			break;
+		case 2:
+			map[0]->moveTileMap(glm::vec2(0, 1120));
+			map[1]->moveTileMap(glm::vec2(0, 560));
+			map[2]->moveTileMap(glm::vec2(0, 0));
+			map[3]->moveTileMap(glm::vec2(0, -560));
+			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	ball->setPosition(glm::vec2(ball->getPosition().x, 0));

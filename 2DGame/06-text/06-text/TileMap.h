@@ -37,9 +37,9 @@ public:
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
 
-	void openExit(ShaderProgram texProgram);
+	void openExit();
 	void setShaderProgram(ShaderProgram program);
-	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);
+	void moveTileMap(const glm::vec2 &minCoords);
 	void setSoundEngine(irrklang::ISoundEngine* eng);
 	
 private:

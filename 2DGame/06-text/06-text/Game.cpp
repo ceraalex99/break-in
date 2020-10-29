@@ -175,3 +175,8 @@ int Game::getCurrentRoom() {
 void Game::previousRoom() {
 	scene.previousRoom();
 }
+
+void Game::gainMoney(int mon) {
+	money += mon;
+	scene.reloadPoints();
+}
