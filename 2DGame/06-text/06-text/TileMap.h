@@ -29,7 +29,7 @@ public:
 
 	void render() const;
 	void free();
-	
+
 	int getTileSize() const { return tileSize; }
 
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size);
@@ -37,11 +37,18 @@ public:
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size);
 
+	bool collisionMoveUpRight(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveUpLeft(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveDownLeft(const glm::ivec2 & pos, const glm::ivec2 & size);
+	bool collisionMoveDownRight(const glm::ivec2 & pos, const glm::ivec2 & size);
+
+	int collision(const int x0, const int x1, const int y);
+
 	void openExit(ShaderProgram texProgram);
 	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords, ShaderProgram texProgram);
 	void setSoundEngine(irrklang::ISoundEngine* eng);
-	
+
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);

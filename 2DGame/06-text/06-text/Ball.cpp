@@ -19,7 +19,7 @@ Ball::~Ball()
 void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	spritesheet.loadFromFile("images/ball.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
-	
+
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
@@ -70,7 +70,7 @@ void Ball::update(int deltaTime) {
 		}
 	}
 	else {
-		
+
 		if (posBall.y > 450) {
 			if (Game::instance().getCurrentRoom() == 0) {
 				if (Game::instance().getGodMode()) {
@@ -83,14 +83,18 @@ void Ball::update(int deltaTime) {
 			else if (direction.y > 0) {
 				Game::instance().previousRoom();
 			}
-			
+
 		}
 		else if (posBall.y < 5) {
-			if(direction.y < 0)
+			if (direction.y < 0)
 				Game::instance().nextRoom();
 		}
 		else {
-			if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
+			if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24))) || (direction.y < 0 && direction.x < 0 && map->collisionMoveUpLeft(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x > 0 && map->collisionMoveDownRight(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x < 0 && map->collisionMoveDownLeft(posBall, glm::ivec2(24, 24)))) {
+				direction.y = -direction.y;
+				direction.x = -direction.x;
+			}
+			else if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
 				direction.y = -direction.y;
 				posBall.y += direction.y * speed;
 			}
@@ -102,7 +106,7 @@ void Ball::update(int deltaTime) {
 				collisionPlayer();
 			}
 		}
-		
+
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
@@ -134,7 +138,7 @@ glm::vec2 Ball::getPosition() {
 	return posBall;
 }
 
-glm::vec2 Ball::getDirection(){
+glm::vec2 Ball::getDirection() {
 	return direction;
 }
 
@@ -173,7 +177,7 @@ void Ball::collisionPlayer() {
 			direction.y = -1.f;
 			posBall.y += direction.y * speed;
 			direction = normalize(direction);
-			
+
 		}
 	}
 }
