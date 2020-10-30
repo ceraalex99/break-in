@@ -99,6 +99,7 @@ bool TileMap::loadLevel(const string &levelFile)
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 
 	map = new int[mapSize.x * mapSize.y];
+	moneyTiles = 0;
 	for (int j = 0; j < mapSize.y; j++)
 	{
 		for (int i = 0; i < mapSize.x; i++)
@@ -106,8 +107,10 @@ bool TileMap::loadLevel(const string &levelFile)
 			fin.get(tile);
 			if (tile == ' ')
 				map[j*mapSize.x + i] = 0;
-			else
+			else {
 				map[j*mapSize.x + i] = tile - int('A') + 1;
+				if (tile == 'K' || tile == 'L') moneyTiles++;
+			}
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -179,21 +182,9 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) {
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
-		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13) || (pos.x < 22)) {
 			if (map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 9) {
-				if (currentTile == 18 || currentTile == 22) {
-					Game::instance().catchKey();
-				}
-				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
-					map[(y + 1)*mapSize.x + x] = 0;
-				}
-				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
-					map[(y - 1)*mapSize.x + x] = 0;
-				}
-				map[y*mapSize.x + x] = 0;
-				Game::instance().breakBrick();
-				prepareArrays(glm::vec2(0, 0), texProgram);
+				checkTile(x, y);
 			}
 			else if (pos.x < 22)
 				soundEngine->play2D("sounds/wall.wav");
@@ -213,21 +204,9 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y - 4 + size.y - 1) / (tileSize / 2);
 	for (int y = y0; y <= y1; y++)
 	{
-		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 10) || (pos.x > 430)) {
 			if (map[y*mapSize.x + x] != 10 && map[y*mapSize.x + x] != 9) {
-				if (currentTile == 18 || currentTile == 22) {
-					Game::instance().catchKey();
-				}
-				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
-					map[(y + 1)*mapSize.x + x] = 0;
-				}
-				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
-					map[(y - 1)*mapSize.x + x] = 0;
-				}
-				map[y*mapSize.x + x] = 0;
-				Game::instance().breakBrick();
-				prepareArrays(glm::vec2(0, 0), texProgram);
+				checkTile(x, y);
 			}
 			else if (pos.x > 430)
 				soundEngine->play2D("sounds/wall.wav");
@@ -247,22 +226,10 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / (tileSize / 2);
 	for (int x = x0; x <= x1; x++)
 	{
-		int currentTile = map[y*mapSize.x + x];
 		if ((map[y*mapSize.x + x] != 0 && map[y*mapSize.x + x] != 13 && map[y*mapSize.x + x] != 10) || (pos.y > 460))
 		{
 			if (map[y*mapSize.x + x] != 9) {
-				if (currentTile == 18 || currentTile == 22) {
-					Game::instance().catchKey();
-				}
-				if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
-					map[(y + 1)*mapSize.x + x] = 0;
-				}
-				else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
-					map[(y - 1)*mapSize.x + x] = 0;
-				}
-				map[y*mapSize.x + x] = 0;
-				Game::instance().breakBrick();
-				prepareArrays(glm::vec2(0, 0), texProgram);
+				checkTile(x, y);
 			}
 			return true;
 		}
@@ -283,24 +250,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size) {
 		if ((currentTile != 0 && currentTile != 13 && currentTile != 10)) {
 			if (map[(y + 1)*mapSize.x + x] == 0) {
 				if (currentTile != 9) {
-					if (currentTile == 18 || currentTile == 22) {
-						Game::instance().catchKey();
-					}
-					else if (currentTile == 11 || currentTile == 15) {
-						Game::instance().gainMoney(100);
-					}
-					else if (currentTile == 12 || currentTile == 16) {
-						Game::instance().gainMoney(400);
-					}
-					if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
-						map[(y + 1)*mapSize.x + x] = 0;
-					}
-					else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
-						map[(y - 1)*mapSize.x + x] = 0;
-					}
-					map[y*mapSize.x + x] = 0;
-					Game::instance().breakBrick();
-					prepareArrays(glm::vec2(0, 0), texProgram);
+					checkTile(x, y);
 				}
 				return true;
 			}
@@ -321,11 +271,7 @@ bool TileMap::collisionMoveUpRight(const glm::ivec2 &pos, const glm::ivec2 &size
 	if (res1 == -1 && res2 != -1) {
 		if (map[(y + 1)*mapSize.x + res2] == 0) {
 			if (map[y*mapSize.x + res2] != 9) {
-				if (map[y*mapSize.x + res2] == 14)
-					Game::instance().catchKey();
-				Game::instance().breakBrick();
-				map[y*mapSize.x + res2] = 0;
-				prepareArrays(glm::vec2(0, 0), texProgram);
+				checkTile(res2, y);
 				return true;
 			}
 		}
@@ -344,11 +290,7 @@ bool TileMap::collisionMoveUpLeft(const glm::ivec2 &pos, const glm::ivec2 &size)
 	if (res1 != -1 && res2 == -1) {
 		if (map[(y + 1)*mapSize.x + res1] == 0) {
 			if (map[y*mapSize.x + res1] != 9) {
-				if (map[y*mapSize.x + res1] == 14)
-					Game::instance().catchKey();
-				Game::instance().breakBrick();
-				map[y*mapSize.x + res1] = 0;
-				prepareArrays(glm::vec2(0, 0), texProgram);
+				checkTile(res1, y);
 				return true;
 			}
 		}
@@ -364,11 +306,7 @@ bool TileMap::collisionMoveDownLeft(const glm::ivec2 &pos, const glm::ivec2 &siz
 	int res2 = collision(pos.x + 5, pos.x + 23, pos.y + size.y - 1);
 	if (res1 != -1 && res2 == -1) {
 		if (map[y*mapSize.x + res1] != 9) {
-			if (map[y*mapSize.x + res1] == 14)
-				Game::instance().catchKey();
-			Game::instance().breakBrick();
-			map[y*mapSize.x + res1] = 0;
-			prepareArrays(glm::vec2(0, 0), texProgram);
+			checkTile(res1, y);
 			return true;
 		}
 
@@ -384,11 +322,7 @@ bool TileMap::collisionMoveDownRight(const glm::ivec2 &pos, const glm::ivec2 &si
 	int res2 = collision(pos.x + 19, pos.x + 23, pos.y + size.y - 1);
 	if (res1 == -1 && res2 != -1) {
 		if (map[y*mapSize.x + res2] != 9) {
-			if (map[y*mapSize.x + res2] == 14)
-				Game::instance().catchKey();
-			Game::instance().breakBrick();
-			map[y*mapSize.x + res2] = 0;
-			prepareArrays(glm::vec2(0, 0), texProgram);
+			checkTile(res2, y);
 			return true;
 		}
 
@@ -432,6 +366,30 @@ void TileMap::setSoundEngine(irrklang::ISoundEngine* eng) {
 	soundEngine = eng;
 }
 
+void TileMap::checkTile(int x, int y) {
+	int currentTile = map[y*mapSize.x + x];
+
+	if (currentTile == 18 || currentTile == 22) {
+		Game::instance().catchKey();
+	}
+	else if (currentTile == 11 || currentTile == 15) {
+		Game::instance().gainMoney(100);
+	}
+	else if (currentTile == 12 || currentTile == 16) {
+		Game::instance().gainMoney(400);
+	}
+	else {
+		Game::instance().breakBrick();
+	}
+	if (currentTile == 11 || currentTile == 12 || currentTile == 17 || currentTile == 18) {
+		map[(y + 1)*mapSize.x + x] = 0;
+	}
+	else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
+		map[(y - 1)*mapSize.x + x] = 0;
+	}
+	map[y*mapSize.x + x] = 0;
+	prepareArrays(glm::vec2(0, 0), texProgram);
+}
 
 
 

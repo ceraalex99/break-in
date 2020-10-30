@@ -173,10 +173,16 @@ void Ball::collisionPlayer() {
 
 	if ((x1Ball > x0Player) && (x0Ball < x1Player)) {
 		if ((y1Player > yBall) && (yBall > y0Player)) {
-			direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 12.f;
-			direction.y = -1.f;
-			posBall.y += direction.y * speed;
-			direction = normalize(direction);
+			if (Game::instance().getGodMode()) {
+				direction = glm::vec2(0.f, -1.f);
+				posBall.y += direction.y * speed;
+			}
+			else {
+				direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 12.f;
+				direction.y = -1.f;
+				posBall.y += direction.y * speed;
+				direction = normalize(direction);
+			}
 
 		}
 	}

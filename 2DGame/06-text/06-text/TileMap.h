@@ -52,7 +52,7 @@ public:
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
-
+	void checkTile(int x, int y);
 private:
 	GLuint vao;
 	GLuint vbo;
@@ -65,7 +65,7 @@ private:
 	ShaderProgram texProgram;
 	irrklang::ISoundEngine* soundEngine;
 	glm::vec2 currentPos, finalPos;
-
+	int moneyTiles;
 };
 
 

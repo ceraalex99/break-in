@@ -71,37 +71,37 @@ void Player::update(int deltaTime) {
 	}
 
 	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		posPlayer.y -= speed;
+		posPlayer.y -= speed/2;
 		if (posPlayer.y < 40) {
-			posPlayer.y += speed;
+			posPlayer.y += speed/2;
 		}
 		else {
-			posPlayer.y -= speed;
+			posPlayer.y -= speed/2;
 			if (posPlayer.y < 40) {
-				posPlayer.y += speed;
+				posPlayer.y += speed/2;
 			}
 			else {
-				posPlayer.y -= speed;
+				posPlayer.y -= speed/2;
 				if (posPlayer.y < 40) {
-					posPlayer.y += speed;
+					posPlayer.y += speed/2;
 				}
 			}
 		}
 	}
 	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		posPlayer.y += speed;
+		posPlayer.y += speed/2;
 		if (posPlayer.y > 432) {
-			posPlayer.y -= speed;
+			posPlayer.y -= speed/2;
 		}
 		else {
-			posPlayer.y += speed;
+			posPlayer.y += speed/2;
 			if (posPlayer.y > 432) {
-				posPlayer.y -= speed;
+				posPlayer.y -= speed/2;
 			}
 			else {
-				posPlayer.y += speed;
+				posPlayer.y += speed/2;
 				if (posPlayer.y > 432) {
-					posPlayer.y -= speed;
+					posPlayer.y -= speed/2;
 				}
 			}
 		}
