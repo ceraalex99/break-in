@@ -11,6 +11,7 @@ public:
 
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
+	void setPosition(const glm::vec2 & pos);
 	void render();
 
 private:

@@ -88,6 +88,10 @@ void Scene::init()
 	ball->setTileMap(map[0]);
 	ball->setPlayer(player);
 
+	boss = new Boss();
+	boss->init(glm::ivec2(0, 0), texProgram);
+	boss->setPosition(glm::vec2(0,0));
+
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
 	
@@ -110,6 +114,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	boss->update(deltaTime);
 	map[0]->update(deltaTime);
 	map[1]->update(deltaTime);
 	map[2]->update(deltaTime);
@@ -158,6 +163,7 @@ void Scene::render()
 	map[3]->render();
 	player->render();
 	ball->render();
+	boss->render();
 
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);

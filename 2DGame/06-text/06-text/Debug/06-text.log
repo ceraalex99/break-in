@@ -1,4 +1,9 @@
-﻿  Player.cpp
+﻿  Boss.cpp
+d:\vj\breakin\2dgame\06-text\06-text\boss.cpp(33): warning C4244: '=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración

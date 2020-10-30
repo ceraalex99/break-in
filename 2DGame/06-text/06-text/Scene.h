@@ -11,6 +11,7 @@
 #include "Ball.h"
 #include <irrKlang.h>
 #include <sstream>
+#include "Boss.h"
 
 
 #define CAMERA_WIDTH 640
@@ -68,6 +69,7 @@ private:
 	TexturedQuad *mesh, *letters;
 	int currentRoom;
 	stringstream pointsStr, moneyStr, livesStr, bankStr, roomStr;
+	Boss *boss;
 
 	irrklang::ISoundEngine* soundEngine;
 	float loseTime;
