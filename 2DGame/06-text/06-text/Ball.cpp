@@ -111,11 +111,11 @@ void Ball::update(int deltaTime) {
 					boss->hit();
 				}
 			}
+
+			player->checkAnimation(posBall);
 		}
 
 	}
-
-	player->checkAnimation(posBall);
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 

@@ -19,7 +19,7 @@ Player::~Player()
 }
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
-	spritesheet.loadFromFile("images/Player_sprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerSprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(10);
 	
@@ -50,7 +50,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->setAnimationSpeed(UPLEFT, 8);
 	sprite->addKeyframe(UPLEFT, glm::vec2(0.f, 0.5f));
 
-	sprite->setAnimationSpeed(DEAD, 8);
+	sprite->setAnimationSpeed(DEAD, 2);
 	sprite->addKeyframe(DEAD, glm::vec2(0.25f, 0.5f));
 	sprite->addKeyframe(DEAD, glm::vec2(0.5f, 0.5f));
 	sprite->addKeyframe(DEAD, glm::vec2(0.75f, 0.5f));
@@ -162,12 +162,14 @@ void Player::setPosition(const glm::vec2 &pos) {
 
 
 void Player::stop() {
+	sprite->changeAnimation(DEAD);
 	speed = 0;
 }
 
 void Player::reset(const glm::vec2 &pos) {
 	speed = 2;
 	posPlayer = pos;
+	sprite->changeAnimation(IDLE);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
