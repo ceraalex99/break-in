@@ -72,7 +72,7 @@ void Ball::update(int deltaTime) {
 	else {
 
 		if (posBall.y > 450) {
-			if (Game::instance().getCurrentRoom() == 0) {
+			if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4) {
 				if (Game::instance().getGodMode()) {
 					direction.y = -direction.y;
 				}
@@ -104,6 +104,12 @@ void Ball::update(int deltaTime) {
 			}
 			else if (direction.y >= -0.3) {
 				collisionPlayer();
+			}
+
+			if (Game::instance().getSceneState() == 4) {
+				if (collisionBoss()) {
+					boss->hit();
+				}
 			}
 		}
 
@@ -186,4 +192,37 @@ void Ball::collisionPlayer() {
 
 		}
 	}
+}
+
+bool Ball::collisionBoss() {
+	glm::ivec2 posBoss = boss->getPosition();
+	int x0Boss = posBoss.x + 20;
+	int x1Boss = posBoss.x + 100;
+	int y0Boss = posBoss.y + 90;
+	int y1Boss = posBoss.y + 100;
+
+	int yBall = posBall.y;
+	int x0Ball = posBall.x;
+	int x1Ball = posBall.x + 23;
+
+	if ((x1Ball > x0Boss) && (x0Ball < x1Boss)) {
+		if (y1Boss > yBall) {
+			if (y0Boss < yBall) {
+				if (direction.y < 0) {
+					direction.y = -direction.y;
+					posBall.y += direction.y * speed;
+				}
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+void Ball::setBoss(Boss *b) {
+	boss = b;
+}
+
+bool Ball::getSticky() {
+	return sticky;
 }

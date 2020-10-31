@@ -51,6 +51,8 @@ public:
 	void loseLife();
 	void resetPlayer();
 	int getCurrentRoom();
+	void startBossFight();
+	int getState();
 private:
 	void initShaders();
 
@@ -62,8 +64,8 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map[4];
-	bool haveKey[4];
+	TileMap *map[5];
+	bool haveKey[5];
 	Ball *ball;
 	Texture meshTexture, lettersTexture;
 	TexturedQuad *mesh, *letters;

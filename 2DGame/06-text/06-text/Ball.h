@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Boss.h"
 
 class Ball
 {
@@ -15,6 +16,12 @@ public:
 	void update(int deltaTime);
 	void render();
 	void collisionPlayer();
+
+	bool collisionBoss();
+
+	void setBoss(Boss * b);
+
+	bool getSticky();
 
 	void setTileMap(TileMap *tileMap);
 	void setPlayer(Player *play);
@@ -36,7 +43,7 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	Player *player;
-
+	Boss *boss;
 	glm::vec2 direction;
 	float speed;
 	bool sticky;

@@ -15,6 +15,7 @@ void Game::init()
 		cout << "Could not start engine" << endl;
 	}
 	soundEngine->setSoundVolume(0.5f);
+	soundEngine->play2D("sounds/menu.ogg", true);
 	menu.init();
 	gameState = 3;
 }
@@ -127,6 +128,7 @@ void Game::startAction(int action) {
 			credits.init();
 		case 3:
 			soundEngine->stopAllSounds();
+			soundEngine->play2D("sounds/menu.ogg", true);
 			menu.init();
 			break;
 	}
@@ -180,4 +182,8 @@ void Game::gainMoney(int mon) {
 	money += mon;
 	scene.reloadMoney();
 	soundEngine->play2D("sounds/money.wav");
+}
+
+int Game::getSceneState() {
+	return scene.getState();
 }
