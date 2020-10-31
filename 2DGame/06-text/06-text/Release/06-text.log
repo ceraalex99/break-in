@@ -1,55 +1,8 @@
-﻿  Ball.cpp
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(38): warning C4244: '-=': conversión de 'float' a 'T'; posible pérdida de datos
-          with
-          [
-              T=int
-          ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(44): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
-          with
-          [
-              T=int
-          ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(99): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-          and
-          [
-              T=int
-          ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(103): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-          and
-          [
-              T=int
-          ]
-c:\users\usuario\desktop\break-in\2dgame\06-text\06-text\ball.cpp(178): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
-          with
-          [
-              T=float
-          ]
-          and
-          [
-              T=int
-          ]
-  Credits.cpp
-  Game.cpp
-  Instructions.cpp
-  Menu.cpp
-  Player.cpp
-  Scene.cpp
-  TileMap.cpp
-  main.cpp
+﻿  Scene.cpp
 SOIL.lib(SOIL.obj) : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/OPT:ICF'
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRTD' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   Generando código
-  7 of 683 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
-    4 functions were new in current compilation
-    26 functions had inline decision re-evaluated but remain unchanged
+  All 704 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Generación de código finalizada
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'C:\Users\USUARIO\Desktop\break-in\2DGame\06-text\Release\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'C:\Users\USUARIO\Desktop\break-in\2DGame\06-text\Release\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración

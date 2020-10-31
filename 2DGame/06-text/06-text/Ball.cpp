@@ -115,6 +115,8 @@ void Ball::update(int deltaTime) {
 
 	}
 
+	player->checkAnimation(posBall);
+
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
 }

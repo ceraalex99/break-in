@@ -19,7 +19,7 @@ public:
 
 	bool collisionBoss();
 
-	void setBoss(Boss * b);
+	void setBoss(Boss *b);
 
 	bool getSticky();
 

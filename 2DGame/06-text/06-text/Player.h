@@ -4,6 +4,9 @@
 #include "Sprite.h"
 #include "TileMap.h"
 
+
+
+
 class Player
 {
 public:
@@ -23,12 +26,16 @@ public:
 
 	glm::ivec2 getPosition();
 
+	void checkAnimation(const glm::vec2 &posBall);
+
 private:
+
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
 	int speed;
+	
 
 };
 #endif
