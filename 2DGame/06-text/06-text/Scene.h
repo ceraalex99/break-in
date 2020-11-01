@@ -64,8 +64,8 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map[13];
-	bool haveKey[13];
+	TileMap *map[5];
+	bool haveKey[5];
 	Ball *ball;
 	Texture meshTexture, lettersTexture;
 	TexturedQuad *mesh, *letters;
@@ -76,6 +76,7 @@ private:
 	irrklang::ISoundEngine* soundEngine;
 	float loseTime;
 	int lives;
+	int currentBank;
 };
 
 

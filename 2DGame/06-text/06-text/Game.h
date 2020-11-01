@@ -6,6 +6,7 @@
 #include "Menu.h"
 #include "Instructions.h"
 #include "Credits.h"
+#include "LevelSelector.h"
 #pragma comment(lib, "irrKlang.lib")
 
 
@@ -65,12 +66,15 @@ public:
 
 	int getSceneState();
 
+	void selectLevel(int level);
+
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	Menu menu;
 	Instructions instructions;
 	Credits credits;
+	LevelSelector levelSelector;
 	int gameState;
 	bool keys[256], specialKeys[256];
 	irrklang::ISoundEngine* soundEngine;

@@ -15,7 +15,7 @@ M          J
 M  B    B  J
 M BG    GB J
 MBGE    EGBJ
-IGE      EGI
+MGE      EGJ
 ME        EJ
 M          J
 M          J
