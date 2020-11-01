@@ -46,6 +46,14 @@ void Scene::init()
 	haveKey[3] = false;
 	haveKey[4] = false;
 	haveKey[5] = false;
+	haveKey[6] = false;
+	haveKey[7] = false;
+	haveKey[8] = false;
+	haveKey[9] = false;
+	haveKey[10] = false;
+	haveKey[11] = false;
+	haveKey[12] = false;
+
 	currentRoom = 0;
 	lives = 4;
 	
@@ -73,18 +81,40 @@ void Scene::init()
 	map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
 	map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
 	map[5] = TileMap::createTileMap("levels/02-01.txt", glm::vec2(0, -2800), texProgram);
+	map[6] = TileMap::createTileMap("levels/02-02.txt", glm::vec2(0, -3360), texProgram);
+	map[7] = TileMap::createTileMap("levels/02-03.txt", glm::vec2(0, -3920), texProgram);
+	map[8] = TileMap::createTileMap("levels/02-bonus.txt", glm::vec2(0, -4480), texProgram);
+	map[9] = TileMap::createTileMap("levels/03-01.txt", glm::vec2(0, -5040), texProgram);
+	map[10] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -5600), texProgram);
+	map[11] = TileMap::createTileMap("levels/03-03.txt", glm::vec2(0, -6160), texProgram);
+	map[12] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -6720), texProgram);
+
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
 	map[3]->setShaderProgram(texProgram);
 	map[4]->setShaderProgram(texProgram);
 	map[5]->setShaderProgram(texProgram);
+	map[6]->setShaderProgram(texProgram);
+	map[7]->setShaderProgram(texProgram);
+	map[8]->setShaderProgram(texProgram);
+	map[9]->setShaderProgram(texProgram);
+	map[10]->setShaderProgram(texProgram);
+	map[11]->setShaderProgram(texProgram);
+	map[12]->setShaderProgram(texProgram);
 	map[0]->setSoundEngine(soundEngine);
 	map[1]->setSoundEngine(soundEngine);
 	map[2]->setSoundEngine(soundEngine);
 	map[3]->setSoundEngine(soundEngine);
 	map[4]->setSoundEngine(soundEngine);
 	map[5]->setSoundEngine(soundEngine);
+	map[6]->setSoundEngine(soundEngine);
+	map[7]->setSoundEngine(soundEngine);
+	map[8]->setSoundEngine(soundEngine);
+	map[9]->setShaderProgram(texProgram);
+	map[10]->setShaderProgram(texProgram);
+	map[11]->setShaderProgram(texProgram);
+	map[12]->setShaderProgram(texProgram);
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -127,6 +157,14 @@ void Scene::update(int deltaTime)
 	map[2]->update(deltaTime);
 	map[3]->update(deltaTime);
 	map[4]->update(deltaTime);
+	map[5]->update(deltaTime);
+	map[6]->update(deltaTime);
+	map[7]->update(deltaTime);
+	map[8]->update(deltaTime);
+	map[9]->update(deltaTime);
+	map[10]->update(deltaTime);
+	map[11]->update(deltaTime);
+	map[12]->update(deltaTime);
 
 	if (state == LOSE_LIFE) {
 		if (loseTime + 1500 < currentTime) {
@@ -137,7 +175,7 @@ void Scene::update(int deltaTime)
 
 	if (Game::instance().getKey('p')) {
 		Game::instance().keyReleased('p');
-		if (currentRoom < 5) {
+		if (currentRoom < 13) {
 			nextRoom();
 			ball->setDirection(glm::vec2(ball->getDirection().x, -abs(ball->getDirection().y)));
 		}
@@ -171,6 +209,13 @@ void Scene::render()
 	map[3]->render();
 	map[4]->render();
 	map[5]->render();
+	map[6]->render();
+	map[7]->render();
+	map[8]->render();
+	map[9]->render();
+	map[10]->render();
+	map[11]->render();
+	map[12]->render();
 	player->render();
 	ball->render();
 	if (state == BOSS_FIGHT) {
@@ -283,6 +328,13 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, -1120));
 			map[4]->moveTileMap(glm::vec2(0, -1680));
 			map[5]->moveTileMap(glm::vec2(0, -2240));
+			map[6]->moveTileMap(glm::vec2(0, -2800));
+			map[7]->moveTileMap(glm::vec2(0, -3360));
+			map[8]->moveTileMap(glm::vec2(0, -3920));
+			map[9]->moveTileMap(glm::vec2(0, -4480));
+			map[10]->moveTileMap(glm::vec2(0, -5040));
+			map[11]->moveTileMap(glm::vec2(0, -5600));
+			map[12]->moveTileMap(glm::vec2(0, -6160));
 			break;
 		case 2:
 			map[0]->moveTileMap(glm::vec2(0, 1120));
@@ -291,6 +343,13 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, -560));
 			map[4]->moveTileMap(glm::vec2(0, -1120));
 			map[5]->moveTileMap(glm::vec2(0, -1680));
+			map[6]->moveTileMap(glm::vec2(0, -2240));
+			map[7]->moveTileMap(glm::vec2(0, -2800));
+			map[8]->moveTileMap(glm::vec2(0, -3360));
+			map[9]->moveTileMap(glm::vec2(0, -3920));
+			map[10]->moveTileMap(glm::vec2(0, -4480));
+			map[11]->moveTileMap(glm::vec2(0, -5040));
+			map[12]->moveTileMap(glm::vec2(0, -5600));
 			break;
 		case 3:
 			map[0]->moveTileMap(glm::vec2(0, 1680));
@@ -299,6 +358,13 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
 			map[5]->moveTileMap(glm::vec2(0, -1120));
+			map[6]->moveTileMap(glm::vec2(0, -1680));
+			map[7]->moveTileMap(glm::vec2(0, -2240));
+			map[8]->moveTileMap(glm::vec2(0, -2800));
+			map[9]->moveTileMap(glm::vec2(0, -3360));
+			map[10]->moveTileMap(glm::vec2(0, -3920));
+			map[11]->moveTileMap(glm::vec2(0, -4480));
+			map[12]->moveTileMap(glm::vec2(0, -5040));
 			break;
 		case 4:
 			map[0]->moveTileMap(glm::vec2(0, 2240));
@@ -307,6 +373,13 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, 560));
 			map[4]->moveTileMap(glm::vec2(0, 0));
 			map[5]->moveTileMap(glm::vec2(0,-560));
+			map[6]->moveTileMap(glm::vec2(0, -1120));
+			map[7]->moveTileMap(glm::vec2(0, -1680));
+			map[8]->moveTileMap(glm::vec2(0, -2240));
+			map[9]->moveTileMap(glm::vec2(0, -2800));
+			map[10]->moveTileMap(glm::vec2(0, -3360));
+			map[11]->moveTileMap(glm::vec2(0, -3920));
+			map[12]->moveTileMap(glm::vec2(0, -4480));
 			
 			break;
 		case 5:
@@ -316,7 +389,119 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, 1120));
 			map[4]->moveTileMap(glm::vec2(0, 560));
 			map[5]->moveTileMap(glm::vec2(0, 0));
-
+			map[6]->moveTileMap(glm::vec2(0, -560));
+			map[7]->moveTileMap(glm::vec2(0, -1120));
+			map[8]->moveTileMap(glm::vec2(0, -1680));
+			map[9]->moveTileMap(glm::vec2(0, -2240));
+			map[10]->moveTileMap(glm::vec2(0, -2800));
+			map[11]->moveTileMap(glm::vec2(0, -3360));
+			map[12]->moveTileMap(glm::vec2(0, -3920));
+			break;
+		case 6:
+			map[0]->moveTileMap(glm::vec2(0, 3360));
+			map[1]->moveTileMap(glm::vec2(0, 2800));
+			map[2]->moveTileMap(glm::vec2(0, 2240));
+			map[3]->moveTileMap(glm::vec2(0, 1680));
+			map[4]->moveTileMap(glm::vec2(0, 1120));
+			map[5]->moveTileMap(glm::vec2(0, 560));
+			map[6]->moveTileMap(glm::vec2(0, 0));
+			map[7]->moveTileMap(glm::vec2(0, -560));
+			map[8]->moveTileMap(glm::vec2(0, -1120));
+			map[9]->moveTileMap(glm::vec2(0, -1680));
+			map[10]->moveTileMap(glm::vec2(0, -2240));
+			map[11]->moveTileMap(glm::vec2(0, -2800));
+			map[12]->moveTileMap(glm::vec2(0, -3360));
+			break;
+		case 7:
+			map[0]->moveTileMap(glm::vec2(0, 3920));
+			map[1]->moveTileMap(glm::vec2(0, 3360));
+			map[2]->moveTileMap(glm::vec2(0, 2800));
+			map[3]->moveTileMap(glm::vec2(0, 2240));
+			map[4]->moveTileMap(glm::vec2(0, 1680));
+			map[5]->moveTileMap(glm::vec2(0, 1120));
+			map[6]->moveTileMap(glm::vec2(0, 560));
+			map[7]->moveTileMap(glm::vec2(0, 0));
+			map[8]->moveTileMap(glm::vec2(0, -560));
+			map[9]->moveTileMap(glm::vec2(0, -1120));
+			map[10]->moveTileMap(glm::vec2(0, -1680));
+			map[11]->moveTileMap(glm::vec2(0, -2240));
+			map[12]->moveTileMap(glm::vec2(0, -2800));
+			break;
+		case 8:
+			map[0]->moveTileMap(glm::vec2(0, 4480));
+			map[1]->moveTileMap(glm::vec2(0, 3920));
+			map[2]->moveTileMap(glm::vec2(0, 3360));
+			map[3]->moveTileMap(glm::vec2(0, 2800));
+			map[4]->moveTileMap(glm::vec2(0, 2240));
+			map[5]->moveTileMap(glm::vec2(0, 1680));
+			map[6]->moveTileMap(glm::vec2(0, 1120));
+			map[7]->moveTileMap(glm::vec2(0, 560));
+			map[8]->moveTileMap(glm::vec2(0, 0));
+			map[9]->moveTileMap(glm::vec2(0, -560));
+			map[10]->moveTileMap(glm::vec2(0, -1120));
+			map[11]->moveTileMap(glm::vec2(0, -1680));
+			map[12]->moveTileMap(glm::vec2(0, -2240));
+			break;
+		case 9:
+			map[0]->moveTileMap(glm::vec2(0, 5040));
+			map[1]->moveTileMap(glm::vec2(0, 4480));
+			map[2]->moveTileMap(glm::vec2(0, 3920));
+			map[3]->moveTileMap(glm::vec2(0, 3360));
+			map[4]->moveTileMap(glm::vec2(0, 2800));
+			map[5]->moveTileMap(glm::vec2(0, 2240));
+			map[6]->moveTileMap(glm::vec2(0, 1680));
+			map[7]->moveTileMap(glm::vec2(0, 1120));
+			map[8]->moveTileMap(glm::vec2(0, 560));
+			map[9]->moveTileMap(glm::vec2(0, 0));
+			map[10]->moveTileMap(glm::vec2(0, -560));
+			map[11]->moveTileMap(glm::vec2(0, -1120));
+			map[12]->moveTileMap(glm::vec2(0, -1680));
+			break;
+		case 10:
+			map[0]->moveTileMap(glm::vec2(0, 5600));
+			map[1]->moveTileMap(glm::vec2(0, 5040));
+			map[2]->moveTileMap(glm::vec2(0, 4480));
+			map[3]->moveTileMap(glm::vec2(0, 3920));
+			map[4]->moveTileMap(glm::vec2(0, 3360));
+			map[5]->moveTileMap(glm::vec2(0, 2800));
+			map[6]->moveTileMap(glm::vec2(0, 2240));
+			map[7]->moveTileMap(glm::vec2(0, 1680));
+			map[8]->moveTileMap(glm::vec2(0, 1120));
+			map[9]->moveTileMap(glm::vec2(0, 560));
+			map[10]->moveTileMap(glm::vec2(0, 0));
+			map[11]->moveTileMap(glm::vec2(0, -560));
+			map[12]->moveTileMap(glm::vec2(0, -1120));
+			break;
+		case 11:
+			map[0]->moveTileMap(glm::vec2(0, 6160));
+			map[1]->moveTileMap(glm::vec2(0, 5600));
+			map[2]->moveTileMap(glm::vec2(0, 5040));
+			map[3]->moveTileMap(glm::vec2(0, 4480));
+			map[4]->moveTileMap(glm::vec2(0, 3920));
+			map[5]->moveTileMap(glm::vec2(0, 3360));
+			map[6]->moveTileMap(glm::vec2(0, 2800));
+			map[7]->moveTileMap(glm::vec2(0, 2240));
+			map[8]->moveTileMap(glm::vec2(0, 1680));
+			map[9]->moveTileMap(glm::vec2(0, 1120));
+			map[10]->moveTileMap(glm::vec2(0, 560));
+			map[11]->moveTileMap(glm::vec2(0, 0));
+			map[12]->moveTileMap(glm::vec2(0, -560));
+			break;
+		case 12:
+			map[0]->moveTileMap(glm::vec2(0, 6720));
+			map[1]->moveTileMap(glm::vec2(0, 6160));
+			map[2]->moveTileMap(glm::vec2(0, 5600));
+			map[3]->moveTileMap(glm::vec2(0, 5060));
+			map[4]->moveTileMap(glm::vec2(0, 4480));
+			map[5]->moveTileMap(glm::vec2(0, 3920));
+			map[6]->moveTileMap(glm::vec2(0, 3360));
+			map[7]->moveTileMap(glm::vec2(0, 2800));
+			map[8]->moveTileMap(glm::vec2(0, 2240));
+			map[9]->moveTileMap(glm::vec2(0, 1680));
+			map[10]->moveTileMap(glm::vec2(0, 1120));
+			map[11]->moveTileMap(glm::vec2(0, 560));
+			map[12]->moveTileMap(glm::vec2(0, 0));
+			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	if (ball->getSticky()) {
@@ -338,6 +523,14 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, -1120));
 			map[3]->moveTileMap(glm::vec2(0, -1680));
 			map[4]->moveTileMap(glm::vec2(0, -2240));
+			map[5]->moveTileMap(glm::vec2(0, -2800));
+			map[6]->moveTileMap(glm::vec2(0, -3360));
+			map[7]->moveTileMap(glm::vec2(0, -3920));
+			map[8]->moveTileMap(glm::vec2(0, -4480));
+			map[9]->moveTileMap(glm::vec2(0, -5040));
+			map[10]->moveTileMap(glm::vec2(0, -5600));
+			map[11]->moveTileMap(glm::vec2(0, -6160));
+			map[12]->moveTileMap(glm::vec2(0, -6720));
 			break;
 		case 1:
 			map[0]->moveTileMap(glm::vec2(0, 560));
@@ -345,6 +538,14 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, -560));
 			map[3]->moveTileMap(glm::vec2(0, -1120));
 			map[4]->moveTileMap(glm::vec2(0, -1680));
+			map[5]->moveTileMap(glm::vec2(0, -2240));
+			map[6]->moveTileMap(glm::vec2(0, -2800));
+			map[7]->moveTileMap(glm::vec2(0, -3360));
+			map[8]->moveTileMap(glm::vec2(0, -3920));
+			map[9]->moveTileMap(glm::vec2(0, -4480));
+			map[10]->moveTileMap(glm::vec2(0, -5040));
+			map[11]->moveTileMap(glm::vec2(0, -5600));
+			map[12]->moveTileMap(glm::vec2(0, -6160));
 			break;
 		case 2:
 			map[0]->moveTileMap(glm::vec2(0, 1120));
@@ -352,6 +553,14 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 0));
 			map[3]->moveTileMap(glm::vec2(0, -560));
 			map[4]->moveTileMap(glm::vec2(0, -1120));
+			map[5]->moveTileMap(glm::vec2(0, -1680));
+			map[6]->moveTileMap(glm::vec2(0, -2240));
+			map[7]->moveTileMap(glm::vec2(0, -2800));
+			map[8]->moveTileMap(glm::vec2(0, -3360));
+			map[9]->moveTileMap(glm::vec2(0, -3920));
+			map[10]->moveTileMap(glm::vec2(0, -4480));
+			map[11]->moveTileMap(glm::vec2(0, -5040));
+			map[12]->moveTileMap(glm::vec2(0, -5600));
 			break;
 		case 3:
 			map[0]->moveTileMap(glm::vec2(0, 1680));
@@ -359,6 +568,149 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 560));
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
+			map[5]->moveTileMap(glm::vec2(0, -1120));
+			map[6]->moveTileMap(glm::vec2(0, -1680));
+			map[7]->moveTileMap(glm::vec2(0, -2240));
+			map[8]->moveTileMap(glm::vec2(0, -2800));
+			map[9]->moveTileMap(glm::vec2(0, -3360));
+			map[10]->moveTileMap(glm::vec2(0, -3920));
+			map[11]->moveTileMap(glm::vec2(0, -4480));
+			map[12]->moveTileMap(glm::vec2(0, -5040));
+			break;
+		case 4:
+			map[0]->moveTileMap(glm::vec2(0, 2240));
+			map[1]->moveTileMap(glm::vec2(0, 1680));
+			map[2]->moveTileMap(glm::vec2(0, 1120));
+			map[3]->moveTileMap(glm::vec2(0, 560));
+			map[4]->moveTileMap(glm::vec2(0, 0));
+			map[5]->moveTileMap(glm::vec2(0, -560));
+			map[6]->moveTileMap(glm::vec2(0, -1120));
+			map[7]->moveTileMap(glm::vec2(0, -1680));
+			map[8]->moveTileMap(glm::vec2(0, -2240));
+			map[9]->moveTileMap(glm::vec2(0, -2800));
+			map[10]->moveTileMap(glm::vec2(0, -3360));
+			map[11]->moveTileMap(glm::vec2(0, -3920));
+			map[12]->moveTileMap(glm::vec2(0, -4480));
+			break;
+		case 5:
+			map[0]->moveTileMap(glm::vec2(0, 2800));
+			map[1]->moveTileMap(glm::vec2(0, 2240));
+			map[2]->moveTileMap(glm::vec2(0, 1680));
+			map[3]->moveTileMap(glm::vec2(0, 1120));
+			map[4]->moveTileMap(glm::vec2(0, 560));
+			map[5]->moveTileMap(glm::vec2(0, 0));
+			map[6]->moveTileMap(glm::vec2(0, -560));
+			map[7]->moveTileMap(glm::vec2(0, -1120));
+			map[8]->moveTileMap(glm::vec2(0, -1680));
+			map[8]->moveTileMap(glm::vec2(0, -2240));
+			map[8]->moveTileMap(glm::vec2(0, -2800));
+			map[8]->moveTileMap(glm::vec2(0, -3360));
+			map[8]->moveTileMap(glm::vec2(0, -3920));
+			break;
+		case 6:
+			map[0]->moveTileMap(glm::vec2(0, 3360));
+			map[1]->moveTileMap(glm::vec2(0, 2800));
+			map[2]->moveTileMap(glm::vec2(0, 2240));
+			map[3]->moveTileMap(glm::vec2(0, 1680));
+			map[4]->moveTileMap(glm::vec2(0, 1120));
+			map[5]->moveTileMap(glm::vec2(0, 560));
+			map[6]->moveTileMap(glm::vec2(0, 0));
+			map[7]->moveTileMap(glm::vec2(0, -560));
+			map[8]->moveTileMap(glm::vec2(0, -1120));
+			map[9]->moveTileMap(glm::vec2(0, -1680));
+			map[10]->moveTileMap(glm::vec2(0, -2240));
+			map[11]->moveTileMap(glm::vec2(0, -2800));
+			map[12]->moveTileMap(glm::vec2(0, -3360));
+			break;
+		case 7:
+			map[0]->moveTileMap(glm::vec2(0, 3920));
+			map[1]->moveTileMap(glm::vec2(0, 3360));
+			map[2]->moveTileMap(glm::vec2(0, 2800));
+			map[3]->moveTileMap(glm::vec2(0, 2240));
+			map[4]->moveTileMap(glm::vec2(0, 1680));
+			map[5]->moveTileMap(glm::vec2(0, 1120));
+			map[6]->moveTileMap(glm::vec2(0, 560));
+			map[7]->moveTileMap(glm::vec2(0, 0));
+			map[8]->moveTileMap(glm::vec2(0, -560));
+			map[9]->moveTileMap(glm::vec2(0, -1120));
+			map[10]->moveTileMap(glm::vec2(0, -1680));
+			map[11]->moveTileMap(glm::vec2(0, -2240));
+			map[12]->moveTileMap(glm::vec2(0, -2800));
+			break;
+		case 8:
+			map[0]->moveTileMap(glm::vec2(0, 4480));
+			map[1]->moveTileMap(glm::vec2(0, 3920));
+			map[2]->moveTileMap(glm::vec2(0, 3360));
+			map[3]->moveTileMap(glm::vec2(0, 2800));
+			map[4]->moveTileMap(glm::vec2(0, 2240));
+			map[5]->moveTileMap(glm::vec2(0, 1680));
+			map[6]->moveTileMap(glm::vec2(0, 1120));
+			map[7]->moveTileMap(glm::vec2(0, 560));
+			map[8]->moveTileMap(glm::vec2(0, 0));
+			map[9]->moveTileMap(glm::vec2(0, -560));
+			map[10]->moveTileMap(glm::vec2(0, -1120));
+			map[11]->moveTileMap(glm::vec2(0, -1680));
+			map[12]->moveTileMap(glm::vec2(0, -2240));
+			break;
+		case 9:
+			map[0]->moveTileMap(glm::vec2(0, 5040));
+			map[1]->moveTileMap(glm::vec2(0, 4480));
+			map[2]->moveTileMap(glm::vec2(0, 3920));
+			map[3]->moveTileMap(glm::vec2(0, 3360));
+			map[4]->moveTileMap(glm::vec2(0, 2800));
+			map[5]->moveTileMap(glm::vec2(0, 2240));
+			map[6]->moveTileMap(glm::vec2(0, 1680));
+			map[7]->moveTileMap(glm::vec2(0, 1120));
+			map[8]->moveTileMap(glm::vec2(0, 560));
+			map[9]->moveTileMap(glm::vec2(0, 0));
+			map[10]->moveTileMap(glm::vec2(0, -560));
+			map[11]->moveTileMap(glm::vec2(0, -1120));
+			map[12]->moveTileMap(glm::vec2(0, -1680));
+			break;
+		case 10:
+			map[0]->moveTileMap(glm::vec2(0, 5600));
+			map[1]->moveTileMap(glm::vec2(0, 5040));
+			map[2]->moveTileMap(glm::vec2(0, 4480));
+			map[3]->moveTileMap(glm::vec2(0, 3920));
+			map[4]->moveTileMap(glm::vec2(0, 3360));
+			map[5]->moveTileMap(glm::vec2(0, 2800));
+			map[6]->moveTileMap(glm::vec2(0, 2240));
+			map[7]->moveTileMap(glm::vec2(0, 1680));
+			map[8]->moveTileMap(glm::vec2(0, 1120));
+			map[9]->moveTileMap(glm::vec2(0, 560));
+			map[10]->moveTileMap(glm::vec2(0, 0));
+			map[11]->moveTileMap(glm::vec2(0, -560));
+			map[12]->moveTileMap(glm::vec2(0, -1120));
+			break;
+		case 11:
+			map[0]->moveTileMap(glm::vec2(0, 6160));
+			map[1]->moveTileMap(glm::vec2(0, 5600));
+			map[2]->moveTileMap(glm::vec2(0, 5040));
+			map[3]->moveTileMap(glm::vec2(0, 4480));
+			map[4]->moveTileMap(glm::vec2(0, 3920));
+			map[5]->moveTileMap(glm::vec2(0, 3360));
+			map[6]->moveTileMap(glm::vec2(0, 2800));
+			map[7]->moveTileMap(glm::vec2(0, 2240));
+			map[8]->moveTileMap(glm::vec2(0, 1680));
+			map[9]->moveTileMap(glm::vec2(0, 1120));
+			map[10]->moveTileMap(glm::vec2(0, 560));
+			map[11]->moveTileMap(glm::vec2(0, 0));
+			map[12]->moveTileMap(glm::vec2(0, -560));
+			break;
+		case 12:
+			map[0]->moveTileMap(glm::vec2(0, 6720));
+			map[1]->moveTileMap(glm::vec2(0, 6160));
+			map[2]->moveTileMap(glm::vec2(0, 5600));
+			map[3]->moveTileMap(glm::vec2(0, 5040));
+			map[4]->moveTileMap(glm::vec2(0, 4480));
+			map[5]->moveTileMap(glm::vec2(0, 3920));
+			map[6]->moveTileMap(glm::vec2(0, 3360));
+			map[7]->moveTileMap(glm::vec2(0, 2800));
+			map[8]->moveTileMap(glm::vec2(0, 2240));
+			map[9]->moveTileMap(glm::vec2(0, 1680));
+			map[10]->moveTileMap(glm::vec2(0, 1120));
+			map[11]->moveTileMap(glm::vec2(0, 560));
+			map[12]->moveTileMap(glm::vec2(0, 0));
 			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));

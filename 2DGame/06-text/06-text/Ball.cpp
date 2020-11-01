@@ -72,7 +72,7 @@ void Ball::update(int deltaTime) {
 	else {
 
 		if (posBall.y > 450) {
-			if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4) {
+			if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4 || Game::instance().getCurrentRoom() == 5) {
 				if (Game::instance().getGodMode()) {
 					direction.y = -direction.y;
 				}
