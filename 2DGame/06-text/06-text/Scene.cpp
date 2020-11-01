@@ -45,6 +45,7 @@ void Scene::init()
 	haveKey[2] = false;
 	haveKey[3] = false;
 	haveKey[4] = false;
+	haveKey[5] = false;
 	currentRoom = 0;
 	lives = 4;
 	
@@ -71,16 +72,19 @@ void Scene::init()
 	map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
 	map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
 	map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
+	map[5] = TileMap::createTileMap("levels/02-01.txt", glm::vec2(0, -2800), texProgram);
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
 	map[3]->setShaderProgram(texProgram);
 	map[4]->setShaderProgram(texProgram);
+	map[5]->setShaderProgram(texProgram);
 	map[0]->setSoundEngine(soundEngine);
 	map[1]->setSoundEngine(soundEngine);
 	map[2]->setSoundEngine(soundEngine);
 	map[3]->setSoundEngine(soundEngine);
 	map[4]->setSoundEngine(soundEngine);
+	map[5]->setSoundEngine(soundEngine);
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -133,7 +137,7 @@ void Scene::update(int deltaTime)
 
 	if (Game::instance().getKey('p')) {
 		Game::instance().keyReleased('p');
-		if (currentRoom < 4) {
+		if (currentRoom < 5) {
 			nextRoom();
 			ball->setDirection(glm::vec2(ball->getDirection().x, -abs(ball->getDirection().y)));
 		}
@@ -166,6 +170,7 @@ void Scene::render()
 	map[2]->render();
 	map[3]->render();
 	map[4]->render();
+	map[5]->render();
 	player->render();
 	ball->render();
 	if (state == BOSS_FIGHT) {
@@ -277,6 +282,7 @@ void Scene::nextRoom() {
 			map[2]->moveTileMap(glm::vec2(0, -560));
 			map[3]->moveTileMap(glm::vec2(0, -1120));
 			map[4]->moveTileMap(glm::vec2(0, -1680));
+			map[5]->moveTileMap(glm::vec2(0, -2240));
 			break;
 		case 2:
 			map[0]->moveTileMap(glm::vec2(0, 1120));
@@ -284,6 +290,7 @@ void Scene::nextRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 0));
 			map[3]->moveTileMap(glm::vec2(0, -560));
 			map[4]->moveTileMap(glm::vec2(0, -1120));
+			map[5]->moveTileMap(glm::vec2(0, -1680));
 			break;
 		case 3:
 			map[0]->moveTileMap(glm::vec2(0, 1680));
@@ -291,6 +298,7 @@ void Scene::nextRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 560));
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
+			map[5]->moveTileMap(glm::vec2(0, -1120));
 			break;
 		case 4:
 			map[0]->moveTileMap(glm::vec2(0, 2240));
@@ -298,8 +306,17 @@ void Scene::nextRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 1120));
 			map[3]->moveTileMap(glm::vec2(0, 560));
 			map[4]->moveTileMap(glm::vec2(0, 0));
-			startBossFight();
+			map[5]->moveTileMap(glm::vec2(0,-560));
+			
 			break;
+		case 5:
+			map[0]->moveTileMap(glm::vec2(0, 2800));
+			map[1]->moveTileMap(glm::vec2(0, 2240));
+			map[2]->moveTileMap(glm::vec2(0, 1680));
+			map[3]->moveTileMap(glm::vec2(0, 1120));
+			map[4]->moveTileMap(glm::vec2(0, 560));
+			map[5]->moveTileMap(glm::vec2(0, 0));
+
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	if (ball->getSticky()) {
