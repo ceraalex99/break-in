@@ -68,6 +68,8 @@ public:
 
 	void selectLevel(int level);
 
+	void nextLevel();
+
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render

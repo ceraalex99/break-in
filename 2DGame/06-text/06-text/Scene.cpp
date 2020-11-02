@@ -74,7 +74,7 @@ void Scene::init()
 		map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
 		map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
 		map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
-		map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel1.txt", glm::vec2(0, -2240), texProgram);
 	}
 
 	else if (currentBank == 2) {
@@ -82,7 +82,7 @@ void Scene::init()
 		map[1] = TileMap::createTileMap("levels/02-02.txt", glm::vec2(0, -560), texProgram);
 		map[2] = TileMap::createTileMap("levels/02-03.txt", glm::vec2(0, -1120), texProgram);
 		map[3] = TileMap::createTileMap("levels/02-bonus.txt", glm::vec2(0, -1680), texProgram);
-		map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel2.txt", glm::vec2(0, -2240), texProgram);
 	}
 	
 	else {
@@ -90,7 +90,7 @@ void Scene::init()
 		map[1] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -560), texProgram);
 		map[2] = TileMap::createTileMap("levels/03-03.txt", glm::vec2(0, -1120), texProgram);
 		map[3] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -1680), texProgram);
-		map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel3.txt", glm::vec2(0, -2240), texProgram);
 	}
 
 	map[0]->setShaderProgram(texProgram);
@@ -322,8 +322,11 @@ void Scene::nextRoom() {
 			map[1]->moveTileMap(glm::vec2(0, 1680));
 			map[2]->moveTileMap(glm::vec2(0, 1120));
 			map[3]->moveTileMap(glm::vec2(0, 560));
-			map[4]->moveTileMap(glm::vec2(0, 0));			
+			map[4]->moveTileMap(glm::vec2(0, 0));
+			//startAnim();
 			break;
+		case 5:
+			Game::instance().nextLevel();
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	if (ball->getSticky()) {
@@ -442,3 +445,10 @@ void Scene::startBossFight() {
 int Scene::getState() {
 	return state;
 }
+
+/*void Scene::startAnim() {
+	ball->stop();
+	ball->setSticky(true);
+	player->startAnim();
+	glm::vec2 posPlayer = player->getPosition();
+}*/

@@ -23,7 +23,7 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 
-	speed = 4;
+	speed = 6;
 	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 }
@@ -33,7 +33,6 @@ void Ball::update(int deltaTime) {
 	posBall += direction * speed;
 
 	if (sticky) {
-		speed = 6;
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			posBall.x -= speed;
 			if (posBall.x < 34) {
@@ -160,7 +159,7 @@ void Ball::stop() {
 
 void Ball::reset(const glm::vec2 &pos) {
 	sticky = true;
-	speed = 4;
+	speed = 6;
 	direction = glm::vec2(0.f, 0.f);
 	posBall = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));

@@ -53,6 +53,7 @@ public:
 	int getCurrentRoom();
 	void startBossFight();
 	int getState();
+	//void startAnim();
 private:
 	void initShaders();
 

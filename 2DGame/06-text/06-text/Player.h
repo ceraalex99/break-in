@@ -28,6 +28,8 @@ public:
 
 	void checkAnimation(const glm::vec2 &posBall);
 
+	//void startAnim();
+
 private:
 
 	glm::ivec2 tileMapDispl, posPlayer;

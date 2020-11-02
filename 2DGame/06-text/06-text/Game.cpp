@@ -144,6 +144,14 @@ void Game::selectLevel(int level) {
 	scene.init();
 }
 
+void Game::nextLevel() {
+	currentBank += 1;
+	scene.setSoundEngine(soundEngine);
+	gameState = 4;
+	scene.init();
+}
+
+
 void Game::catchKey(){
 	scene.catchKey();
 }

@@ -6,7 +6,7 @@
 #include "Game.h"
 
 enum playerAnims {
-	UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT, UPLEFT, IDLE, DEAD
+	UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT, UPLEFT, IDLE, DEAD, SUSPICIOUS
 };
 
 Player::Player()
@@ -21,7 +21,7 @@ Player::~Player()
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	spritesheet.loadFromFile("images/playerSprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.25, 0.25), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(10);
+	sprite->setNumberAnimations(11);
 	
 	sprite->setAnimationSpeed(IDLE, 8);
 	sprite->addKeyframe(IDLE, glm::vec2(0.25f, 0.f));
@@ -55,6 +55,10 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->addKeyframe(DEAD, glm::vec2(0.5f, 0.5f));
 	sprite->addKeyframe(DEAD, glm::vec2(0.75f, 0.5f));
 	sprite->addKeyframe(DEAD, glm::vec2(0.75f, 0.f));
+
+	sprite->setAnimationSpeed(SUSPICIOUS,2);
+	sprite->addKeyframe(SUSPICIOUS, glm::vec2(0.75f, 0.f));
+	sprite->addKeyframe(SUSPICIOUS, glm::vec2(0.5f,0.f));
 
 	sprite->changeAnimation(IDLE);
 	tileMapDispl = tileMapPos;
@@ -197,3 +201,11 @@ void Player::checkAnimation(const glm::vec2 &posBall) {
 		else sprite->changeAnimation(IDLE);
 	}
 }
+
+/*void Player::startAnim() {
+	speed = 0;
+	sprite->changeAnimation(SUSPICIOUS);
+	while (posPlayer.y > 5) {
+		posPlayer.y -= 10;
+	}
+}*/
