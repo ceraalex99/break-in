@@ -1,9 +1,152 @@
-﻿  Scene.cpp
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(379): error C2360: la inicialización de 'texCoords' se omite en la etiqueta 'case'
-  d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(376): note: vea la declaración de 'texCoords'
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(379): error C2360: la inicialización de 'geom' se omite en la etiqueta 'case'
-  d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(375): note: vea la declaración de 'geom'
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(430): error C2360: la inicialización de 'texCoords' se omite en la etiqueta 'case'
-  d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(427): note: vea la declaración de 'texCoords'
-d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(430): error C2360: la inicialización de 'geom' se omite en la etiqueta 'case'
-  d:\vj\breakin\2dgame\06-text\06-text\scene.cpp(426): note: vea la declaración de 'geom'
+﻿  Ball.cpp
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(44): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(46): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(49): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(51): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(54): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(56): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(70): warning C4244: '-=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(76): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(88): warning C4244: '-=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(91): warning C4244: '+=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(93): warning C4244: '-=': conversión de 'float' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(131): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(135): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(219): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(224): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\ball.cpp(248): warning C4244: '+=': conversión de 'T' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  Boss.cpp
+d:\vj\breakin\2dgame\06-text\06-text\boss.cpp(124): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+  Credits.cpp
+  Game.cpp
+  Instructions.cpp
+  LevelSelector.cpp
+  main.cpp
+  Menu.cpp
+  Player.cpp
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(78): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(80): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(83): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(85): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(88): warning C4244: '-=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+d:\vj\breakin\2dgame\06-text\06-text\player.cpp(90): warning C4244: '+=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+  Scene.cpp
+  TileMap.cpp
+  Generando código...
+SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(stb_image_aug.obj)' o en 'D:\vj\breakin\2DGame\06-text\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  06-text.vcxproj -> D:\vj\breakin\2DGame\06-text\Debug\06-text.exe

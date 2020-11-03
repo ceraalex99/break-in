@@ -72,8 +72,6 @@ public:
 
 	void nextLevel();
 
-	void win();
-
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render

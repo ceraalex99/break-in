@@ -534,7 +534,8 @@ int Scene::getState() {
 	return state;
 }
 
-void Scene::startAnim() {
+void Scene::startAnim() {
+
 	//ball->stop();
 	ball->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 8, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
