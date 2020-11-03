@@ -45,6 +45,7 @@ void Scene::init()
 	haveKey[2] = false;
 	haveKey[3] = false;
 	haveKey[4] = false;
+
 	currentRoom = 0;
 	lives = 4;
 	
@@ -68,31 +69,55 @@ void Scene::init()
 	letters = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	lettersTexture.setMagFilter(GL_NEAREST);
 
-	map[0] = TileMap::createTileMap("levels/01-01.txt", glm::vec2(0, 0), texProgram);
-	map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
-	map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
-	map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
-	map[4] = TileMap::createTileMap("levels/01-boss.txt", glm::vec2(0, -2240), texProgram);
+	currentBank = Game::instance().getCurrentBank();
+
+	if (currentBank == 1) {
+		map[0] = TileMap::createTileMap("levels/01-01.txt", glm::vec2(0, 0), texProgram);
+		map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
+		map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
+		map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel1.txt", glm::vec2(0, -2240), texProgram);
+	}
+
+	else if (currentBank == 2) {
+		map[0] = TileMap::createTileMap("levels/02-01.txt", glm::vec2(0, 0), texProgram);
+		map[1] = TileMap::createTileMap("levels/02-02.txt", glm::vec2(0, -560), texProgram);
+		map[2] = TileMap::createTileMap("levels/02-03.txt", glm::vec2(0, -1120), texProgram);
+		map[3] = TileMap::createTileMap("levels/02-bonus.txt", glm::vec2(0, -1680), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel2.txt", glm::vec2(0, -2240), texProgram);
+	}
+	
+	else {
+		map[0] = TileMap::createTileMap("levels/03-01.txt", glm::vec2(0, 0), texProgram);
+		map[1] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -560), texProgram);
+		map[2] = TileMap::createTileMap("levels/03-03.txt", glm::vec2(0, -1120), texProgram);
+		map[3] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -1680), texProgram);
+		map[4] = TileMap::createTileMap("levels/emptyLevel3.txt", glm::vec2(0, -2240), texProgram);
+	}
+
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
 	map[3]->setShaderProgram(texProgram);
 	map[4]->setShaderProgram(texProgram);
+	
 	map[0]->setSoundEngine(soundEngine);
 	map[1]->setSoundEngine(soundEngine);
 	map[2]->setSoundEngine(soundEngine);
 	map[3]->setSoundEngine(soundEngine);
 	map[4]->setSoundEngine(soundEngine);
+	
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setTileMap(map[0]);
-
+	
 	ball = new Ball();
 	ball->init(glm::ivec2(0, 0), texProgram);
 	ball->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
 	ball->setTileMap(map[0]);
 	ball->setPlayer(player);
+
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -146,7 +171,7 @@ void Scene::update(int deltaTime)
 
 	if (Game::instance().getKey('p')) {
 		Game::instance().keyReleased('p');
-		if (currentRoom < 4) {
+		if (currentRoom < 5) {
 			nextRoom();
 			ball->setDirection(glm::vec2(ball->getDirection().x, -abs(ball->getDirection().y)));
 		}
@@ -213,6 +238,7 @@ void Scene::render()
 	map[2]->render();
 	map[3]->render();
 	map[4]->render();
+	
 	player->render();
 	ball->render();
 	if (currentRoom == 4 && (state == BOSS_FIGHT || state == BOSS_INTRO || state == LOSE_LIFE)) {
@@ -350,6 +376,8 @@ void Scene::nextRoom() {
 			glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f/480.f), glm::vec2(1.f, 1.f) };
 			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 			break;
+		case 5:
+			Game::instance().nextLevel();
 	}
 	player->setTileMap(map[currentRoom]);
 	ball->setTileMap(map[currentRoom]);
@@ -397,6 +425,13 @@ void Scene::previousRoom() {
 			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(480.f, 480.f) };
 			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			break;
+		case 4:
+			map[0]->moveTileMap(glm::vec2(0, 2240));
+			map[1]->moveTileMap(glm::vec2(0, 1680));
+			map[2]->moveTileMap(glm::vec2(0, 1120));
+			map[3]->moveTileMap(glm::vec2(0, 560));
+			map[4]->moveTileMap(glm::vec2(0, 0));
 			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
@@ -485,3 +520,10 @@ int Scene::getState() {
 void Scene::win(){
 	state = GAME_WIN;
 }
+
+/*void Scene::startAnim() {
+	ball->stop();
+	ball->setSticky(true);
+	player->startAnim();
+	glm::vec2 posPlayer = player->getPosition();
+}*/

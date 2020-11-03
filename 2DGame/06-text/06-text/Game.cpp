@@ -24,7 +24,7 @@ bool Game::update(int deltaTime)
 {
 	switch (gameState) {
 		case 0:
-			scene.update(deltaTime);
+			levelSelector.update(deltaTime);
 			break;
 		case 1:
 			instructions.update(deltaTime);
@@ -35,6 +35,8 @@ bool Game::update(int deltaTime)
 		case 3:
 			menu.update(deltaTime);
 			break;
+		case 4:
+			scene.update(deltaTime);
 	}
 	
 	return bPlay;
@@ -46,7 +48,7 @@ void Game::render()
 
 	switch (gameState) {
 	case 0:
-		scene.render();
+		levelSelector.render();
 		break;
 	case 1:
 		instructions.render();
@@ -57,6 +59,8 @@ void Game::render()
 	case 3:
 		menu.render();
 		break;
+	case 4:
+		scene.render();
 	}
 }
 
@@ -118,9 +122,7 @@ void Game::startAction(int action) {
 		case 0:
 			points = 0;
 			money = 0;
-			currentBank = 1;
-			scene.setSoundEngine(soundEngine);
-			scene.init();
+			levelSelector.init();
 			break;
 		case 1:
 			instructions.init();
@@ -133,6 +135,20 @@ void Game::startAction(int action) {
 			break;
 	}
 	gameState = action;
+}
+
+void Game::selectLevel(int level) {
+	currentBank = level+1;
+	scene.setSoundEngine(soundEngine);
+	gameState = 4;
+	scene.init();
+}
+
+void Game::nextLevel() {
+	currentBank += 1;
+	scene.setSoundEngine(soundEngine);
+	gameState = 4;
+	scene.init();
 }
 
 

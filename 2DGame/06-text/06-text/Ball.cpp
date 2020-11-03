@@ -114,6 +114,8 @@ void Ball::update(int deltaTime) {
 					boss->hit();
 				}
 			}
+
+			player->checkAnimation(posBall);
 		}
 
 	}

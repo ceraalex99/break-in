@@ -55,6 +55,7 @@ public:
 	int getState();
 	void win();
 	
+	//void startAnim();
 private:
 	void initShaders();
 
@@ -81,6 +82,7 @@ private:
 	Quad *blackBackground;
 	
 	Quad *bossLifeBar;
+	int currentBank;
 };
 
 
