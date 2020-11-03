@@ -17,6 +17,9 @@ public:
 	void setSoundEngine(irrklang::ISoundEngine * eng);
 	glm::ivec2 getPosition();
 	void hit();
+	int getLife();
+	bool getHitting();
+	void die();
 	void render();
 
 private:
@@ -28,7 +31,8 @@ private:
 	glm::ivec2 finalPos;
 	irrklang::ISoundEngine* soundEngine;
 	bool playedIntro;
-	int currentFrame, startAnimFrame;
+	int currentFrame, startAnimFrame, startAnimTime;
 	bool hitting;
+	int lives;
 };
 #endif
