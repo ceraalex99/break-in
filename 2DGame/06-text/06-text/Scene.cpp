@@ -64,10 +64,17 @@ void Scene::init()
 	meshTexture.loadFromFile("images/mesh.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	meshTexture.setMagFilter(GL_NEAREST);
 
+	geom[1] = glm::vec2(480.f, 480.f);
+	endLevel = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	endLevelTexture.loadFromFile("images/endLevel.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	endLevelTexture.setMagFilter(GL_NEAREST);
+
 	geom[1] = glm::vec2(160.f, 480.f);
 	lettersTexture.loadFromFile("images/letters.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	letters = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	lettersTexture.setMagFilter(GL_NEAREST);
+
+
 
 	currentBank = Game::instance().getCurrentBank();
 
@@ -92,7 +99,7 @@ void Scene::init()
 		map[1] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -560), texProgram);
 		map[2] = TileMap::createTileMap("levels/03-03.txt", glm::vec2(0, -1120), texProgram);
 		map[3] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -1680), texProgram);
-		map[4] = TileMap::createTileMap("levels/emptyLevel3.txt", glm::vec2(0, -2240), texProgram);
+		map[4] = TileMap::createTileMap("levels/bossLevel.txt", glm::vec2(0, -2240), texProgram);
 	}
 
 	map[0]->setShaderProgram(texProgram);
@@ -197,7 +204,7 @@ void Scene::render()
 	simpleProgram.setUniformMatrix4f("modelview", modelview);
 
 	blackBackground->render();
-	if (currentRoom == 4 && boss->getLife() != 0) {
+	if (currentRoom == 4 && currentBank == 3 && boss->getLife() != 0) {
 		int bossLife = boss->getLife();
 		bool firstPhase;
 		if (bossLife > 10) {
@@ -232,7 +239,8 @@ void Scene::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	
-	mesh->render(meshTexture);
+	if(currentRoom < 4 || currentBank == 3) mesh->render(meshTexture);
+	else endLevel->render(endLevelTexture);
 	map[0]->render();
 	map[1]->render();
 	map[2]->render();
@@ -371,10 +379,13 @@ void Scene::nextRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 1120));
 			map[3]->moveTileMap(glm::vec2(0, 560));
 			map[4]->moveTileMap(glm::vec2(0, 0));
-			startBossFight();
-			glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
-			glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f/480.f), glm::vec2(1.f, 1.f) };
-			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			if(currentBank < 3) startAnim();
+			else {
+				startBossFight();
+				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
+				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			}
 			break;
 		case 5:
 			Game::instance().nextLevel();
@@ -423,9 +434,14 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 560));
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
-			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(480.f, 480.f) };
-			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			if (currentBank < 3) startAnim();
+			else {
+				startBossFight();
+				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
+				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			}
+			break;
 			break;
 		case 4:
 			map[0]->moveTileMap(glm::vec2(0, 2240));
@@ -518,14 +534,13 @@ int Scene::getState() {
 	return state;
 }
 
+void Scene::startAnim() {
+	//ball->stop();
+	ball->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 8, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
+	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
+	player->setAnimationPlayer();
+	ball->setAnimationBall();
+}
 void Scene::win(){
 	state = GAME_WIN;
 }
-
-/*void Scene::startAnim() {
-
-	ball->stop();
-	ball->setSticky(true);
-	player->startAnim();
-	glm::vec2 posPlayer = player->getPosition();
-}*/

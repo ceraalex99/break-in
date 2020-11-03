@@ -37,6 +37,8 @@ public:
 
 	void setSticky(bool s);
 
+	void setAnimationBall();
+
 private:
 	glm::ivec2 tileMapDispl, posBall;
 	Texture spritesheet;
@@ -47,6 +49,7 @@ private:
 	glm::vec2 direction;
 	float speed;
 	bool sticky;
-
+	bool animation;
+	int tiempo;
 };
 #endif

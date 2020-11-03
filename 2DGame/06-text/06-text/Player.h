@@ -28,7 +28,7 @@ public:
 
 	void checkAnimation(const glm::vec2 &posBall);
 
-	//void startAnim();
+	void setAnimationPlayer();
 
 private:
 
@@ -37,6 +37,8 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	int speed;
+	bool animation;
+	int tiempo;
 	
 
 };

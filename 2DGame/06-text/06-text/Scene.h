@@ -55,7 +55,7 @@ public:
 	int getState();
 	void win();
 	
-	//void startAnim();
+	void startAnim();
 private:
 	void initShaders();
 
@@ -70,8 +70,8 @@ private:
 	TileMap *map[5];
 	bool haveKey[5];
 	Ball *ball;
-	Texture meshTexture, lettersTexture;
-	TexturedQuad *mesh, *letters;
+	Texture meshTexture, lettersTexture, endLevelTexture;
+	TexturedQuad *mesh, *letters, *endLevel;
 	int currentRoom;
 	stringstream pointsStr, moneyStr, livesStr, bankStr, roomStr;
 	Boss *boss;
