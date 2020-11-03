@@ -23,7 +23,7 @@ void Credits::init() {
 	background = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	if (!text.init("fonts/8-bit-pusab.ttf"))
 		cout << "Could not load font" << endl;
-	creditsImage.loadFromFile("images/breakin.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	creditsImage.loadFromFile("images/credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	currentTime = 0.f;
 }
 
@@ -40,8 +40,6 @@ void Credits::render() {
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	background->render(creditsImage);
-
-	text.render("PRESS ESC TO EXIT TO MENU SCREEN", glm::vec2(240, 450), 10, glm::vec4(1.f, 1.f, 1.f, 1.f));
 
 }
 
