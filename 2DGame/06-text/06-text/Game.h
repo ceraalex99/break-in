@@ -66,6 +66,8 @@ public:
 
 	int getSceneState();
 
+	void win();
+
 	void selectLevel(int level);
 
 	void nextLevel();

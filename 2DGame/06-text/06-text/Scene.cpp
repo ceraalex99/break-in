@@ -378,6 +378,7 @@ void Scene::nextRoom() {
 			break;
 		case 5:
 			Game::instance().nextLevel();
+			break;
 	}
 	player->setTileMap(map[currentRoom]);
 	ball->setTileMap(map[currentRoom]);
@@ -521,7 +522,8 @@ void Scene::win(){
 	state = GAME_WIN;
 }
 
-/*void Scene::startAnim() {
+/*void Scene::startAnim() {
+
 	ball->stop();
 	ball->setSticky(true);
 	player->startAnim();
