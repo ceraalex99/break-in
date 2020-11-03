@@ -99,7 +99,7 @@ void Scene::init()
 		map[1] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -560), texProgram);
 		map[2] = TileMap::createTileMap("levels/03-03.txt", glm::vec2(0, -1120), texProgram);
 		map[3] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -1680), texProgram);
-		map[4] = TileMap::createTileMap("levels/emptyLevel3.txt", glm::vec2(0, -2240), texProgram);
+		map[4] = TileMap::createTileMap("levels/bossLevel.txt", glm::vec2(0, -2240), texProgram);
 	}
 
 	map[0]->setShaderProgram(texProgram);
@@ -204,7 +204,7 @@ void Scene::render()
 	simpleProgram.setUniformMatrix4f("modelview", modelview);
 
 	blackBackground->render();
-	if (currentRoom == 4 && boss->getLife() != 0) {
+	if (currentRoom == 4 && currentBank == 3 && boss->getLife() != 0) {
 		int bossLife = boss->getLife();
 		bool firstPhase;
 		if (bossLife > 10) {
@@ -433,9 +433,14 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 560));
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
-			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(480.f, 480.f) };
-			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			if (currentBank < 3) startAnim();
+			else {
+				startBossFight();
+				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
+				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			}
+			break;
 			break;
 		case 4:
 			map[0]->moveTileMap(glm::vec2(0, 2240));
