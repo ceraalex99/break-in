@@ -20,30 +20,32 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	spritesheet.loadFromFile("images/ball.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 
-	tileMapDispl = tileMapPos;
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
+	sprite->setNumberAnimations(1);
+	sprite->setAnimationSpeed(0, 0);
+	sprite->addKeyframe(0, glm::vec2(0, 0));
 
-	speed = 4;
+	tileMapDispl = tileMapPos;
+
+	speed = 6;
 	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 }
 
 void Ball::update(int deltaTime) {
 	sprite->update(deltaTime);
-	posBall += direction * speed;
+	
 
 	if (sticky) {
-		speed = 6;
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
 			posBall.x -= speed;
 			if (posBall.x < 34) {
-				posBall.x += 6;
+				posBall.x += speed;
 			}
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 			posBall.x += speed;
 			if (posBall.x > 428) {
-				posBall.x -= 6;
+				posBall.x -= speed;
 			}
 		}
 		if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
@@ -51,25 +53,26 @@ void Ball::update(int deltaTime) {
 			sticky = false;
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-			posBall.y += 2;
+			posBall.y += speed/3;
 			if (posBall.y > 406) {
-				posBall.y -= 2;
+				posBall.y -= speed / 3;
 			}
 			else {
-				posBall.y += 2;
+				posBall.y += speed / 3;
 				if (posBall.y > 406) {
-					posBall.y -= 2;
+					posBall.y -= speed / 3;
 				}
 				else {
-					posBall.y += 2;
+					posBall.y += speed / 3;
 					if (posBall.y > 406) {
-						posBall.y -= 2;
+						posBall.y -= speed / 3;
 					}
 				}
 			}
 		}
 	}
 	else {
+		posBall += direction * speed;
 
 		if (posBall.y > 450) {
 			if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4) {
@@ -149,7 +152,7 @@ glm::vec2 Ball::getDirection() {
 }
 
 void Ball::setDirection(glm::vec2 dir) {
-	direction = normalize(dir);
+	direction = (dir);
 }
 
 void Ball::stop() {
@@ -158,7 +161,7 @@ void Ball::stop() {
 
 void Ball::reset(const glm::vec2 &pos) {
 	sticky = true;
-	speed = 4;
+	speed = 6;
 	direction = glm::vec2(0.f, 0.f);
 	posBall = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));

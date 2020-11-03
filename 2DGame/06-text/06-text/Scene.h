@@ -53,6 +53,8 @@ public:
 	int getCurrentRoom();
 	void startBossFight();
 	int getState();
+	void win();
+	
 private:
 	void initShaders();
 
@@ -74,8 +76,11 @@ private:
 	Boss *boss;
 
 	irrklang::ISoundEngine* soundEngine;
-	float loseTime;
+	float loseTime, startBossTime;
 	int lives;
+	Quad *blackBackground;
+	
+	Quad *bossLifeBar;
 };
 
 

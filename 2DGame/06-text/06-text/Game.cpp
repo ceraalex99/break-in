@@ -187,3 +187,7 @@ void Game::gainMoney(int mon) {
 int Game::getSceneState() {
 	return scene.getState();
 }
+
+void Game::win() {
+	scene.win();
+}

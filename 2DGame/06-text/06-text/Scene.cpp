@@ -11,7 +11,7 @@
 #define INIT_PLAYER_Y_TILES 20
 
 enum State {
-	PLAYING, GAME_OVER, GAME_WIN, LOSE_LIFE, BOSS_FIGHT
+	PLAYING, GAME_OVER, GAME_WIN, LOSE_LIFE, BOSS_FIGHT, BOSS_INTRO
 };
 
 State state;
@@ -51,6 +51,8 @@ void Scene::init()
 
 	initShaders();
 	
+	blackBackground = Quad::createQuad(0.f, 0.f, 640.f, 480.f, simpleProgram);
+	bossLifeBar = Quad::createQuad(0.f, 0.f, 44.f, 10.f, simpleProgram);
 	
 	arrows = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	arrowsTexture.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -70,7 +72,7 @@ void Scene::init()
 	map[1] = TileMap::createTileMap("levels/01-02.txt", glm::vec2(0, -560), texProgram);
 	map[2] = TileMap::createTileMap("levels/01-03.txt", glm::vec2(0, -1120), texProgram);
 	map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
-	map[4] = TileMap::createTileMap("levels/emptyLevel.txt", glm::vec2(0, -2240), texProgram);
+	map[4] = TileMap::createTileMap("levels/01-boss.txt", glm::vec2(0, -2240), texProgram);
 	map[0]->setShaderProgram(texProgram);
 	map[1]->setShaderProgram(texProgram);
 	map[2]->setShaderProgram(texProgram);
@@ -88,7 +90,7 @@ void Scene::init()
 
 	ball = new Ball();
 	ball->init(glm::ivec2(0, 0), texProgram);
-	ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
+	ball->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
 	ball->setTileMap(map[0]);
 	ball->setPlayer(player);
 
@@ -117,6 +119,14 @@ void Scene::update(int deltaTime)
 	if (state == BOSS_FIGHT) {
 		boss->update(deltaTime);
 	}
+	else if (state == BOSS_INTRO) {
+		ball->stop();
+		if (startBossTime + 4000 < currentTime) {
+			state = BOSS_FIGHT;
+			resetPlayer();
+		}
+		boss->update(deltaTime);
+	}
 	map[0]->update(deltaTime);
 	map[1]->update(deltaTime);
 	map[2]->update(deltaTime);
@@ -125,7 +135,11 @@ void Scene::update(int deltaTime)
 
 	if (state == LOSE_LIFE) {
 		if (loseTime + 2000 < currentTime) {
-			state = PLAYING;
+			if (currentRoom == 4) {
+				state = BOSS_FIGHT;
+			}
+			else
+				state = PLAYING;
 			resetPlayer();
 		}
 	}
@@ -151,7 +165,41 @@ void Scene::render()
 {
 	glm::mat4 modelview;
 
+	simpleProgram.use();
+	simpleProgram.setUniformMatrix4f("projection", projection);
+	simpleProgram.setUniform4f("color", 0.0f, 0.0f, 0.0f, 1.0f);
+	modelview = glm::mat4(1.0f);
+	simpleProgram.setUniformMatrix4f("modelview", modelview);
+
+	blackBackground->render();
+	if (currentRoom == 4 && boss->getLife() != 0) {
+		int bossLife = boss->getLife();
+		bool firstPhase;
+		if (bossLife > 10) {
+			bossLife -= 10;
+			firstPhase = true;
+		}
+		else
+			firstPhase = false;
+		for (int i = 1; i <= 10; ++i) {
+			if (bossLife >= i)
+				if(firstPhase)
+					simpleProgram.setUniform4f("color", 1.f, 0.5f, 0.f, 1.f);
+				else
+					simpleProgram.setUniform4f("color", 1.f, 0.f, 0.f, 1.f);
+			else if(bossLife == i-1  && boss->getHitting()) {
+				simpleProgram.setUniform4f("color", 1.f, 1.f, 1.f, 1.f);
+			}
+			else {
+				simpleProgram.setUniform4f("color", 0.f, 0.f, 0.f, 1.f);
+			}
+			modelview = glm::translate(glm::mat4(1.f), glm::vec3(44.f*i-22.f, 15.f, 0.f));
+			simpleProgram.setUniformMatrix4f("modelview", modelview);
+			bossLifeBar->render();
+		}
+	}
 	
+
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
@@ -167,7 +215,7 @@ void Scene::render()
 	map[4]->render();
 	player->render();
 	ball->render();
-	if (state == BOSS_FIGHT) {
+	if (currentRoom == 4 && (state == BOSS_FIGHT || state == BOSS_INTRO || state == LOSE_LIFE)) {
 		boss->render();
 	}
 
@@ -298,17 +346,22 @@ void Scene::nextRoom() {
 			map[3]->moveTileMap(glm::vec2(0, 560));
 			map[4]->moveTileMap(glm::vec2(0, 0));
 			startBossFight();
+			glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f/480.f), glm::vec2(1.f, 1.f) };
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 			break;
-	}
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
-	if (ball->getSticky()) {
-		ball->setPosition(glm::vec2(INIT_PLAYER_X_TILES*map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
-	}
-	else {
-		ball->setPosition(glm::vec2(ball->getPosition().x, 480));
 	}
 	player->setTileMap(map[currentRoom]);
 	ball->setTileMap(map[currentRoom]);
+	player->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
+	if (ball->getSticky() || currentRoom == 4) {
+		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
+	}
+	else {
+		ball->setPosition(glm::ivec2(ball->getPosition().x, 480));
+	}
+	
+	reloadRoom();
 }
 
 void Scene::previousRoom() {
@@ -341,12 +394,22 @@ void Scene::previousRoom() {
 			map[2]->moveTileMap(glm::vec2(0, 560));
 			map[3]->moveTileMap(glm::vec2(0, 0));
 			map[4]->moveTileMap(glm::vec2(0, -560));
+			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(480.f, 480.f) };
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 			break;
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
-	ball->setPosition(glm::vec2(ball->getPosition().x, 0));
 	player->setTileMap(map[currentRoom]);
 	ball->setTileMap(map[currentRoom]);
+	if (ball->getSticky()) {
+		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
+	}
+	else {
+		ball->setPosition(glm::vec2(ball->getPosition().x, 0));
+	}
+
+	reloadRoom();
 }
 
 void Scene::reloadMoney() {
@@ -366,7 +429,12 @@ void Scene::reloadLives() {
 
 void Scene::reloadRoom() {
 	roomStr.str(string());
-	roomStr << setfill('0') << setw(2) << currentRoom + 1 << endl;
+	if (currentRoom == 4) {
+		roomStr << "??" << endl;
+	}
+	else {
+		roomStr << setfill('0') << setw(2) << currentRoom + 1 << endl;
+	}
 }
 
 void Scene::reloadBank() {
@@ -397,16 +465,23 @@ int Scene::getCurrentRoom() {
 
 void Scene::startBossFight() {
 	soundEngine->stopAllSounds();
-	state = BOSS_FIGHT;
+	state = BOSS_INTRO;
+	player->stop();
+	startBossTime = currentTime;
 	boss = new Boss();
 	boss->setSoundEngine(soundEngine);
 	boss->init(glm::ivec2(0, 0), texProgram);
 	boss->setPosition(glm::vec2(180, -230));
-	boss->move(glm::vec2(180,0));
+	boss->move(glm::vec2(180,40));
 
 	ball->setBoss(boss);
+
 }
 
 int Scene::getState() {
 	return state;
+}
+
+void Scene::win(){
+	state = GAME_WIN;
 }
