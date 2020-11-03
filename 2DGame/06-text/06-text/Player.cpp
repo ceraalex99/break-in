@@ -64,18 +64,43 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	speed = 2;
+	animation = false;
+	tiempo = 0;
 }
 
 void Player::update(int deltaTime) {
 	sprite->update(deltaTime);
-
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-
-		posPlayer.x -= speed;
-		if (posPlayer.x < 22) {
-			posPlayer.x += speed;
+	if (animation) {
+		if (tiempo < 2000) {
+			tiempo += deltaTime;
 		}
 		else {
+			posPlayer.y -= 0.5;
+			if (posPlayer.y < 9) {
+				posPlayer.y += 0.5;
+			}
+			else {
+				posPlayer.y -= 0.5;
+				if (posPlayer.y < 9) {
+					posPlayer.y += 0.5;
+				}
+				else {
+					posPlayer.y -= 0.5;
+					if (posPlayer.y < 9) {
+						posPlayer.y += 0.5;
+					}
+				}
+			}
+			if (posPlayer.y < 10) {
+				animation = false;
+				sprite->changeAnimation(IDLE);
+			}
+		}
+		
+	}
+	else {
+		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
+
 			posPlayer.x -= speed;
 			if (posPlayer.x < 22) {
 				posPlayer.x += speed;
@@ -85,15 +110,15 @@ void Player::update(int deltaTime) {
 				if (posPlayer.x < 22) {
 					posPlayer.x += speed;
 				}
+				else {
+					posPlayer.x -= speed;
+					if (posPlayer.x < 22) {
+						posPlayer.x += speed;
+					}
+				}
 			}
 		}
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
-		posPlayer.x += speed;
-		if (posPlayer.x > 412) {
-			posPlayer.x -= speed;
-		}
-		else {
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
 			posPlayer.x += speed;
 			if (posPlayer.x > 412) {
 				posPlayer.x -= speed;
@@ -103,48 +128,53 @@ void Player::update(int deltaTime) {
 				if (posPlayer.x > 412) {
 					posPlayer.x -= speed;
 				}
+				else {
+					posPlayer.x += speed;
+					if (posPlayer.x > 412) {
+						posPlayer.x -= speed;
+					}
+				}
 			}
 		}
-	}
 
-	if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		posPlayer.y -= speed/2;
-		if (posPlayer.y < 40) {
-			posPlayer.y += speed/2;
-		}
-		else {
-			posPlayer.y -= speed/2;
+		if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+			posPlayer.y -= speed / 2;
 			if (posPlayer.y < 40) {
-				posPlayer.y += speed/2;
+				posPlayer.y += speed / 2;
 			}
 			else {
-				posPlayer.y -= speed/2;
+				posPlayer.y -= speed / 2;
 				if (posPlayer.y < 40) {
-					posPlayer.y += speed/2;
+					posPlayer.y += speed / 2;
+				}
+				else {
+					posPlayer.y -= speed / 2;
+					if (posPlayer.y < 40) {
+						posPlayer.y += speed / 2;
+					}
 				}
 			}
 		}
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		posPlayer.y += speed/2;
-		if (posPlayer.y > 432) {
-			posPlayer.y -= speed/2;
-		}
-		else {
-			posPlayer.y += speed/2;
+		else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+			posPlayer.y += speed / 2;
 			if (posPlayer.y > 432) {
-				posPlayer.y -= speed/2;
+				posPlayer.y -= speed / 2;
 			}
 			else {
-				posPlayer.y += speed/2;
+				posPlayer.y += speed / 2;
 				if (posPlayer.y > 432) {
-					posPlayer.y -= speed/2;
+					posPlayer.y -= speed / 2;
+				}
+				else {
+					posPlayer.y += speed / 2;
+					if (posPlayer.y > 432) {
+						posPlayer.y -= speed / 2;
+					}
 				}
 			}
+
 		}
-
 	}
-
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 
@@ -202,10 +232,7 @@ void Player::checkAnimation(const glm::vec2 &posBall) {
 	}
 }
 
-/*void Player::startAnim() {
-	speed = 0;
+void Player::setAnimationPlayer() {
+	animation = true;
 	sprite->changeAnimation(SUSPICIOUS);
-	while (posPlayer.y > 5) {
-		posPlayer.y -= 10;
-	}
-}*/
+}
