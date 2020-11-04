@@ -27,6 +27,7 @@ private:
 	Texture instructionsImage;
 	ShaderProgram texProgram;
 	TexturedQuad *background;
+	int pag;
 
 };
 #endif
