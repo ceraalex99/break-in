@@ -174,7 +174,7 @@ void Scene::update(int deltaTime)
 	map[4]->update(deltaTime);
 
 	if (state == LOSE_LIFE) {
-		if (loseTime + 2000 < currentTime) {
+		if (loseTime + 1500 < currentTime) {
 			if (currentRoom == 4) {
 				state = BOSS_FIGHT;
 			}
