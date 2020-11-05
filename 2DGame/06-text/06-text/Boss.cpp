@@ -19,6 +19,7 @@ Boss::~Boss()
 }
 
 void Boss::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
+	texProgram = shaderProgram;
 	spritesheet.loadFromFile("images/boss.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(120, 120), glm::vec2(0.2, 0.125), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(8);
@@ -66,12 +67,16 @@ void Boss::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->addKeyframe(DYING, glm::vec2(0.2f, 0.625f));
 
 	sprite->setAnimationSpeed(FIRST_PHASE_SHOT, 6);
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.6f, 0.125f));
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.8f, 0.125f));
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.f, 0.25f));
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.2f, 0.25f));
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.4f, 0.25f));
-	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.6f, 0.25f));
+	sprite->addKeyframe(FIRST_PHASE_SHOT, glm::vec2(0.f, 0.375f));
+	
+
+	sprite->setAnimationSpeed(SECOND_PHASE_SHOT, 6);
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.6f, 0.125f));
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.8f, 0.125f));
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.f, 0.25f));
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.2f, 0.25f));
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.4f, 0.25f));
+	sprite->addKeyframe(SECOND_PHASE_SHOT, glm::vec2(0.6f, 0.25f));
 
 
 
@@ -84,14 +89,29 @@ void Boss::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	playedIntro = false;
 	hitting = false;
 	lives = 20;
+	shotTimer = 0;
+	shooting = false;
+	secPhase = false;
 }
 
 void Boss::update(int deltaTime) {
 	currentTime += deltaTime;
+	shotTimer += deltaTime;
 	currentFrame++;
 	sprite->update(deltaTime);
+
+	if (!secPhase && shooting) {
+		shot1->update(deltaTime);
+	}
+	else if (secPhase && shooting) {
+		shot1->update(deltaTime);
+		shot2->update(deltaTime);
+		shot3->update(deltaTime);
+	}
+
 	if (movingState) {
 		if (sprite->animation() == FIRST_TO_SECOND) {
+			
 			if (posBoss.x > 180) {
 				posBoss.x -= 2;
 			}
@@ -120,17 +140,25 @@ void Boss::update(int deltaTime) {
 		}
 	}
 	else {
-		if (sprite->animation() != FIRST_TO_SECOND && sprite->animation() != DYING)
+		if (sprite->animation() != FIRST_TO_SECOND && sprite->animation() != DYING) {
 			posBoss.x = (180 * sin(atan(1) * 4 * currentTime / 2000.f)) + 180;
+			if (shotTimer >= 3000){
+				shotTimer = 0;
+				if ((sprite->animation() == FIRST_PHASE_IDLE || sprite->animation() == SECOND_PHASE_IDLE)) {
+					shoot();
+				}
+			}
+		}
 	}
 
 	if (sprite->animation() == FIRST_PHASE_HIT && currentFrame == startAnimFrame + 35) {
-		if (lives == 10) {
+		if (lives == 1) {
 			//parar el juego y darle epicidad
 			soundEngine->play2D("sounds/phaseChange.mp3");
 			sprite->changeAnimation(FIRST_TO_SECOND);
 			startAnimTime = currentTime;
 			movingState = true;
+			secPhase = true;
 			if (posBoss.x % 2 == 1)
 				posBoss.x--;
 		}
@@ -153,11 +181,28 @@ void Boss::update(int deltaTime) {
 		die();
 	}
 
+	if (shotTimer > 200) {
+		if (sprite->animation() == FIRST_PHASE_SHOT) {
+			sprite->changeAnimation(FIRST_PHASE_IDLE);
+		}
+		else if (sprite->animation() == SECOND_PHASE_SHOT) {
+			sprite->changeAnimation(SECOND_PHASE_IDLE);
+		}
+	}
+
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBoss.x), float(tileMapDispl.y + posBoss.y)));
 }
 
 void Boss::render() {
 	sprite->render();
+	if (shooting && !secPhase) {
+		shot1->render();
+	}
+	else if(shooting && secPhase){
+		shot1->render();
+		shot2->render();
+		shot3->render();
+	}
 }
 
 void Boss::setPosition(const glm::vec2 &pos) {
@@ -190,7 +235,7 @@ void Boss::hit() {
 		}
 		else {
 			soundEngine->play2D("sounds/bosshit.mp3");
-			if (sprite->animation() == FIRST_PHASE_IDLE)
+			if (!secPhase)
 				sprite->changeAnimation(FIRST_PHASE_HIT);
 			else
 				sprite->changeAnimation(SECOND_PHASE_HIT);
@@ -210,4 +255,41 @@ bool Boss::getHitting() {
 void Boss::die() {
 	soundEngine->play2D("sounds/dying2.mp3");
 	Game::instance().win();
+}
+
+void Boss::shoot() {
+	shooting = true;
+	shot1 = new Shot();
+	shot1->init(glm::ivec2(0, 0), texProgram);
+	shot1->setDirection(glm::vec2(0.f, 1.f));
+	shot1->setPosition(glm::ivec2(posBoss.x + 60, posBoss.y + 110));
+	shot1->setPlayer(Game::instance().getPlayer());
+	shot1->setTileMap(Game::instance().getTileMap());
+
+	//sonido disparo
+	if (!secPhase) {
+		//animacion disparo
+		sprite->changeAnimation(FIRST_PHASE_SHOT);
+	}
+	else {
+		sprite->changeAnimation(SECOND_PHASE_SHOT);
+		//animacion disparo
+		shot2 = new Shot();
+		shot2->init(glm::ivec2(0, 0), texProgram);
+		shot2->setDirection(normalize(glm::vec2(-1.f, 1.f)));
+		shot2->setPosition(glm::ivec2(posBoss.x + 60, posBoss.y + 110));
+		shot2->setPlayer(Game::instance().getPlayer());
+		shot2->setTileMap(Game::instance().getTileMap());
+
+		shot3 = new Shot();
+		shot3->init(glm::ivec2(0, 0), texProgram);
+		shot3->setDirection(normalize(glm::vec2(1.f, 1.f)));
+		shot3->setPosition(glm::ivec2(posBoss.x + 60, posBoss.y + 110));
+		shot3->setPlayer(Game::instance().getPlayer());
+		shot3->setTileMap(Game::instance().getTileMap());
+	}
+}
+
+void Boss::stopShooting() {
+	shooting = false;
 }

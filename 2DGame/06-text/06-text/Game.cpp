@@ -126,8 +126,10 @@ void Game::startAction(int action) {
 			break;
 		case 1:
 			instructions.init();
+			break;
 		case 2:
 			credits.init();
+			break;
 		case 3:
 			soundEngine->stopAllSounds();
 			soundEngine->play2D("sounds/menu.ogg", true);
@@ -206,4 +208,16 @@ int Game::getSceneState() {
 
 void Game::win() {
 	scene.win();
+}
+
+Player* Game::getPlayer() {
+	return scene.getPlayer();
+}
+
+TileMap* Game::getTileMap() {
+	return scene.getTileMap();
+}
+
+void Game::stopBossShooting() {
+	scene.stopBossShooting();
 }

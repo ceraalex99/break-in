@@ -17,20 +17,21 @@ Ball::~Ball()
 }
 
 void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
+	
 	spritesheet.loadFromFile("images/ball.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(24, 24), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
 
+	sticky = true;
+	
+	speed = 6;
 	sprite->setNumberAnimations(1);
 	sprite->setAnimationSpeed(0, 0);
 	sprite->addKeyframe(0, glm::vec2(0, 0));
-
 	tileMapDispl = tileMapPos;
-
-	speed = 6;
-	sticky = true;
 	direction = glm::vec2(0.f, 0.f);
 	animation = false;
 	tiempo = 0;
+	sprite->changeAnimation(0);
 }
 
 void Ball::update(int deltaTime) {
@@ -184,7 +185,7 @@ glm::vec2 Ball::getDirection() {
 }
 
 void Ball::setDirection(glm::vec2 dir) {
-	direction = (dir);
+	direction = dir;
 }
 
 void Ball::stop() {

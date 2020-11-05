@@ -68,6 +68,12 @@ public:
 
 	void win();
 
+	Player * getPlayer();
+
+	TileMap * getTileMap();
+
+	void stopBossShooting();
+
 	void selectLevel(int level);
 
 	void nextLevel();

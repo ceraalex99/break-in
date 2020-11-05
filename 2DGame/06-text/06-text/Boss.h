@@ -3,6 +3,8 @@
 
 #include "Sprite.h"
 #include <irrKlang.h>
+#include "Shot.h"
+#include "ShaderProgram.h"
 
 class Boss
 {
@@ -20,6 +22,8 @@ public:
 	int getLife();
 	bool getHitting();
 	void die();
+	void shoot();
+	void stopShooting();
 	void render();
 
 private:
@@ -34,5 +38,11 @@ private:
 	int currentFrame, startAnimFrame, startAnimTime;
 	bool hitting;
 	int lives;
+	int shotTimer;
+	ShaderProgram texProgram;
+	bool shooting;
+	bool secPhase;
+
+	Shot *shot1, *shot2, *shot3;
 };
 #endif

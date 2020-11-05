@@ -545,3 +545,15 @@ void Scene::startAnim() {
 void Scene::win(){
 	state = GAME_WIN;
 }
+
+Player* Scene::getPlayer() {
+	return player;
+}
+
+TileMap* Scene::getTileMap() {
+	return map[currentRoom];
+}
+
+void Scene::stopBossShooting() {
+	boss->stopShooting();
+}

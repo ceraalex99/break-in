@@ -54,6 +54,12 @@ public:
 	void startBossFight();
 	int getState();
 	void win();
+
+	Player * getPlayer();
+
+	TileMap * getTileMap();
+
+	void stopBossShooting();
 	
 	void startAnim();
 private:
