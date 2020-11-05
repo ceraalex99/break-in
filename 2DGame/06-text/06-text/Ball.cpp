@@ -201,15 +201,24 @@ void Ball::reset(const glm::vec2 &pos) {
 }
 
 void Ball::collisionPlayer() {
+
+	bool doble = player->getLargePlayer();
 	glm::ivec2 posPlayer = player->getPosition();
 	int x0Ball = posBall.x;
 	int x1Ball = posBall.x + 23;
 
 	int yBall = posBall.y + 24;
-
-	int x0Player = posPlayer.x;
-	int x1Player = posPlayer.x + 47;
-
+	
+	int x0Player, x1Player;
+	if (doble) {
+		x0Player = posPlayer.x - 23;
+		x1Player = posPlayer.x + 70;
+	}
+	else {
+		x0Player = posPlayer.x;
+		x1Player = posPlayer.x + 47;
+	}
+	
 	int y0Player = posPlayer.y;
 	int y1Player = posPlayer.y + 14;
 
