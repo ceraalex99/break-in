@@ -61,11 +61,26 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	sprite->addKeyframe(SUSPICIOUS, glm::vec2(0.5f,0.f));
 
 	sprite->changeAnimation(IDLE);
+
+
+
+	spriteDouble = Sprite::createSprite(glm::ivec2(96, 48), glm::vec2(0.5, 0.25), &spritesheet, &shaderProgram);
+
+	spriteDouble->setNumberAnimations(1);
+
+	spriteDouble->setAnimationSpeed(0, 8);
+	spriteDouble->addKeyframe(0, glm::vec2(0.5f,0.75f));
+
+
+	spriteDouble->changeAnimation(0);
+
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	spriteDouble->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x - 24), float(tileMapDispl.y + posPlayer.y)));
 	speed = 2;
 	animation = false;
 	tiempo = 0;
+	largePlayer = false;
 }
 
 void Player::update(int deltaTime) {
@@ -177,11 +192,12 @@ void Player::update(int deltaTime) {
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-
+	if (largePlayer) spriteDouble->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x - 24), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render() {
 	sprite->render();
+	if (largePlayer) spriteDouble->render();
 }
 
 void Player::setTileMap(TileMap *tileMap) {
@@ -191,6 +207,7 @@ void Player::setTileMap(TileMap *tileMap) {
 void Player::setPosition(const glm::vec2 &pos) {
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if(largePlayer) spriteDouble->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x - 24), float(tileMapDispl.y + posPlayer.y)));
 }
 
 
@@ -203,6 +220,7 @@ void Player::stop() {
 void Player::reset(const glm::vec2 &pos) {
 	speed = 2;
 	posPlayer = pos;
+	largePlayer = false;
 	sprite->changeAnimation(IDLE);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
@@ -226,7 +244,7 @@ void Player::checkAnimation(const glm::vec2 &posBall) {
 	}
 
 	else {
-		if (posBall.y < posPlayer.y - 30) sprite->changeAnimation(UP);
+		if (posBall.y < posPlayer.y - 60) sprite->changeAnimation(UP);
 		else if (posBall.y > posPlayer.y + 30) sprite->changeAnimation(DOWN);
 		else sprite->changeAnimation(IDLE);
 	}
@@ -235,4 +253,8 @@ void Player::checkAnimation(const glm::vec2 &posBall) {
 void Player::setAnimationPlayer() {
 	animation = true;
 	sprite->changeAnimation(SUSPICIOUS);
+}
+
+bool Player::getLargePlayer() {
+	return largePlayer;
 }

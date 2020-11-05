@@ -9,6 +9,7 @@
 #include "Text.h"
 #include "Player.h"
 #include "Ball.h"
+#include "Vigilant.h"
 #include <irrKlang.h>
 #include <sstream>
 #include "Boss.h"
@@ -60,6 +61,10 @@ public:
 	TileMap * getTileMap();
 
 	void stopBossShooting();
+
+	void alarmOn();
+
+	void alarmOff();
 	
 	void startAnim();
 private:
@@ -76,6 +81,7 @@ private:
 	TileMap *map[5];
 	bool haveKey[5];
 	Ball *ball;
+	Vigilant *vigilant;
 	Texture meshTexture, lettersTexture, endLevelTexture;
 	TexturedQuad *mesh, *letters, *endLevel;
 	int currentRoom;

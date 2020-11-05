@@ -24,6 +24,8 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 	finalPos = minCoords;
 	currentPos = minCoords;
 	prepareArrays(minCoords, program);
+	alarmOn = false;
+	tiempo = 0;
 }
 
 TileMap::~TileMap()
@@ -40,6 +42,35 @@ void TileMap::update(int deltaTime) {
 	else if (currentPos.y > finalPos.y) {
 		currentPos.y -= 35;
 		prepareArrays(currentPos, texProgram);
+	}
+
+	if (alarmOn) {
+		if (tiempo > 1) {
+			if (map[posicionAlarma1] == 20) {
+				map[posicionAlarma1] = 28;
+				map[posicionAlarma2] = 32;
+				prepareArrays(currentPos, texProgram);
+			}
+			else if (map[posicionAlarma1] == 24) {
+				map[posicionAlarma1] = 32;
+				map[posicionAlarma2] = 28;
+				prepareArrays(currentPos, texProgram);
+			}
+			else if (map[posicionAlarma1] == 28) {
+				map[posicionAlarma1] = 20;
+				map[posicionAlarma2] = 24;
+				prepareArrays(currentPos, texProgram);
+			}
+			else if (map[posicionAlarma1] == 32) {
+				map[posicionAlarma1] = 24;
+				map[posicionAlarma2] = 20;
+				prepareArrays(currentPos, texProgram);
+			}
+			tiempo = 0;
+		}
+		else {
+			tiempo += deltaTime;
+		}
 	}
 }
 
@@ -387,19 +418,26 @@ void TileMap::checkTile(int x, int y) {
 	else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
 		map[(y - 1)*mapSize.x + x] = 0;
 	}
-	map[y*mapSize.x + x] = 0;
+
+	if (currentTile == 19) map[y*mapSize.x + x] = 23;
+	else if (currentTile == 25) map[y*mapSize.x + x] = 29;
+	else if (currentTile == 29) map[y*mapSize.x + x] = 26;
+	else if (currentTile == 20 || currentTile == 24 || currentTile == 28 || currentTile == 32) {
+		if (!alarmOn) {
+			Game::instance().alarmOn();
+			alarmOn = true;
+			posicionAlarma1 = y * mapSize.x + x;
+			if (currentTile == 20) posicionAlarma2 = (y + 1) * mapSize.x + x;
+			else posicionAlarma2 = (y - 1) * mapSize.x + x;
+		}
+	}
+	else map[y*mapSize.x + x] = 0;
 	prepareArrays(glm::vec2(0, 0), texProgram);
 }
 
-
-
-
-
-
-
-
-
-
+void TileMap::setAlarm(bool alarm) {
+	alarmOn = alarm;
+}
 
 
 

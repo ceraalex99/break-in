@@ -30,14 +30,16 @@ public:
 
 	void setAnimationPlayer();
 
+	bool getLargePlayer();
+
 private:
 
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
-	Sprite *sprite;
+	Sprite *sprite, *spriteDouble;
 	TileMap *map;
 	int speed;
-	bool animation;
+	bool animation, largePlayer;
 	int tiempo;
 	
 

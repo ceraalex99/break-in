@@ -125,6 +125,13 @@ void Scene::init()
 	ball->setTileMap(map[0]);
 	ball->setPlayer(player);
 
+	vigilant = new Vigilant();
+	vigilant->init(glm::ivec2(0,0), texProgram);
+	vigilant->setPosition(glm::ivec2(0, 0));
+	vigilant->setPlayer(player);
+	vigilant->setTileMap(map[0]);
+
+
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
@@ -148,6 +155,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	vigilant->update(deltaTime);
 	if (state == BOSS_FIGHT) {
 		boss->update(deltaTime);
 	}
@@ -166,7 +174,7 @@ void Scene::update(int deltaTime)
 	map[4]->update(deltaTime);
 
 	if (state == LOSE_LIFE) {
-		if (loseTime + 2000 < currentTime) {
+		if (loseTime + 1500 < currentTime) {
 			if (currentRoom == 4) {
 				state = BOSS_FIGHT;
 			}
@@ -249,6 +257,10 @@ void Scene::render()
 	
 	player->render();
 	ball->render();
+	if(vigilant->getActivo()){
+		vigilant->render();
+	}
+	
 	if (currentRoom == 4 && (state == BOSS_FIGHT || state == BOSS_INTRO || state == LOSE_LIFE)) {
 		boss->render();
 	}
@@ -495,10 +507,11 @@ void Scene::reloadBank() {
 }
 
 void Scene::loseLife() {
-	if (state != LOSE_LIFE) {
+	if (state != LOSE_LIFE && !Game::instance().getGodMode()) {
 		state = LOSE_LIFE;
 		lives--;
 		reloadLives();
+		vigilant->reset();
 		ball->stop();
 		player->stop();
 		soundEngine->play2D("sounds/gameover.wav");
@@ -556,4 +569,11 @@ TileMap* Scene::getTileMap() {
 
 void Scene::stopBossShooting() {
 	boss->stopShooting();
+}
+void Scene::alarmOn() {
+	vigilant->alarm();
+}
+
+void Scene::alarmOff() {
+	vigilant->reset();
 }
