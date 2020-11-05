@@ -143,8 +143,7 @@ void Ball::update(int deltaTime) {
 						boss->hit();
 					}
 				}
-
-				player->checkAnimation(posBall);
+				if (!stopped) player->checkAnimation(posBall);
 			}
 
 		}
@@ -189,11 +188,13 @@ void Ball::setDirection(glm::vec2 dir) {
 
 void Ball::stop() {
 	speed = 0;
+	stopped = true;
 }
 
 void Ball::reset(const glm::vec2 &pos) {
 	sticky = true;
 	speed = 6;
+	stopped = false;
 	direction = glm::vec2(0.f, 0.f);
 	posBall = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));

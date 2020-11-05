@@ -50,6 +50,7 @@ private:
 	float speed;
 	bool sticky;
 	bool animation;
+	bool stopped;
 	int tiempo;
 };
 #endif

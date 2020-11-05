@@ -511,9 +511,9 @@ void Scene::loseLife() {
 		state = LOSE_LIFE;
 		lives--;
 		reloadLives();
+		vigilant->reset();
 		ball->stop();
 		player->stop();
-		vigilant->reset();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
 	}
