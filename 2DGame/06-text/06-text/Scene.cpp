@@ -507,7 +507,7 @@ void Scene::reloadBank() {
 }
 
 void Scene::loseLife() {
-	if (state != LOSE_LIFE) {
+	if (state != LOSE_LIFE && !Game::instance().getGodMode()) {
 		state = LOSE_LIFE;
 		lives--;
 		reloadLives();
