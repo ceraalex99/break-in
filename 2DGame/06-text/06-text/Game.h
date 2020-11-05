@@ -68,6 +68,9 @@ public:
 
 	void win();
 
+	void alarmOn();
+	void alarmOff();
+
 	void selectLevel(int level);
 
 	void nextLevel();

@@ -226,7 +226,7 @@ void Player::checkAnimation(const glm::vec2 &posBall) {
 	}
 
 	else {
-		if (posBall.y < posPlayer.y - 30) sprite->changeAnimation(UP);
+		if (posBall.y < posPlayer.y - 60) sprite->changeAnimation(UP);
 		else if (posBall.y > posPlayer.y + 30) sprite->changeAnimation(DOWN);
 		else sprite->changeAnimation(IDLE);
 	}

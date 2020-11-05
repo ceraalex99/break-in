@@ -207,3 +207,11 @@ int Game::getSceneState() {
 void Game::win() {
 	scene.win();
 }
+
+void Game::alarmOn() {
+	scene.alarmOn();
+}
+
+void Game::alarmOff() {
+	scene.alarmOff();
+}

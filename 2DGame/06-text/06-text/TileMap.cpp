@@ -370,6 +370,7 @@ void TileMap::checkTile(int x, int y) {
 	int currentTile = map[y*mapSize.x + x];
 
 	if (currentTile == 18 || currentTile == 22) {
+		Game::instance().alarmOn();
 		Game::instance().catchKey();
 	}
 	else if (currentTile == 11 || currentTile == 15) {
