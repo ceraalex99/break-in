@@ -96,6 +96,7 @@ void Vigilant::alarm() {
 void Vigilant::reset() {
 	activo = false;
 	tiempo = 0;
+	map->setAlarm(false);
 	posVigilant = glm::ivec2(0,0);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posVigilant.x), float(tileMapDispl.y + posVigilant.y)));
 }

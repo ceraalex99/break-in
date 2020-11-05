@@ -49,6 +49,8 @@ public:
 	void moveTileMap(const glm::vec2 &minCoords);
 	void setSoundEngine(irrklang::ISoundEngine* eng);
 
+	void setAlarm(bool alarm);
+
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
@@ -66,6 +68,8 @@ private:
 	irrklang::ISoundEngine* soundEngine;
 	glm::vec2 currentPos, finalPos;
 	int moneyTiles;
+	bool alarmOn;
+	int posicionAlarma1, posicionAlarma2, tiempo, tiempoTotal;
 };
 
 
