@@ -58,6 +58,9 @@ void Instructions::update(int deltaTime) {
 			instructionsImage.loadFromFile("images/instructions6.png", TEXTURE_PIXEL_FORMAT_RGBA);
 			break;
 		case 7:
+			instructionsImage.loadFromFile("images/instructions7.png", TEXTURE_PIXEL_FORMAT_RGBA);
+			break;
+		case 8:
 			Game::instance().startAction(3);
 			break;
 		}
@@ -89,6 +92,9 @@ void Instructions::update(int deltaTime) {
 			instructionsImage.loadFromFile("images/instructions6.png", TEXTURE_PIXEL_FORMAT_RGBA);
 			break;
 		case 7:
+			instructionsImage.loadFromFile("images/instructions7.png", TEXTURE_PIXEL_FORMAT_RGBA);
+			break;
+		case 8:
 			Game::instance().startAction(3);
 			break;
 		}

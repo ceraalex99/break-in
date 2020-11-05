@@ -387,7 +387,11 @@ void TileMap::checkTile(int x, int y) {
 	else if (currentTile == 15 || currentTile == 16 || currentTile == 21 || currentTile == 22) {
 		map[(y - 1)*mapSize.x + x] = 0;
 	}
-	map[y*mapSize.x + x] = 0;
+
+	if (currentTile == 19) map[y*mapSize.x + x] = 23;
+	else if (currentTile == 25) map[y*mapSize.x + x] = 29;
+	else if (currentTile == 29) map[y*mapSize.x + x] = 26;
+	else map[y*mapSize.x + x] = 0;
 	prepareArrays(glm::vec2(0, 0), texProgram);
 }
 
