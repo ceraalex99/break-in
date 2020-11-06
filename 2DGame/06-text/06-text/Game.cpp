@@ -84,7 +84,15 @@ void Game::keyPressed(int key)
 	else if (key == 'g') {
 		godMode = !godMode;
 	}
+	
 	keys[key] = true;
+
+	if (key == 13) {
+		if (gameState == 5) {
+			keyReleased(13);
+			startAction(3);
+		}
+	}
 }
 
 void Game::keyReleased(int key)

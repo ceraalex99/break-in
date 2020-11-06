@@ -232,6 +232,7 @@ void Scene::update(int deltaTime)
 		}
 	}
 
+
 }
 
 void Scene::render()
