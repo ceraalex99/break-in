@@ -53,6 +53,7 @@ public:
 	void resetPlayer();
 	int getCurrentRoom();
 	void startBossFight();
+	void endBossFight();
 	int getState();
 	void win();
 
@@ -66,7 +67,8 @@ public:
 
 	void alarmOff();
 	
-	void startAnim();
+	void startAnimFinalBank();
+	void startAnimFinalGame();
 private:
 	void initShaders();
 
@@ -78,8 +80,8 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map[5];
-	bool haveKey[5];
+	TileMap *map[6];
+	bool haveKey[6];
 	Ball *ball;
 	Vigilant *vigilant;
 	Texture meshTexture, lettersTexture, endLevelTexture;
@@ -95,6 +97,8 @@ private:
 	
 	Quad *bossLifeBar;
 	int currentBank;
+
+	bool dead;
 };
 
 

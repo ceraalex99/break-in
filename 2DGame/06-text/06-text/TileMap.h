@@ -45,6 +45,7 @@ public:
 	int collision(const int x0, const int x1, const int y);
 
 	void openExit();
+	void openFinal();
 	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords);
 	void setSoundEngine(irrklang::ISoundEngine* eng);

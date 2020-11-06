@@ -218,6 +218,8 @@ void Player::stop() {
 }
 
 void Player::reset(const glm::vec2 &pos) {
+	animation = false;
+	tiempo = 0;
 	speed = 2;
 	posPlayer = pos;
 	largePlayer = false;

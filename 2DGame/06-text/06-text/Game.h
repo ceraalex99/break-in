@@ -7,6 +7,7 @@
 #include "Instructions.h"
 #include "Credits.h"
 #include "LevelSelector.h"
+#include "GameOver.h"
 #pragma comment(lib, "irrKlang.lib")
 
 
@@ -88,6 +89,7 @@ private:
 	Instructions instructions;
 	Credits credits;
 	LevelSelector levelSelector;
+	GameOver gameOver;
 	int gameState;
 	bool keys[256], specialKeys[256];
 	irrklang::ISoundEngine* soundEngine;
