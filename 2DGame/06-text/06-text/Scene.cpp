@@ -508,6 +508,8 @@ void Scene::reloadBank() {
 
 void Scene::loseLife() {
 	if (state != LOSE_LIFE && !Game::instance().getGodMode()) {
+		if (state == BOSS_FIGHT)
+			stopBossShooting();
 		state = LOSE_LIFE;
 		lives--;
 		reloadLives();
@@ -516,6 +518,7 @@ void Scene::loseLife() {
 		player->stop();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
+		
 	}
 }
 

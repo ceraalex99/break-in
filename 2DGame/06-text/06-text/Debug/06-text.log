@@ -1,5 +1,5 @@
 ﻿  Boss.cpp
-d:\vj\breakin\2dgame\06-text\06-text\boss.cpp(144): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+d:\vj\breakin\2dgame\06-text\06-text\boss.cpp(148): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
           with
           [
               T=int

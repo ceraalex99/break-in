@@ -92,9 +92,13 @@ void Boss::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	shotTimer = 0;
 	shooting = false;
 	secPhase = false;
+	time = 0;
+
+	text.init("fonts/ARCADEPI.ttf");
 }
 
 void Boss::update(int deltaTime) {
+	time += deltaTime;
 	currentTime += deltaTime;
 	shotTimer += deltaTime;
 	currentFrame++;
@@ -128,7 +132,7 @@ void Boss::update(int deltaTime) {
 			}
 			else {
 				if (!playedIntro) {
-					soundEngine->play2D("sounds/bossintro.mp3");
+					soundEngine->play2D("sounds/bossSong.mp3", true);
 					currentTime = 0;
 					playedIntro = true;
 				}
@@ -152,12 +156,12 @@ void Boss::update(int deltaTime) {
 	}
 
 	if (sprite->animation() == FIRST_PHASE_HIT && currentFrame == startAnimFrame + 35) {
-		if (lives == 1) {
-			//parar el juego y darle epicidad
+		if (lives == 10) {
 			soundEngine->play2D("sounds/phaseChange.mp3");
 			sprite->changeAnimation(FIRST_TO_SECOND);
 			startAnimTime = currentTime;
 			movingState = true;
+			shooting = false;
 			secPhase = true;
 			if (posBoss.x % 2 == 1)
 				posBoss.x--;
@@ -203,6 +207,11 @@ void Boss::render() {
 		shot2->render();
 		shot3->render();
 	}
+
+	if (time <= 2800) {
+		text.render("THE", glm::vec2(173, 215), 72, glm::vec4(1, 1, 1, 1));
+		text.render("KIDNAPPER", glm::vec2(17, 290), 64, glm::vec4(1, 1, 1, 1));
+	}
 }
 
 void Boss::setPosition(const glm::vec2 &pos) {
@@ -230,7 +239,6 @@ void Boss::hit() {
 		if (lives == 0) {
 			sprite->changeAnimation(DYING);
 			startAnimFrame = currentFrame;
-			//dying sound
 			soundEngine->play2D("sounds/phaseChange.mp3");
 		}
 		else {
@@ -253,6 +261,7 @@ bool Boss::getHitting() {
 }
 
 void Boss::die() {
+	soundEngine->stopAllSounds();
 	soundEngine->play2D("sounds/dying2.mp3");
 	Game::instance().win();
 }
@@ -266,14 +275,12 @@ void Boss::shoot() {
 	shot1->setPlayer(Game::instance().getPlayer());
 	shot1->setTileMap(Game::instance().getTileMap());
 
-	//sonido disparo
+	soundEngine->play2D("sounds/bossshot.mp3");
 	if (!secPhase) {
-		//animacion disparo
 		sprite->changeAnimation(FIRST_PHASE_SHOT);
 	}
 	else {
 		sprite->changeAnimation(SECOND_PHASE_SHOT);
-		//animacion disparo
 		shot2 = new Shot();
 		shot2->init(glm::ivec2(0, 0), texProgram);
 		shot2->setDirection(normalize(glm::vec2(-1.f, 1.f)));

@@ -5,6 +5,7 @@
 #include <irrKlang.h>
 #include "Shot.h"
 #include "ShaderProgram.h"
+#include "Text.h"
 
 class Boss
 {
@@ -28,7 +29,7 @@ public:
 
 private:
 	glm::ivec2 tileMapDispl, posBoss;
-	int currentTime;
+	int currentTime, time;
 	Texture spritesheet;
 	Sprite *sprite;
 	bool movingState;
@@ -42,6 +43,7 @@ private:
 	ShaderProgram texProgram;
 	bool shooting;
 	bool secPhase;
+	Text text;
 
 	Shot *shot1, *shot2, *shot3;
 };
