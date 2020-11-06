@@ -7,6 +7,7 @@
 #include "Instructions.h"
 #include "Credits.h"
 #include "LevelSelector.h"
+#include "GameOver.h"
 #pragma comment(lib, "irrKlang.lib")
 
 
@@ -50,6 +51,8 @@ public:
 	void catchKey();
 	void breakBrick();
 
+	void gainPoints(int p);
+
 	int getPoints();
 	int getMoney();
 	int getCurrentBank();
@@ -77,6 +80,8 @@ public:
 
 	void stopBossShooting();
 
+	void catchPowerup();
+
 	void selectLevel(int level);
 
 	void nextLevel();
@@ -88,6 +93,7 @@ private:
 	Instructions instructions;
 	Credits credits;
 	LevelSelector levelSelector;
+	GameOver gameOver;
 	int gameState;
 	bool keys[256], specialKeys[256];
 	irrklang::ISoundEngine* soundEngine;

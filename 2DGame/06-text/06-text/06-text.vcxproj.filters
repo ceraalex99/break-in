@@ -75,6 +75,13 @@
     <ClCompile Include="Vigilant.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Powerup.cpp">
+=======
+    <ClCompile Include="GameOver.cpp">
+>>>>>>> main
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -135,6 +142,13 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Vigilant.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Powerup.h">
+=======
+    <ClInclude Include="GameOver.h">
+>>>>>>> main
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

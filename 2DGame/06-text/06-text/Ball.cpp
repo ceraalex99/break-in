@@ -139,7 +139,7 @@ void Ball::update(int deltaTime) {
 					collisionPlayer();
 				}
 
-				if (Game::instance().getSceneState() == 4) {
+				if (Game::instance().getSceneState() == 4 && boss->getLife() > 0) {
 					if (collisionBoss()) {
 						boss->hit();
 					}

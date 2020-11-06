@@ -37,6 +37,10 @@ bool Game::update(int deltaTime)
 			break;
 		case 4:
 			scene.update(deltaTime);
+			break;
+		case 5:
+			gameOver.update(deltaTime);
+			break;
 	}
 	
 	return bPlay;
@@ -61,6 +65,10 @@ void Game::render()
 		break;
 	case 4:
 		scene.render();
+		break;
+	case 5:
+		gameOver.render();
+		break;
 	}
 }
 
@@ -132,8 +140,15 @@ void Game::startAction(int action) {
 			break;
 		case 3:
 			soundEngine->stopAllSounds();
+			soundEngine->setSoundVolume(0.5f);
 			soundEngine->play2D("sounds/menu.ogg", true);
 			menu.init();
+			break;
+		case 5:
+			soundEngine->stopAllSounds();
+			soundEngine->setSoundVolume(0.2f);
+			soundEngine->play2D("sounds/gameOver.mp3", true);
+			gameOver.init();
 			break;
 	}
 	gameState = action;
@@ -159,9 +174,13 @@ void Game::catchKey(){
 }
 
 void Game::breakBrick() {
-	points += 100;
-	scene.reloadPoints();
+	gainPoints(100);
 	soundEngine->play2D("sounds/brick.wav");
+}
+
+void Game::gainPoints(int p) {
+	points += p;
+	scene.reloadPoints();
 }
 
 int Game::getPoints() {
@@ -210,11 +229,13 @@ void Game::win() {
 	scene.win();
 }
 
-void Game::alarmOn() {
+void Game::alarmOn() {
+
 	scene.alarmOn();
 }
 
-void Game::alarmOff() {
+void Game::alarmOff() {
+
 	scene.alarmOff();
 }
 
@@ -228,4 +249,9 @@ TileMap* Game::getTileMap() {
 
 void Game::stopBossShooting() {
 	scene.stopBossShooting();
+}
+
+void Game::catchPowerup() {
+	gainPoints(200);
+	scene.catchPowerup();
 }

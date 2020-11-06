@@ -13,7 +13,7 @@
 #include <irrKlang.h>
 #include <sstream>
 #include "Boss.h"
-
+#include "Powerup.h"
 
 #define CAMERA_WIDTH 640
 #define CAMERA_HEIGHT 480
@@ -53,6 +53,7 @@ public:
 	void resetPlayer();
 	int getCurrentRoom();
 	void startBossFight();
+	void endBossFight();
 	int getState();
 	void win();
 
@@ -65,8 +66,11 @@ public:
 	void alarmOn();
 
 	void alarmOff();
+
+	void catchPowerup();
 	
-	void startAnim();
+	void startAnimFinalBank();
+	void startAnimFinalGame();
 private:
 	void initShaders();
 
@@ -78,8 +82,8 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
-	TileMap *map[5];
-	bool haveKey[5];
+	TileMap *map[6];
+	bool haveKey[6];
 	Ball *ball;
 	Vigilant *vigilant;
 	Texture meshTexture, lettersTexture, endLevelTexture;
@@ -95,6 +99,11 @@ private:
 	
 	Quad *bossLifeBar;
 	int currentBank;
+	int powerupTimer;
+	Powerup *powerup;
+	bool powerupIsActive;
+
+	bool dead;
 };
 
 

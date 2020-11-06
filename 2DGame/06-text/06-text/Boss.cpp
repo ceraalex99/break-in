@@ -98,119 +98,123 @@ void Boss::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 }
 
 void Boss::update(int deltaTime) {
-	time += deltaTime;
-	currentTime += deltaTime;
-	shotTimer += deltaTime;
-	currentFrame++;
-	sprite->update(deltaTime);
+	if (lives >= 0) {
+		time += deltaTime;
+		currentTime += deltaTime;
+		shotTimer += deltaTime;
+		currentFrame++;
+		sprite->update(deltaTime);
 
-	if (!secPhase && shooting) {
-		shot1->update(deltaTime);
-	}
-	else if (secPhase && shooting) {
-		shot1->update(deltaTime);
-		shot2->update(deltaTime);
-		shot3->update(deltaTime);
-	}
-
-	if (movingState) {
-		if (sprite->animation() == FIRST_TO_SECOND) {
-			
-			if (posBoss.x > 180) {
-				posBoss.x -= 2;
-			}
-			else if(posBoss.x < 180){
-				posBoss.x += 2;
-			}
-			else {
-				movingState = false;
-			}
+		if (!secPhase && shooting) {
+			shot1->update(deltaTime);
 		}
-		else {
-			if (posBoss.y < finalPos.y) {
-				posBoss.y += 5;
-			}
-			else {
-				if (!playedIntro) {
-					soundEngine->play2D("sounds/bossSong.mp3", true);
-					currentTime = 0;
-					playedIntro = true;
+		else if (secPhase && shooting) {
+			shot1->update(deltaTime);
+			shot2->update(deltaTime);
+			shot3->update(deltaTime);
+		}
+
+		if (movingState) {
+			if (sprite->animation() == FIRST_TO_SECOND) {
+
+				if (posBoss.x > 180) {
+					posBoss.x -= 2;
 				}
-				else if (currentTime > 3500.f) {
+				else if (posBoss.x < 180) {
+					posBoss.x += 2;
+				}
+				else {
 					movingState = false;
-					currentTime = 0;
 				}
 			}
-		}
-	}
-	else {
-		if (sprite->animation() != FIRST_TO_SECOND && sprite->animation() != DYING) {
-			posBoss.x = (180 * sin(atan(1) * 4 * currentTime / 2000.f)) + 180;
-			if (shotTimer >= 3000){
-				shotTimer = 0;
-				if ((sprite->animation() == FIRST_PHASE_IDLE || sprite->animation() == SECOND_PHASE_IDLE)) {
-					shoot();
+			else {
+				if (posBoss.y < finalPos.y) {
+					posBoss.y += 5;
+				}
+				else {
+					if (!playedIntro) {
+						soundEngine->play2D("sounds/bossSong.mp3", true);
+						currentTime = 0;
+						playedIntro = true;
+					}
+					else if (currentTime > 3500.f) {
+						movingState = false;
+						currentTime = 0;
+					}
 				}
 			}
-		}
-	}
-
-	if (sprite->animation() == FIRST_PHASE_HIT && currentFrame == startAnimFrame + 35) {
-		if (lives == 10) {
-			soundEngine->play2D("sounds/phaseChange.mp3");
-			sprite->changeAnimation(FIRST_TO_SECOND);
-			startAnimTime = currentTime;
-			movingState = true;
-			shooting = false;
-			secPhase = true;
-			if (posBoss.x % 2 == 1)
-				posBoss.x--;
 		}
 		else {
-			sprite->changeAnimation(FIRST_PHASE_IDLE);
+			if (sprite->animation() != FIRST_TO_SECOND && sprite->animation() != DYING) {
+				posBoss.x = (180 * sin(atan(1) * 4 * currentTime / 2000.f)) + 180;
+				if (shotTimer >= 3000) {
+					shotTimer = 0;
+					if ((sprite->animation() == FIRST_PHASE_IDLE || sprite->animation() == SECOND_PHASE_IDLE)) {
+						shoot();
+					}
+				}
+			}
+		}
+
+		if (sprite->animation() == FIRST_PHASE_HIT && currentFrame == startAnimFrame + 35) {
+			if (lives == 10) {
+				soundEngine->play2D("sounds/phaseChange.mp3");
+				sprite->changeAnimation(FIRST_TO_SECOND);
+				startAnimTime = currentTime;
+				movingState = true;
+				shooting = false;
+				secPhase = true;
+				if (posBoss.x % 2 == 1)
+					posBoss.x--;
+			}
+			else {
+				sprite->changeAnimation(FIRST_PHASE_IDLE);
+				hitting = false;
+			}
+		}
+		else if (sprite->animation() == FIRST_TO_SECOND && currentTime > startAnimTime + 1800) {
+			sprite->changeAnimation(SECOND_PHASE_IDLE);
+			hitting = false;
+			currentTime = 0;
+		}
+
+		else if (sprite->animation() == SECOND_PHASE_HIT && currentFrame == startAnimFrame + 30) {
+			sprite->changeAnimation(SECOND_PHASE_IDLE);
 			hitting = false;
 		}
-	}
-	else if (sprite->animation() == FIRST_TO_SECOND && currentTime > startAnimTime + 1800) {
-		sprite->changeAnimation(SECOND_PHASE_IDLE);
-		hitting = false;
-		currentTime = 0;
-	}
-
-	else if (sprite->animation() == SECOND_PHASE_HIT && currentFrame == startAnimFrame + 30) {
-		sprite->changeAnimation(SECOND_PHASE_IDLE);
-		hitting = false;
-	}
-	else if (sprite->animation() == DYING && currentFrame == startAnimFrame + 100) {
-		die();
-	}
-
-	if (shotTimer > 200) {
-		if (sprite->animation() == FIRST_PHASE_SHOT) {
-			sprite->changeAnimation(FIRST_PHASE_IDLE);
+		else if (sprite->animation() == DYING && currentFrame == startAnimFrame + 100) {
+			die();
 		}
-		else if (sprite->animation() == SECOND_PHASE_SHOT) {
-			sprite->changeAnimation(SECOND_PHASE_IDLE);
-		}
-	}
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBoss.x), float(tileMapDispl.y + posBoss.y)));
+		if (shotTimer > 200) {
+			if (sprite->animation() == FIRST_PHASE_SHOT) {
+				sprite->changeAnimation(FIRST_PHASE_IDLE);
+			}
+			else if (sprite->animation() == SECOND_PHASE_SHOT) {
+				sprite->changeAnimation(SECOND_PHASE_IDLE);
+			}
+		}
+
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBoss.x), float(tileMapDispl.y + posBoss.y)));
+	}
 }
 
 void Boss::render() {
-	sprite->render();
-	if (shooting && !secPhase) {
-		shot1->render();
-	}
-	else if(shooting && secPhase){
-		shot1->render();
-		shot2->render();
-		shot3->render();
-	}
+	if (lives >= 0) {
+		sprite->render();
+		if (shooting && !secPhase) {
+			shot1->render();
+		}
+		else if (shooting && secPhase) {
+			shot1->render();
+			shot2->render();
+			shot3->render();
+		}
 
-	if (time <= 2800) {
-		text.render("THE", glm::vec2(173, 215), 72, glm::vec4(1, 1, 1, 1));
-		text.render("KIDNAPPER", glm::vec2(17, 290), 64, glm::vec4(1, 1, 1, 1));
+		if (time <= 2800) {
+			text.render("THE", glm::vec2(173, 215), 72, glm::vec4(1, 1, 1, 1));
+			text.render("KIDNAPPER", glm::vec2(17, 290), 64, glm::vec4(1, 1, 1, 1));
+		}
 	}
 }
 
@@ -261,6 +265,7 @@ bool Boss::getHitting() {
 }
 
 void Boss::die() {
+	lives = -1;
 	soundEngine->stopAllSounds();
 	soundEngine->play2D("sounds/dying2.mp3");
 	Game::instance().win();
