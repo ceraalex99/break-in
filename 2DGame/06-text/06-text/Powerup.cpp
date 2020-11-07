@@ -87,18 +87,20 @@ void Powerup::update(int deltaTime)
 	if (collisionPlayer()) {
 		Game::instance().catchPowerup();
 		switch (color) {
-			case YELLOW:
+			case GREEN:
 				player->setLargePlayer(true);
 				ball->setPowerUpSticky(false);
+				player->setStickyPlayer(false);
 				break;
-			case RED:
+			case YELLOW:
 				Game::instance().tripleBall();
 				break;
 			case BLUE:
 				player->setLargePlayer(false);
 				ball->setPowerUpSticky(true);
+				player->setStickyPlayer(true);
 				break;
-			case GREEN:
+			case RED:
 				Game::instance().gainPoints(800);
 				break;
 		}

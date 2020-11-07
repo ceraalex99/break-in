@@ -34,14 +34,16 @@ public:
 
 	void setLargePlayer(bool large);
 
+	void setStickyPlayer(bool sticky);
+
 private:
 
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
-	Sprite *sprite, *spriteDouble;
+	Sprite *sprite, *spriteDouble, *spriteSticky;
 	TileMap *map;
 	int speed;
-	bool animation, largePlayer;
+	bool animation, largePlayer, stickyPlayer;
 	int tiempo;
 	
 

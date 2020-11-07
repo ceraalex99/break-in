@@ -531,6 +531,7 @@ void Scene::nextRoom() {
 			if (ball->getPosition().y > ball3->getPosition().y) {
 				ball = ball3;
 			}
+			ball->setDeadBall(false);
 			ball2 = NULL;
 			delete ball2;
 			ball3 = NULL;
@@ -630,6 +631,7 @@ void Scene::previousRoom() {
 			if (ball->getPosition().y < ball3->getPosition().y) {
 				ball = ball3;
 			}
+			ball->setDeadBall(false);
 			ball2 = NULL;
 			delete ball2;
 			ball3 = NULL;
@@ -682,6 +684,7 @@ void Scene::loseLife() {
 		reloadLives();
 		vigilant->reset();
 		ball->stop();
+		ball->setDeadBall(false);
 		player->stop();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
@@ -777,6 +780,7 @@ void Scene::catchPowerup() {
 void Scene::stopPowerUps() {
 	powerActive = false;
 	player->setLargePlayer(false);
+	player->setStickyPlayer(false);
 	ball->setPowerUpSticky(false);
 }
 
@@ -806,6 +810,8 @@ void Scene::loseBall() {
 			ball2 = ball3;
 			
 		}
+		ball->setDeadBall(false);
+		ball2->setDeadBall(false);
 		ball3 = NULL;
 		delete ball3;
 	}

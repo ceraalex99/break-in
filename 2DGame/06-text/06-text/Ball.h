@@ -43,6 +43,8 @@ public:
 
 	void setSpeed(int spd);
 
+	void setDeadBall(bool dead);
+
 private:
 	glm::ivec2 tileMapDispl, posBall;
 	Texture spritesheet;
@@ -57,5 +59,6 @@ private:
 	bool stopped;
 	int tiempo;
 	bool powerUpSticky;
+	bool deadBall;
 };
 #endif

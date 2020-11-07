@@ -35,19 +35,15 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	powerUpSticky = false;
 	stopped = false;
 	animation = false;
+	deadBall = false;
 }
 
 void Ball::update(int deltaTime) {
 	sprite->update(deltaTime);
-	
-	if (animation) {
-		if (tiempo < 2000) {
-			tiempo += deltaTime;
-		}
-		else {
-			posBall.y -= 0.5;
-			if (posBall.y < 4) {
-				posBall.y += 0.5;
+	if (!deadBall) {
+		if (animation) {
+			if (tiempo < 2000) {
+				tiempo += deltaTime;
 			}
 			else {
 				posBall.y -= 0.5;
@@ -59,94 +55,100 @@ void Ball::update(int deltaTime) {
 					if (posBall.y < 4) {
 						posBall.y += 0.5;
 					}
+					else {
+						posBall.y -= 0.5;
+						if (posBall.y < 4) {
+							posBall.y += 0.5;
+						}
+					}
+				}
+				if (posBall.y < 5) {
+					Game::instance().nextRoom();
 				}
 			}
-			if (posBall.y < 5) {
-				Game::instance().nextRoom();
-			}
-		}
-		
-	}
-	else {
-		posBall += direction * speed;
-		if (sticky) {
-			if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
-				posBall.x -= speed;
-				if (posBall.x < 34) {
-					posBall.x += 6;
-				}
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
-				posBall.x += speed;
-				if (posBall.x > 428) {
-					posBall.x -= 6;
-				}
-			}
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-				direction = normalize(glm::vec2(0.4f, -1.f));
-				sticky = false;
-			}
+
 		}
 		else {
-
-			if (posBall.y > 450) {
-				if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4) {
-					if (Game::instance().getGodMode()) {
-						direction.y = -direction.y;
-					}
-					else {
-						Game::instance().loseBall();
+			posBall += direction * speed;
+			if (sticky) {
+				if (Game::instance().getSpecialKey(GLUT_KEY_LEFT)) {
+					posBall.x -= speed;
+					if (posBall.x < 34) {
+						posBall.x += 6;
 					}
 				}
-				else if (direction.y > 0) {
-					if (Game::instance().getNumberBalls() > 1) {
-						Game::instance().loseBall();
+				else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT)) {
+					posBall.x += speed;
+					if (posBall.x > 428) {
+						posBall.x -= 6;
 					}
-					else Game::instance().previousRoom();
 				}
-
-			}
-			else if (posBall.y < 5) {
-				if (direction.y < 0)
-					if (Game::instance().getNumberBalls() > 1) {
-						Game::instance().loseBall();
-					}
-					else Game::instance().nextRoom();
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
+					direction = normalize(glm::vec2(0.4f, -1.f));
+					sticky = false;
+				}
 			}
 			else {
-				if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24))) || (direction.y < 0 && direction.x < 0 && map->collisionMoveUpLeft(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x > 0 && map->collisionMoveDownRight(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x < 0 && map->collisionMoveDownLeft(posBall, glm::ivec2(24, 24)))) {
-					direction.y = -direction.y;
-					direction.x = -direction.x;
-				}
-				else if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
-					direction.y = -direction.y;
-					posBall.y += direction.y * speed;
-				}
-				else if ((direction.x > 0 && map->collisionMoveRight(posBall, glm::ivec2(24, 24))) || (direction.x < 0 && map->collisionMoveLeft(posBall, glm::ivec2(24, 24)))) {
-					direction.x = -direction.x;
-					posBall.x += direction.x * speed;
-				}
-				else if (direction.y >= -0.3) {
-					collisionPlayer();
-				}
 
-				if (Game::instance().getSceneState() == 4 && boss->getLife() > 0) {
-					if (collisionBoss()) {
-						boss->hit();
+				if (posBall.y > 450) {
+					if (Game::instance().getCurrentRoom() == 0 || Game::instance().getCurrentRoom() == 4) {
+						if (Game::instance().getGodMode()) {
+							direction.y = -direction.y;
+						}
+						else {
+							Game::instance().loseBall();
+							if (Game::instance().getNumberBalls() > 1) {
+								deadBall = true;
+							}
+						}
 					}
+					else if (direction.y > 0) {
+						if (Game::instance().getNumberBalls() > 1) {
+							Game::instance().loseBall();
+							deadBall = true;
+						}
+						else Game::instance().previousRoom();
+					}
+
 				}
-				if (!stopped) player->checkAnimation(posBall);
+				else if (posBall.y < 5) {
+					if (direction.y < 0)
+						Game::instance().nextRoom();
+				}
+				else {
+					if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24))) || (direction.y < 0 && direction.x < 0 && map->collisionMoveUpLeft(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x > 0 && map->collisionMoveDownRight(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x < 0 && map->collisionMoveDownLeft(posBall, glm::ivec2(24, 24)))) {
+						direction.y = -direction.y;
+						direction.x = -direction.x;
+					}
+					else if ((direction.y < 0 && map->collisionMoveUp(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && map->collisionMoveDown(posBall, glm::ivec2(24, 24), &posBall.y))) {
+						direction.y = -direction.y;
+						posBall.y += direction.y * speed;
+					}
+					else if ((direction.x > 0 && map->collisionMoveRight(posBall, glm::ivec2(24, 24))) || (direction.x < 0 && map->collisionMoveLeft(posBall, glm::ivec2(24, 24)))) {
+						direction.x = -direction.x;
+						posBall.x += direction.x * speed;
+					}
+					else if (direction.y >= -0.3) {
+						collisionPlayer();
+					}
+
+					if (Game::instance().getSceneState() == 4 && boss->getLife() > 0) {
+						if (collisionBoss()) {
+							boss->hit();
+						}
+					}
+					if (!stopped) player->checkAnimation(posBall);
+				}
+
 			}
-
 		}
+
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
 	}
-
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posBall.x), float(tileMapDispl.y + posBall.y)));
-
 }
 
 void Ball::render() {
-	sprite->render();
+	if(!deadBall) sprite->render();
 }
 
 void Ball::setTileMap(TileMap *tileMap) {
@@ -282,4 +284,8 @@ void Ball::setPowerUpSticky(bool powerUp) {
 
 void Ball::setSpeed(int spd) {
 	speed = spd;
+}
+
+void Ball::setDeadBall(bool dead) {
+	deadBall = dead;
 }
