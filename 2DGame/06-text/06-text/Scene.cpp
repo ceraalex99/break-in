@@ -133,6 +133,7 @@ void Scene::init()
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setTileMap(map[0]);
+	player->setSoundEngine(soundEngine);
 	
 	ball = new Ball();
 	ball->init(glm::ivec2(0, 0), texProgram);
@@ -497,6 +498,7 @@ void Scene::catchKey() {
 
 void Scene::nextRoom() {
 	currentRoom++;
+	stopPowerUps();
 	switch (currentRoom) {
 		case 1:
 			map[0]->moveTileMap(glm::vec2(0, 560));
@@ -586,6 +588,7 @@ void Scene::nextRoom() {
 
 void Scene::previousRoom() {
 	currentRoom--;
+	stopPowerUps();
 	switch (currentRoom) {
 		case 0:
 			map[0]->moveTileMap(glm::vec2(0, 0));
@@ -726,6 +729,7 @@ void Scene::loseLife() {
 		ball->stop();
 		ball->setDeadBall(false);
 		player->die();
+		stopPowerUps();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
 		
@@ -823,6 +827,7 @@ void Scene::stopPowerUps() {
 	player->setStickyPlayer(false);
 	ball->setPowerUpSticky(false);
 	player->setFirePlayer(false);
+	player->setShotCreated(false);
 }
 
 void Scene::tripleBall() {
@@ -869,9 +874,13 @@ void Scene::setTelefono() {
 void Scene::countPoints() {
 
 	if (Game::instance().getPoints() > 0) {
-		Game::instance().setMoney(Game::instance().getMoney() + 10);
-		Game::instance().setPoints(Game::instance().getPoints() - 10);
+		Game::instance().setMoney(Game::instance().getMoney() + 125);
+		Game::instance().setPoints(Game::instance().getPoints() - 125);
 	}
 	reloadMoney();
 	reloadPoints();
+}
+
+void Scene::setShotCreated(bool created) {
+	player->setShotCreated(created);
 }

@@ -1,8 +1,11 @@
 #ifndef _PLAYER_INCLUDE
 #define _PLAYER_INCLUDE
 
+#include <irrKlang.h>
 #include "Sprite.h"
 #include "TileMap.h"
+#include "ShotPlayer.h"
+#include "ShaderProgram.h"
 
 
 
@@ -41,6 +44,9 @@ public:
 	void setStickyPlayer(bool sticky);
 
 	void setFirePlayer(bool fire);
+	void setSoundEngine(irrklang::ISoundEngine * eng);
+
+	void setShotCreated(bool created);
 
 private:
 
@@ -48,10 +54,14 @@ private:
 	Texture spritesheet;
 	Sprite *sprite, *spriteDouble, *spriteSticky, *spriteFire;
 	TileMap *map;
+	ShotPlayer *shot1;
 	int speed;
 	bool animation, largePlayer, stickyPlayer, firePlayer;
 	int tiempo;
+	ShaderProgram texProgram;
+	irrklang::ISoundEngine* soundEngine;
 	
+	bool shotCreated;
 
 };
 #endif

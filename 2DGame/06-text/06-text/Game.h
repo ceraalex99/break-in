@@ -92,6 +92,8 @@ public:
 
 	void setTelefono();
 
+	void setShotCreated(bool created);
+
 	void selectLevel(int level);
 
 	void nextLevel();

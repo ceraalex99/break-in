@@ -2,6 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <irrKlang.h>
 #include "Player.h"
 #include "Game.h"
 
@@ -19,6 +20,7 @@ Player::~Player()
 }
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
+	texProgram = shaderProgram;
 	spritesheet.loadFromFile("images/playerSprites1.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.20, 0.20), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(11);
@@ -102,9 +104,13 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	speed = 2;
 	animation = false;
 	tiempo = 0;
+	
+	shotCreated = false;
+	
 	largePlayer = false;
 	stickyPlayer = false;
 	firePlayer = false;
+
 }
 
 void Player::update(int deltaTime) {
@@ -213,6 +219,22 @@ void Player::update(int deltaTime) {
 			}
 
 		}
+		if (firePlayer) {
+			if (Game::instance().getKey(32) && !shotCreated) {
+				Game::instance().keyReleased(32);
+				shot1 = new ShotPlayer();
+				shot1->init(glm::ivec2(0, 0), texProgram);
+				shot1->setDirection(glm::vec2(0.f, -1.f));
+				shot1->setPosition(glm::ivec2(posPlayer.x + 24, posPlayer.y + 10));
+				shot1->setTileMap(Game::instance().getTileMap());
+				shotCreated = true;
+
+				soundEngine->play2D("sounds/bossshot.mp3");
+			}
+			if (shotCreated) {
+				shot1->update(deltaTime);
+			}
+		}
 	}
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
@@ -225,7 +247,10 @@ void Player::render() {
 	sprite->render();
 	if (largePlayer) spriteDouble->render();
 	if (stickyPlayer) spriteSticky->render();
-	if (firePlayer) spriteFire->render();
+	if (firePlayer) {
+		spriteFire->render();
+		if(shotCreated) shot1->render();
+	}
 }
 
 void Player::setTileMap(TileMap *tileMap) {
@@ -312,4 +337,13 @@ void Player::setStickyPlayer(bool sticky) {
 
 void Player::setFirePlayer(bool fire) {
 	firePlayer = fire;
+}
+
+void Player::setSoundEngine(irrklang::ISoundEngine* eng) {
+	soundEngine = eng;
+}
+
+void Player::setShotCreated(bool created) {
+	if(shotCreated)	shot1->setdeadShot(true);
+	shotCreated = created;
 }

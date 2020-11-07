@@ -80,6 +80,8 @@ public:
 	void setTelefono();
 
 	void countPoints();
+
+	void setShotCreated(bool created);
 	
 	void startAnimFinalBank();
 	void startAnimFinalGame();

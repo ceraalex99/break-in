@@ -287,3 +287,7 @@ int Game::getNumberBalls() {
 void Game::setTelefono() {
 	scene.setTelefono();
 }
+
+void Game::setShotCreated(bool created) {
+	scene.setShotCreated(created);
+}

@@ -23,6 +23,7 @@
     <ClCompile Include="TexturedQuad.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Vigilant.cpp" />
+    <ClCompile Include="ShotPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
@@ -47,5 +48,6 @@
     <ClInclude Include="TexturedQuad.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Vigilant.h" />
+    <ClInclude Include="ShotPlayer.h" />
   </ItemGroup>
 </Project>
