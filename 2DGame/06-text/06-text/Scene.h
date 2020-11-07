@@ -76,6 +76,10 @@ public:
 	void loseBall();
 
 	int getNumberBalls();
+
+	void setTelefono();
+
+	void countPoints();
 	
 	void startAnimFinalBank();
 	void startAnimFinalGame();
@@ -94,8 +98,8 @@ private:
 	bool haveKey[6];
 	Ball *ball, *ball2, *ball3;
 	Vigilant *vigilant;
-	Texture meshTexture, lettersTexture, endLevelTexture;
-	TexturedQuad *mesh, *letters, *endLevel;
+	Texture meshTexture, lettersTexture, endLevelTexture, pointsTexture;
+	TexturedQuad *mesh, *letters, *endLevel, *points;
 	int currentRoom;
 	stringstream pointsStr, moneyStr, livesStr, bankStr, roomStr;
 	Boss *boss;
@@ -115,6 +119,8 @@ private:
 
 	int balls;
 	bool startTripleBall;
+
+	bool telefono;
 };
 
 

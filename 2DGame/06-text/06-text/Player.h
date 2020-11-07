@@ -22,9 +22,13 @@ public:
 
 	void stop();
 
+	void die();
+
 	void reset(const glm::vec2 & pos);
 
 	glm::ivec2 getPosition();
+
+	void setSpeed(int spd);
 
 	void checkAnimation(const glm::vec2 &posBall);
 
@@ -36,14 +40,16 @@ public:
 
 	void setStickyPlayer(bool sticky);
 
+	void setFirePlayer(bool fire);
+
 private:
 
 	glm::ivec2 tileMapDispl, posPlayer;
 	Texture spritesheet;
-	Sprite *sprite, *spriteDouble, *spriteSticky;
+	Sprite *sprite, *spriteDouble, *spriteSticky, *spriteFire;
 	TileMap *map;
 	int speed;
-	bool animation, largePlayer, stickyPlayer;
+	bool animation, largePlayer, stickyPlayer, firePlayer;
 	int tiempo;
 	
 

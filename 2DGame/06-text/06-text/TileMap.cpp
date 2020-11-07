@@ -410,6 +410,9 @@ void TileMap::checkTile(int x, int y) {
 	if (currentTile == 18 || currentTile == 22) {
 		Game::instance().catchKey();
 	}
+	else if (currentTile == 17 || currentTile == 21) {
+		Game::instance().setTelefono();
+	}
 	else if (currentTile == 11 || currentTile == 15) {
 		Game::instance().gainMoney(100);
 	}

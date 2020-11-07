@@ -195,8 +195,16 @@ int Game::getPoints() {
 	return points;
 }
 
+void Game::setPoints(int newPoints) {
+	points = newPoints;
+}
+
 int Game::getMoney() {
 	return money;
+}
+
+void Game::setMoney(int newMoney) {
+	money = newMoney;
 }
 
 void Game::loseLife() {
@@ -274,4 +282,8 @@ void Game::loseBall() {
 
 int Game::getNumberBalls() {
 	return scene.getNumberBalls();
+}
+
+void Game::setTelefono() {
+	scene.setTelefono();
 }

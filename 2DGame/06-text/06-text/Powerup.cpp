@@ -91,6 +91,7 @@ void Powerup::update(int deltaTime)
 				player->setLargePlayer(true);
 				ball->setPowerUpSticky(false);
 				player->setStickyPlayer(false);
+				player->setFirePlayer(false);
 				break;
 			case YELLOW:
 				Game::instance().tripleBall();
@@ -99,9 +100,13 @@ void Powerup::update(int deltaTime)
 				player->setLargePlayer(false);
 				ball->setPowerUpSticky(true);
 				player->setStickyPlayer(true);
+				player->setFirePlayer(false);
 				break;
 			case RED:
-				Game::instance().gainPoints(800);
+				player->setLargePlayer(false);
+				player->setFirePlayer(true);
+				ball->setPowerUpSticky(false);
+				player->setStickyPlayer(false);
 				break;
 		}
 	}

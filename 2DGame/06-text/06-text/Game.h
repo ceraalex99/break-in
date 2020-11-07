@@ -54,7 +54,9 @@ public:
 	void gainPoints(int p);
 
 	int getPoints();
+	void setPoints(int newPoints);
 	int getMoney();
+	void setMoney(int newMoney);
 	int getCurrentBank();
 	void loseLife();
 	bool getGodMode();
@@ -87,6 +89,8 @@ public:
 	void loseBall();
 
 	int getNumberBalls();
+
+	void setTelefono();
 
 	void selectLevel(int level);
 

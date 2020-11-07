@@ -83,8 +83,18 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	spriteSticky->addKeyframe(0, glm::vec2(0.f, 0.8f));
 
 
+
+	spriteFire = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.2, 0.2), &spritesheet, &shaderProgram);
+
+	spriteFire->setNumberAnimations(1);
+
+	spriteFire->setAnimationSpeed(0, 8);
+	spriteFire->addKeyframe(0, glm::vec2(0.2f, 0.8f));
+
+
 	spriteDouble->changeAnimation(0);
 	spriteSticky->changeAnimation(0);
+	spriteFire->changeAnimation(0);
 
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
@@ -94,6 +104,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	tiempo = 0;
 	largePlayer = false;
 	stickyPlayer = false;
+	firePlayer = false;
 }
 
 void Player::update(int deltaTime) {
@@ -207,12 +218,14 @@ void Player::update(int deltaTime) {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if (largePlayer) spriteDouble->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x - 24), float(tileMapDispl.y + posPlayer.y)));
 	if (stickyPlayer) spriteSticky->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if (firePlayer) spriteFire->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render() {
 	sprite->render();
 	if (largePlayer) spriteDouble->render();
 	if (stickyPlayer) spriteSticky->render();
+	if (firePlayer) spriteFire->render();
 }
 
 void Player::setTileMap(TileMap *tileMap) {
@@ -224,11 +237,17 @@ void Player::setPosition(const glm::vec2 &pos) {
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	if(largePlayer) spriteDouble->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x - 24), float(tileMapDispl.y + posPlayer.y)));
 	if (stickyPlayer) spriteSticky->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if (firePlayer) spriteFire->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 
 
 void Player::stop() {
+	sprite->changeAnimation(IDLE);
+	speed = 0;
+}
+
+void Player::die() {
 	sprite->changeAnimation(DEAD);
 	speed = 0;
 }
@@ -240,12 +259,17 @@ void Player::reset(const glm::vec2 &pos) {
 	posPlayer = pos;
 	largePlayer = false;
 	stickyPlayer = false;
+	firePlayer = false;
 	sprite->changeAnimation(IDLE);
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 glm::ivec2 Player::getPosition() {
 	return posPlayer;
+}
+
+void Player::setSpeed(int spd) {
+	speed = spd;
 }
 
 void Player::checkAnimation(const glm::vec2 &posBall) {
@@ -284,4 +308,8 @@ void Player::setLargePlayer(bool large) {
 
 void Player::setStickyPlayer(bool sticky) {
 	stickyPlayer = sticky;
+}
+
+void Player::setFirePlayer(bool fire) {
+	firePlayer = fire;
 }

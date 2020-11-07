@@ -76,6 +76,11 @@ void Scene::init()
 	letters = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	lettersTexture.setMagFilter(GL_NEAREST);
 
+	geom[1] = glm::vec2(400.f, 300.f);
+	pointsTexture.loadFromFile("images/backgroundPoints.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	points = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	pointsTexture.setMagFilter(GL_NEAREST);
+
 
 
 	currentBank = Game::instance().getCurrentBank();
@@ -181,6 +186,15 @@ void Scene::update(int deltaTime)
 		powerup->setPlayer(player);
 		powerup->setBall(ball);
 		powerupIsActive = true;
+	}
+	if (telefono) {
+		ball->stop();
+		if (balls > 1) {
+			ball2->stop();
+			if (balls > 2) ball3->stop();
+		}
+		player->stop();
+		countPoints();
 	}
 
 	if (startTripleBall) {
@@ -390,6 +404,32 @@ void Scene::render()
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 		arrows->render(arrowsTexture);
+	}
+
+	if (telefono) {
+		if (Game::instance().getPoints() > 0) {
+			texProgram.use();
+			texProgram.setUniformMatrix4f("projection", projection);
+			texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
+			
+			modelview = glm::translate(glm::mat4(1.0f), glm::vec3(map[0]->getTileSize(), 4 * map[0]->getTileSize(), 0.f));
+			texProgram.setUniformMatrix4f("modelview", modelview);
+			texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+			points->render(pointsTexture);
+
+			text.render(moneyStr.str(), glm::vec2(map[0]->getTileSize() + 120, 7 * map[0]->getTileSize() + 10), 32, glm::vec4(0, 1, 0, 1));
+			text.render(pointsStr.str(), glm::vec2(map[0]->getTileSize() + 120, 9 * map[0]->getTileSize()), 32, glm::vec4(0, 1, 0, 1));
+
+		}
+		else {
+			telefono = false;
+			ball->setSpeed(6);
+			player->setSpeed(2);
+			if (balls > 1) {
+				ball2->setSpeed(6);
+				if (balls > 2) ball3->setSpeed(6);
+			}
+		}
 	}
 }
 
@@ -685,7 +725,7 @@ void Scene::loseLife() {
 		vigilant->reset();
 		ball->stop();
 		ball->setDeadBall(false);
-		player->stop();
+		player->die();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
 		
@@ -782,6 +822,7 @@ void Scene::stopPowerUps() {
 	player->setLargePlayer(false);
 	player->setStickyPlayer(false);
 	ball->setPowerUpSticky(false);
+	player->setFirePlayer(false);
 }
 
 void Scene::tripleBall() {
@@ -819,4 +860,18 @@ void Scene::loseBall() {
 
 int Scene::getNumberBalls() {
 	return balls;
+}
+
+void Scene::setTelefono() {
+	telefono = true;
+}
+
+void Scene::countPoints() {
+
+	if (Game::instance().getPoints() > 0) {
+		Game::instance().setMoney(Game::instance().getMoney() + 10);
+		Game::instance().setPoints(Game::instance().getPoints() - 10);
+	}
+	reloadMoney();
+	reloadPoints();
 }
