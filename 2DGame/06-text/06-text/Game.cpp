@@ -263,3 +263,15 @@ void Game::catchPowerup() {
 	gainPoints(200);
 	scene.catchPowerup();
 }
+
+void Game::tripleBall() {
+	scene.tripleBall();
+}
+
+void Game::loseBall() {
+	scene.loseBall();
+}
+
+int Game::getNumberBalls() {
+	return scene.getNumberBalls();
+}

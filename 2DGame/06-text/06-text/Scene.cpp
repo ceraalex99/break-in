@@ -160,24 +160,67 @@ void Scene::init()
 
 	powerupTimer = 0;
 	powerupIsActive = false;
+
+	powerTimer = 0;
+	powerActive = false;
+	bossDefeated = false;
+
+	balls = 1;
+	startTripleBall = false;
 }
 
 void Scene::update(int deltaTime)
 {
 	powerupTimer += deltaTime;
+	powerTimer += deltaTime;
 
 	if (powerupTimer > 4000 && !powerupIsActive) {
 		powerup = new Powerup();
 		powerup->init(glm::vec2(0, 0), texProgram);
 		powerup->setPosition(glm::ivec2(-30, 540));
 		powerup->setPlayer(player);
+		powerup->setBall(ball);
 		powerupIsActive = true;
+	}
+
+	if (startTripleBall) {
+		ball2 = new Ball();
+		ball2->init(glm::ivec2(0, 0), texProgram);
+		ball2->setSticky(false);
+		ball2->setPosition(glm::vec2(ball->getPosition().x, ball->getPosition().y));
+		ball2->setTileMap(map[currentRoom]);
+		ball2->setPlayer(player);
+		ball2->setDirection(glm::vec2(ball->getDirection().x + 0.2f, ball->getDirection().y));
+		ball2->setSpeed(6);
+
+		ball3 = new Ball();
+		ball3->init(glm::ivec2(0, 0), texProgram);
+		ball3->setSticky(false);
+		ball3->setPosition(glm::vec2(ball->getPosition().x, ball->getPosition().y));
+		ball3->setTileMap(map[currentRoom]);
+		ball3->setPlayer(player);
+		ball3->setDirection(glm::vec2(ball->getDirection().x - 0.2f, ball->getDirection().y));
+		ball3->setSpeed(6);
+		
+
+		balls = 3;
+
+		startTripleBall = false;
+	}
+
+	if (powerTimer > 8000 && powerActive) {
+		stopPowerUps();
+		powerTimer = 0;
 	}
 
 
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	ball->update(deltaTime);
+	if (balls > 1) {
+		ball2->update(deltaTime);
+		if(balls > 2) ball3->update(deltaTime);
+	}
 	vigilant->update(deltaTime);
 	if(powerupIsActive)
 		powerup->update(deltaTime);
@@ -221,6 +264,9 @@ void Scene::update(int deltaTime)
 			if (!(currentRoom == 4 && currentBank == 3)) {
 				nextRoom();
 				ball->setDirection(glm::vec2(ball->getDirection().x, -abs(ball->getDirection().y)));
+				balls = 1;
+				delete ball2;
+				delete ball3;
 			}
 		}
 	}
@@ -229,6 +275,9 @@ void Scene::update(int deltaTime)
 		if (currentRoom > 0) {
 			previousRoom();
 			ball->setDirection(glm::vec2(ball->getDirection().x, abs(ball->getDirection().y)));
+			balls = 1;
+			delete ball2;
+			delete ball3;
 		}
 	}
 
@@ -294,6 +343,10 @@ void Scene::render()
 	player->render();
 	if (state != FINAL_ANIMATION) {
 		ball->render();
+		if (balls > 1 && !startTripleBall) {
+			ball2->render();
+			if (balls > 2 && !startTripleBall) ball3->render();
+		}
 	}
 	
 	if (powerupIsActive)
@@ -438,7 +491,7 @@ void Scene::nextRoom() {
 			map[5]->moveTileMap(glm::vec2(0, -560));
 			if(currentBank < 3) startAnimFinalBank();
 			else {
-				startBossFight();
+				if(!bossDefeated) startBossFight();
 				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
 				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
 				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
@@ -464,14 +517,28 @@ void Scene::nextRoom() {
 			break;
 	}
 	player->setTileMap(map[currentRoom]);
-	ball->setTileMap(map[currentRoom]);
+	
 	player->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	if (ball->getSticky() || currentRoom == 4) {
 		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
 	}
 	else {
+		if (balls > 1) {
+			balls = 1;
+			if (ball->getPosition().y > ball2->getPosition().y) {
+				ball = ball2;
+			}
+			if (ball->getPosition().y > ball3->getPosition().y) {
+				ball = ball3;
+			}
+			ball2 = NULL;
+			delete ball2;
+			ball3 = NULL;
+			delete ball3;
+		}
 		ball->setPosition(glm::ivec2(ball->getPosition().x, 480));
 	}
+	ball->setTileMap(map[currentRoom]);
 	
 	reloadRoom();
 }
@@ -519,6 +586,10 @@ void Scene::previousRoom() {
 
 				endBossFight();
 			}
+			else {
+				resetPlayer();
+				ball->setAnimationBall(false);
+			}
 			break;
 		case 4:
 			map[0]->moveTileMap(glm::vec2(0, 2240));
@@ -528,7 +599,7 @@ void Scene::previousRoom() {
 			map[4]->moveTileMap(glm::vec2(0, 0));
 			map[5]->moveTileMap(glm::vec2(0, -560));
 			if (currentBank == 3) {
-				startBossFight();
+				if(!bossDefeated) startBossFight();
 				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
 				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
 				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
@@ -546,11 +617,25 @@ void Scene::previousRoom() {
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setTileMap(map[currentRoom]);
-	ball->setTileMap(map[currentRoom]);
+	
 	if (ball->getSticky()) {
 		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	}
 	else {
+		if (balls > 1) {
+			balls = 1;
+			if (ball->getPosition().y < ball2->getPosition().y) {
+				ball = ball2;
+			}
+			if (ball->getPosition().y < ball3->getPosition().y) {
+				ball = ball3;
+			}
+			ball2 = NULL;
+			delete ball2;
+			ball3 = NULL;
+			delete ball3;
+		}
+		ball->setTileMap(map[currentRoom]);
 		ball->setPosition(glm::vec2(ball->getPosition().x, 0));
 	}
 
@@ -646,7 +731,7 @@ void Scene::startAnimFinalBank() {
 	ball->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 8, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setAnimationPlayer();
-	ball->setAnimationBall();
+	ball->setAnimationBall(true);
 }
 
 void Scene::startAnimFinalGame() {
@@ -658,9 +743,9 @@ void Scene::startAnimFinalGame() {
 
 
 void Scene::win(){
-	map[4]->openFinal();
-	state = GAME_WIN;
+	bossDefeated = true;
 	map[currentRoom]->openBossExit();
+	state = GAME_WIN;
 }
 
 Player* Scene::getPlayer() {
@@ -685,4 +770,47 @@ void Scene::alarmOff() {
 void Scene::catchPowerup() {
 	powerupIsActive = false;
 	powerupTimer = 0;
+	powerTimer = 0;
+	powerActive = true;
+}
+
+void Scene::stopPowerUps() {
+	powerActive = false;
+	player->setLargePlayer(false);
+	ball->setPowerUpSticky(false);
+}
+
+void Scene::tripleBall() {
+	balls = 3;
+	startTripleBall = true;
+}
+
+void Scene::loseBall() {
+	--balls;
+	if (balls < 1) {
+		loseLife();
+		balls = 1;
+	}
+	else if (balls == 1) {
+		ball2 = NULL;
+		delete ball2;
+		ball3 = NULL;
+		delete ball3;
+	}
+	else if (balls == 2){
+		if (ball->getPosition().y > 450) {
+			ball = ball2;
+			ball2 = ball3;
+		}
+		else if (ball2->getPosition().y > 450) {
+			ball2 = ball3;
+			
+		}
+		ball3 = NULL;
+		delete ball3;
+	}
+}
+
+int Scene::getNumberBalls() {
+	return balls;
 }

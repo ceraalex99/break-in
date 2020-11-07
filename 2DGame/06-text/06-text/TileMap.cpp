@@ -389,13 +389,6 @@ void TileMap::openExit() {
 	prepareArrays(glm::vec2(0, 0), texProgram);
 }
 
-void TileMap::openFinal() {
-	for (int x = 4; x < 8; x++) {
-		map[2*mapSize.x + x] = 0;
-	}
-	prepareArrays(glm::vec2(0, 0), texProgram);
-}
-
 
 void TileMap::setShaderProgram(ShaderProgram program) {
 	texProgram = program;

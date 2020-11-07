@@ -32,6 +32,8 @@ public:
 
 	bool getLargePlayer();
 
+	void setLargePlayer(bool large);
+
 private:
 
 	glm::ivec2 tileMapDispl, posPlayer;

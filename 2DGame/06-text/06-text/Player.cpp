@@ -260,3 +260,7 @@ void Player::setAnimationPlayer() {
 bool Player::getLargePlayer() {
 	return largePlayer;
 }
+
+void Player::setLargePlayer(bool large) {
+	largePlayer = large;
+}

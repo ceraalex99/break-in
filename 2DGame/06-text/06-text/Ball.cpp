@@ -32,6 +32,9 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	animation = false;
 	tiempo = 0;
 	sprite->changeAnimation(0);
+	powerUpSticky = false;
+	stopped = false;
+	animation = false;
 }
 
 void Ball::update(int deltaTime) {
@@ -79,27 +82,9 @@ void Ball::update(int deltaTime) {
 					posBall.x -= 6;
 				}
 			}
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP) || Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
 				direction = normalize(glm::vec2(0.4f, -1.f));
 				sticky = false;
-			}
-			else if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-				posBall.y += 2;
-				if (posBall.y > 406) {
-					posBall.y -= speed / 3;
-				}
-				else {
-					posBall.y += speed / 3;
-					if (posBall.y > 406) {
-						posBall.y -= speed / 3;
-					}
-					else {
-						posBall.y += 2;
-						if (posBall.y > 406) {
-							posBall.y -= 2;
-						}
-					}
-				}
 			}
 		}
 		else {
@@ -110,17 +95,23 @@ void Ball::update(int deltaTime) {
 						direction.y = -direction.y;
 					}
 					else {
-						Game::instance().loseLife();
+						Game::instance().loseBall();
 					}
 				}
 				else if (direction.y > 0) {
-					Game::instance().previousRoom();
+					if (Game::instance().getNumberBalls() > 1) {
+						Game::instance().loseBall();
+					}
+					else Game::instance().previousRoom();
 				}
 
 			}
 			else if (posBall.y < 5) {
 				if (direction.y < 0)
-					Game::instance().nextRoom();
+					if (Game::instance().getNumberBalls() > 1) {
+						Game::instance().loseBall();
+					}
+					else Game::instance().nextRoom();
 			}
 			else {
 				if ((direction.y < 0 && direction.x > 0 && map->collisionMoveUpRight(posBall, glm::ivec2(24, 24))) || (direction.y < 0 && direction.x < 0 && map->collisionMoveUpLeft(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x > 0 && map->collisionMoveDownRight(posBall, glm::ivec2(24, 24))) || (direction.y > 0 && direction.x < 0 && map->collisionMoveDownLeft(posBall, glm::ivec2(24, 24)))) {
@@ -230,10 +221,18 @@ void Ball::collisionPlayer() {
 				posBall.y += direction.y * speed;
 			}
 			else {
-				direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 12.f;
-				direction.y = -1.f;
-				posBall.y += direction.y * speed;
-				direction = normalize(direction);
+				if (powerUpSticky) {
+					sticky = true;
+					direction.y = -1.f;
+					posBall.y += direction.y * speed;
+					direction = glm::vec2(0.f, 0.f);
+				}
+				else {
+					direction.x = ((posBall.x + 12.f) - (posPlayer.x + 24.f)) / 12.f;
+					direction.y = -1.f;
+					posBall.y += direction.y * speed;
+					direction = normalize(direction);
+				}
 			}
 
 		}
@@ -273,6 +272,14 @@ bool Ball::getSticky() {
 	return sticky;
 }
 
-void Ball::setAnimationBall() {
-	animation = true;
+void Ball::setAnimationBall(bool anim) {
+	animation = anim;
+}
+
+void Ball::setPowerUpSticky(bool powerUp) {
+	powerUpSticky = powerUp;
+}
+
+void Ball::setSpeed(int spd) {
+	speed = spd;
 }

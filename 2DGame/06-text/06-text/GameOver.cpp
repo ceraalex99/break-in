@@ -28,23 +28,6 @@ void GameOver::init() {
 
 void GameOver::update(int deltaTime) {
 	currentTime += deltaTime;
-
-	/*if (Game::instance().getSpecialKey(GLUT_KEY_DOWN)) {
-		Game::instance().specialKeyReleased(GLUT_KEY_DOWN);
-		++action;
-		action %= 3;
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_UP)) {
-		Game::instance().specialKeyReleased(GLUT_KEY_UP);
-		action += 2;
-		action %= 3;
-	}
-
-	if (Game::instance().getKey(13) || Game::instance().getKey(32)) {
-		Game::instance().keyReleased(13);
-		Game::instance().keyReleased(32);
-		Game::instance().startAction(action);
-	}*/
 }
 
 void GameOver::render() {
@@ -57,23 +40,6 @@ void GameOver::render() {
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	background->render(backgroundImage);
-
-	/*if (action == 0) {
-		text.render("PLAY", glm::vec2(276, 360), 36, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(220, 410), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(266, 460), 24, glm::vec4(1, 1, 1, 1));
-	}
-	else if (action == 1) {
-		text.render("PLAY", glm::vec2(295, 360), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(165, 410), 36, glm::vec4(0.5, 0.4, 1, 1));
-		text.render("CREDITS", glm::vec2(266, 460), 24, glm::vec4(1, 1, 1, 1));
-	}
-	else {
-		text.render("PLAY", glm::vec2(295, 360), 24, glm::vec4(1, 1, 1, 1));
-		text.render("INSTRUCTIONS", glm::vec2(220, 410), 24, glm::vec4(1, 1, 1, 1));
-		text.render("CREDITS", glm::vec2(235, 460), 36, glm::vec4(0.5, 0.4, 1, 1));
-	}
-	*/
 }
 
 

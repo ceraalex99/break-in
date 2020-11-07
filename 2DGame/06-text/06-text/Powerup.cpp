@@ -55,6 +55,7 @@ void Powerup::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 void Powerup::update(int deltaTime)
 {
 	animTimer += deltaTime;
+	tiempo += deltaTime;
 
 	if (animTimer > 3000) {
 		animTimer = 0;
@@ -87,12 +88,18 @@ void Powerup::update(int deltaTime)
 		Game::instance().catchPowerup();
 		switch (color) {
 			case YELLOW:
+				player->setLargePlayer(true);
+				ball->setPowerUpSticky(false);
 				break;
 			case RED:
+				Game::instance().tripleBall();
 				break;
 			case BLUE:
+				player->setLargePlayer(false);
+				ball->setPowerUpSticky(true);
 				break;
 			case GREEN:
+				Game::instance().gainPoints(800);
 				break;
 		}
 	}
@@ -138,6 +145,7 @@ void Powerup::setPosition(const glm::vec2 & pos)
 	posPowerup = pos;
 }
 
-
-
+void Powerup::setBall(Ball *pelota) {
+	ball = pelota;
+}
 

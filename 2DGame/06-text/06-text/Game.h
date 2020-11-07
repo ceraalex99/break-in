@@ -82,6 +82,12 @@ public:
 
 	void catchPowerup();
 
+	void tripleBall();
+
+	void loseBall();
+
+	int getNumberBalls();
+
 	void selectLevel(int level);
 
 	void nextLevel();

@@ -37,7 +37,11 @@ public:
 
 	void setSticky(bool s);
 
-	void setAnimationBall();
+	void setAnimationBall(bool anim);
+
+	void setPowerUpSticky(bool powerUpSticky);
+
+	void setSpeed(int spd);
 
 private:
 	glm::ivec2 tileMapDispl, posBall;
@@ -52,5 +56,6 @@ private:
 	bool animation;
 	bool stopped;
 	int tiempo;
+	bool powerUpSticky;
 };
 #endif

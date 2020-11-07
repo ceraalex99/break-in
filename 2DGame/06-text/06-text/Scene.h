@@ -68,6 +68,14 @@ public:
 	void alarmOff();
 
 	void catchPowerup();
+
+	void stopPowerUps();
+
+	void tripleBall();
+
+	void loseBall();
+
+	int getNumberBalls();
 	
 	void startAnimFinalBank();
 	void startAnimFinalGame();
@@ -84,7 +92,7 @@ private:
 	Player *player;
 	TileMap *map[6];
 	bool haveKey[6];
-	Ball *ball;
+	Ball *ball, *ball2, *ball3;
 	Vigilant *vigilant;
 	Texture meshTexture, lettersTexture, endLevelTexture;
 	TexturedQuad *mesh, *letters, *endLevel;
@@ -99,11 +107,14 @@ private:
 	
 	Quad *bossLifeBar;
 	int currentBank;
-	int powerupTimer;
+	int powerupTimer, powerTimer;
 	Powerup *powerup;
-	bool powerupIsActive;
+	bool powerupIsActive, powerActive;
 
-	bool dead;
+	bool dead, bossDefeated;
+
+	int balls;
+	bool startTripleBall;
 };
 
 

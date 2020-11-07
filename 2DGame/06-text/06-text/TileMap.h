@@ -47,7 +47,6 @@ public:
 	void openBossExit();
 
 	void openExit();
-	void openFinal();
 	void setShaderProgram(ShaderProgram program);
 	void moveTileMap(const glm::vec2 &minCoords);
 	void setSoundEngine(irrklang::ISoundEngine* eng);
