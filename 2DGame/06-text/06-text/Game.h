@@ -82,7 +82,7 @@ public:
 
 	void stopBossShooting();
 
-	void catchPowerup();
+	void catchPowerup(int color);
 
 	void tripleBall();
 

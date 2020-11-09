@@ -16,6 +16,12 @@ enum State {
 
 State state;
 
+enum PlayerState {
+	SMALL, LARGE, STICKY, BATGUN
+};
+
+PlayerState playerState;
+
 Scene::Scene()
 {
 	player = NULL;
@@ -35,11 +41,24 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	playerState = SMALL;
 	soundEngine->stopAllSounds();
 	soundEngine->play2D("sounds/backgroundMusicLow.wav", true);
 
-	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f)};
+	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(120.f, 20.f)};
 	glm::vec2 texCoords[2] = {glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f)};
+
+	largeTex.loadFromFile("images/large.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	largeTex.setMagFilter(GL_NEAREST);
+	smallTex.loadFromFile("images/small.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	smallTex.setMagFilter(GL_NEAREST);
+	batgunTex.loadFromFile("images/gunbat.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	batgunTex.setMagFilter(GL_NEAREST);
+	stickyTex.loadFromFile("images/sticky.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	stickyTex.setMagFilter(GL_NEAREST);
+
+	
+
 	haveKey[0] = false;
 	haveKey[1] = false;
 	haveKey[2] = false;
@@ -53,6 +72,10 @@ void Scene::init()
 	dead = false;
 
 	initShaders();
+
+	powerupQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+
+	geom[1] = glm::vec2(160.f, 16.f);
 	
 	blackBackground = Quad::createQuad(0.f, 0.f, 640.f, 480.f, simpleProgram);
 	bossLifeBar = Quad::createQuad(0.f, 0.f, 44.f, 10.f, simpleProgram);
@@ -167,7 +190,6 @@ void Scene::init()
 	powerupTimer = 0;
 	powerupIsActive = false;
 
-	powerTimer = 0;
 	powerActive = false;
 	bossDefeated = false;
 
@@ -178,7 +200,6 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	powerupTimer += deltaTime;
-	powerTimer += deltaTime;
 
 	if (powerupTimer > 4000 && !powerupIsActive) {
 		powerup = new Powerup();
@@ -223,10 +244,6 @@ void Scene::update(int deltaTime)
 		startTripleBall = false;
 	}
 
-	if (powerTimer > 8000 && powerActive) {
-		stopPowerUps();
-		powerTimer = 0;
-	}
 
 
 	currentTime += deltaTime;
@@ -383,6 +400,22 @@ void Scene::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	letters->render(lettersTexture);
 
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(500.f, 400.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	switch (playerState) {
+	case SMALL:
+		powerupQuad->render(smallTex);
+		break;
+	case LARGE:
+		powerupQuad->render(largeTex);
+		break;
+	case BATGUN:
+		powerupQuad->render(batgunTex);
+		break;
+	case STICKY:
+		powerupQuad->render(stickyTex);
+		break;
+	}
 	
 	
 	text.render(moneyStr.str(), glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
@@ -432,6 +465,7 @@ void Scene::render()
 			}
 		}
 	}
+
 }
 
 void Scene::initShaders()
@@ -497,6 +531,7 @@ void Scene::catchKey() {
 }
 
 void Scene::nextRoom() {
+	playerState = SMALL;
 	currentRoom++;
 	stopPowerUps();
 	switch (currentRoom) {
@@ -587,6 +622,7 @@ void Scene::nextRoom() {
 }
 
 void Scene::previousRoom() {
+	playerState = SMALL;
 	currentRoom--;
 	stopPowerUps();
 	switch (currentRoom) {
@@ -814,10 +850,24 @@ void Scene::alarmOff() {
 	vigilant->reset();
 }
 
-void Scene::catchPowerup() {
+void Scene::catchPowerup(int color) {
+	switch (color) {
+		case 1:
+			playerState = BATGUN;
+			break;
+		case 2:
+			playerState = STICKY;
+			break;
+		case 3:
+			playerState = LARGE;
+			break;
+		case 4:
+		case 5:
+			playerState = SMALL;
+			break;
+	}
 	powerupIsActive = false;
 	powerupTimer = 0;
-	powerTimer = 0;
 	powerActive = true;
 }
 

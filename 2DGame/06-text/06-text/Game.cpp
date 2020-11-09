@@ -267,9 +267,9 @@ void Game::stopBossShooting() {
 	scene.stopBossShooting();
 }
 
-void Game::catchPowerup() {
+void Game::catchPowerup(int color) {
 	gainPoints(200);
-	scene.catchPowerup();
+	scene.catchPowerup(color);
 }
 
 void Game::tripleBall() {

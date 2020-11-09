@@ -119,5 +119,5 @@ bool Vigilant::collisionPlayer() {
 			return true;
 		}
 	}
-	else return false;
+	return false;
 }

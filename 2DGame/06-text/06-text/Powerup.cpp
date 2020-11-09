@@ -24,7 +24,6 @@ void Powerup::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 	spritesheet.loadFromFile("images/powerups.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(32, 32), glm::vec2(0.25f, 0.25f), &spritesheet, &shaderProgram);
 
-	
 	sprite->setNumberAnimations(6);
 
 	sprite->setAnimationSpeed(YELLOW, 0);
@@ -85,8 +84,15 @@ void Powerup::update(int deltaTime)
 	}
 	
 	if (collisionPlayer()) {
-		Game::instance().catchPowerup();
+		Game::instance().catchPowerup(color);
 		switch (color) {
+			case WHITE:
+			case PINK:
+				player->setLargePlayer(false);
+				ball->setPowerUpSticky(false);
+				player->setStickyPlayer(false);
+				player->setFirePlayer(false);
+				break;
 			case GREEN:
 				player->setLargePlayer(true);
 				ball->setPowerUpSticky(false);

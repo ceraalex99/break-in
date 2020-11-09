@@ -67,7 +67,8 @@ public:
 
 	void alarmOff();
 
-	void catchPowerup();
+	void catchPowerup(int color);
+
 
 	void stopPowerUps();
 
@@ -113,7 +114,7 @@ private:
 	
 	Quad *bossLifeBar;
 	int currentBank;
-	int powerupTimer, powerTimer;
+	int powerupTimer;
 	Powerup *powerup;
 	bool powerupIsActive, powerActive;
 
@@ -123,6 +124,9 @@ private:
 	bool startTripleBall;
 
 	bool telefono;
+
+	Texture largeTex, smallTex, batgunTex, stickyTex;
+	TexturedQuad *powerupQuad;
 };
 
 

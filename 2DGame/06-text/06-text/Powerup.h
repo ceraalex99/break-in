@@ -35,5 +35,6 @@ private:
 	int animTimer;
 	bool powerUpActive;
 	int tiempo;
+	
 };
 #endif
