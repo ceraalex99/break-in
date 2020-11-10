@@ -924,8 +924,8 @@ void Scene::setTelefono() {
 void Scene::countPoints() {
 
 	if (Game::instance().getPoints() > 0) {
-		Game::instance().setMoney(Game::instance().getMoney() + 125);
-		Game::instance().setPoints(Game::instance().getPoints() - 125);
+		Game::instance().setMoney(Game::instance().getMoney() + 100);
+		Game::instance().setPoints(Game::instance().getPoints() - 100);
 	}
 	reloadMoney();
 	reloadPoints();
