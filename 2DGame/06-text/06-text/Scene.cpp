@@ -115,7 +115,7 @@ void Scene::init()
 		map[3] = TileMap::createTileMap("levels/01-bonus.txt", glm::vec2(0, -1680), texProgram);
 		map[4] = TileMap::createTileMap("levels/emptyLevel1.txt", glm::vec2(0, -2240), texProgram);
 		map[5] = TileMap::createTileMap("levels/emptyLevel1.txt", glm::vec2(0, -2800), texProgram);
-
+		currentMoney = 18;
 	}
 
 	else if (currentBank == 2) {
@@ -125,6 +125,7 @@ void Scene::init()
 		map[3] = TileMap::createTileMap("levels/02-bonus.txt", glm::vec2(0, -1680), texProgram);
 		map[4] = TileMap::createTileMap("levels/emptyLevel2.txt", glm::vec2(0, -2240), texProgram);
 		map[5] = TileMap::createTileMap("levels/emptyLevel2.txt", glm::vec2(0, -2800), texProgram);
+		currentMoney = 8;
 	}
 	
 	else {
@@ -134,6 +135,7 @@ void Scene::init()
 		map[3] = TileMap::createTileMap("levels/03-bonus.txt", glm::vec2(0, -1680), texProgram);
 		map[4] = TileMap::createTileMap("levels/bossLevel.txt", glm::vec2(0, -2240), texProgram);
 		map[5] = TileMap::createTileMap("levels/emptyLevel3.txt", glm::vec2(0, -2800), texProgram);
+		currentMoney = 10;
 	}
 
 	map[0]->setShaderProgram(texProgram);
@@ -933,4 +935,9 @@ void Scene::countPoints() {
 
 void Scene::setShotCreated(bool created) {
 	player->setShotCreated(created);
+}
+
+void Scene::gainMoney() {
+	currentMoney--;
+	if (currentMoney == 0) nextRoom();
 }

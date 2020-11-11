@@ -83,6 +83,8 @@ public:
 	void countPoints();
 
 	void setShotCreated(bool created);
+
+	void gainMoney();
 	
 	void startAnimFinalBank();
 	void startAnimFinalGame();
@@ -124,7 +126,7 @@ private:
 	bool startTripleBall;
 
 	bool telefono;
-
+	int currentMoney;
 	Texture largeTex, smallTex, batgunTex, stickyTex;
 	TexturedQuad *powerupQuad;
 };

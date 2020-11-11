@@ -233,6 +233,7 @@ void Game::previousRoom() {
 
 void Game::gainMoney(int mon) {
 	money += mon;
+	scene.gainMoney();
 	scene.reloadMoney();
 	soundEngine->play2D("sounds/money.wav");
 }
