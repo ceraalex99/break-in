@@ -32,7 +32,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-	if(arrows != NULL)
+	if (arrows != NULL)
 		delete arrows;
 	if (player != NULL)
 		delete player;
@@ -45,8 +45,8 @@ void Scene::init()
 	soundEngine->stopAllSounds();
 	soundEngine->play2D("sounds/backgroundMusicLow.wav", true);
 
-	glm::vec2 geom[2] = {glm::vec2(0.f, 0.f), glm::vec2(120.f, 20.f)};
-	glm::vec2 texCoords[2] = {glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f)};
+	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(120.f, 20.f) };
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 
 	largeTex.loadFromFile("images/large.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	largeTex.setMagFilter(GL_NEAREST);
@@ -57,7 +57,7 @@ void Scene::init()
 	stickyTex.loadFromFile("images/sticky.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	stickyTex.setMagFilter(GL_NEAREST);
 
-	
+
 
 	haveKey[0] = false;
 	haveKey[1] = false;
@@ -68,7 +68,7 @@ void Scene::init()
 
 	currentRoom = 0;
 	lives = 4;
-	
+
 	dead = false;
 
 	initShaders();
@@ -76,10 +76,10 @@ void Scene::init()
 	powerupQuad = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
 	geom[1] = glm::vec2(160.f, 16.f);
-	
+
 	blackBackground = Quad::createQuad(0.f, 0.f, 640.f, 480.f, simpleProgram);
 	bossLifeBar = Quad::createQuad(0.f, 0.f, 44.f, 10.f, simpleProgram);
-	
+
 	arrows = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 	arrowsTexture.loadFromFile("images/arrows.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	arrowsTexture.setMagFilter(GL_NEAREST);
@@ -127,7 +127,7 @@ void Scene::init()
 		map[5] = TileMap::createTileMap("levels/emptyLevel2.txt", glm::vec2(0, -2800), texProgram);
 		currentMoney = 8;
 	}
-	
+
 	else {
 		map[0] = TileMap::createTileMap("levels/03-01.txt", glm::vec2(0, 0), texProgram);
 		map[1] = TileMap::createTileMap("levels/03-02.txt", glm::vec2(0, -560), texProgram);
@@ -145,7 +145,7 @@ void Scene::init()
 	map[4]->setShaderProgram(texProgram);
 	map[5]->setShaderProgram(texProgram);
 
-	
+
 	map[0]->setSoundEngine(soundEngine);
 	map[1]->setSoundEngine(soundEngine);
 	map[2]->setSoundEngine(soundEngine);
@@ -153,21 +153,21 @@ void Scene::init()
 	map[4]->setSoundEngine(soundEngine);
 	map[5]->setShaderProgram(texProgram);
 
-	
+
 	player = new Player();
 	player->init(glm::ivec2(0, 0), texProgram);
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setTileMap(map[0]);
 	player->setSoundEngine(soundEngine);
-	
+
 	ball = new Ball();
 	ball->init(glm::ivec2(0, 0), texProgram);
-	ball->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
+	ball->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	ball->setTileMap(map[0]);
 	ball->setPlayer(player);
 
 	vigilant = new Vigilant();
-	vigilant->init(glm::ivec2(0,0), texProgram);
+	vigilant->init(glm::ivec2(0, 0), texProgram);
 	vigilant->setPosition(glm::ivec2(0, 0));
 	vigilant->setPlayer(player);
 	vigilant->setTileMap(map[0]);
@@ -176,11 +176,11 @@ void Scene::init()
 
 	projection = glm::ortho(0.f, float(CAMERA_WIDTH - 1), float(CAMERA_HEIGHT - 1), 0.f);
 	currentTime = 0.0f;
-	
+
 	// Select which font you want to use
-	if(!text.init("fonts/ARCADEPI.ttf"))
-	//if(!text.init("fonts/OpenSans-Bold.ttf"))
-	//if(!text.init("fonts/DroidSerif.ttf"))
+	if (!text.init("fonts/ARCADEPI.ttf"))
+		//if(!text.init("fonts/OpenSans-Bold.ttf"))
+		//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
 
 	reloadMoney();
@@ -239,7 +239,7 @@ void Scene::update(int deltaTime)
 		ball3->setPlayer(player);
 		ball3->setDirection(glm::vec2(ball->getDirection().x - 0.2f, ball->getDirection().y));
 		ball3->setSpeed(6);
-		
+
 
 		balls = 3;
 
@@ -253,10 +253,10 @@ void Scene::update(int deltaTime)
 	ball->update(deltaTime);
 	if (balls > 1) {
 		ball2->update(deltaTime);
-		if(balls > 2) ball3->update(deltaTime);
+		if (balls > 2) ball3->update(deltaTime);
 	}
 	vigilant->update(deltaTime);
-	if(powerupIsActive)
+	if (powerupIsActive)
 		powerup->update(deltaTime);
 
 	if (state == BOSS_FIGHT) {
@@ -340,22 +340,22 @@ void Scene::render()
 			firstPhase = false;
 		for (int i = 1; i <= 10; ++i) {
 			if (bossLife >= i)
-				if(firstPhase)
+				if (firstPhase)
 					simpleProgram.setUniform4f("color", 1.f, 0.5f, 0.f, 1.f);
 				else
 					simpleProgram.setUniform4f("color", 1.f, 0.f, 0.f, 1.f);
-			else if(bossLife == i-1  && boss->getHitting()) {
+			else if (bossLife == i - 1 && boss->getHitting()) {
 				simpleProgram.setUniform4f("color", 1.f, 1.f, 1.f, 1.f);
 			}
 			else {
 				simpleProgram.setUniform4f("color", 0.f, 0.f, 0.f, 1.f);
 			}
-			modelview = glm::translate(glm::mat4(1.f), glm::vec3(44.f*i-22.f, 15.f, 0.f));
+			modelview = glm::translate(glm::mat4(1.f), glm::vec3(44.f*i - 22.f, 15.f, 0.f));
 			simpleProgram.setUniformMatrix4f("modelview", modelview);
 			bossLifeBar->render();
 		}
 	}
-	
+
 
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
@@ -363,8 +363,8 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-	
-	if(currentRoom < 4 || currentBank == 3) mesh->render(meshTexture);
+
+	if (currentRoom < 4 || currentBank == 3) mesh->render(meshTexture);
 	else endLevel->render(endLevelTexture);
 	map[0]->render();
 	map[1]->render();
@@ -373,7 +373,7 @@ void Scene::render()
 	map[4]->render();
 	map[5]->render();
 
-	
+
 	player->render();
 	if (state != FINAL_ANIMATION) {
 		ball->render();
@@ -382,13 +382,13 @@ void Scene::render()
 			if (balls > 2 && !startTripleBall) ball3->render();
 		}
 	}
-	
+
 	if (powerupIsActive)
 		powerup->render();
-	if(vigilant->getActivo()){
+	if (vigilant->getActivo()) {
 		vigilant->render();
 	}
-	
+
 	if (currentRoom == 4 && (state == BOSS_FIGHT || state == BOSS_INTRO || state == LOSE_LIFE)) {
 		boss->render();
 	}
@@ -418,19 +418,19 @@ void Scene::render()
 		powerupQuad->render(stickyTex);
 		break;
 	}
-	
-	
+
+
 	text.render(moneyStr.str(), glm::vec2(500, 44), 22, glm::vec4(0, 1, 0, 1));
-	
+
 	text.render(pointsStr.str(), glm::vec2(500, 142), 22, glm::vec4(0, 1, 0, 1));
-	
+
 	text.render(livesStr.str(), glm::vec2(585, 264), 22, glm::vec4(0, 1, 0, 1));
-	
-	
+
+
 	text.render(bankStr.str(), glm::vec2(585, 344), 22, glm::vec4(0, 1, 0, 1));
-	
+
 	text.render(roomStr.str(), glm::vec2(585, 474), 22, glm::vec4(0, 1, 0, 1));
-	
+
 	if (haveKey[currentRoom]) {
 		texProgram.use();
 		texProgram.setUniformMatrix4f("projection", projection);
@@ -447,7 +447,7 @@ void Scene::render()
 			texProgram.use();
 			texProgram.setUniformMatrix4f("projection", projection);
 			texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-			
+
 			modelview = glm::translate(glm::mat4(1.0f), glm::vec3(map[0]->getTileSize(), 4 * map[0]->getTileSize(), 0.f));
 			texProgram.setUniformMatrix4f("modelview", modelview);
 			texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
@@ -475,13 +475,13 @@ void Scene::initShaders()
 	Shader vShader, fShader;
 
 	vShader.initFromFile(VERTEX_SHADER, "shaders/simple.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/simple.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -490,7 +490,7 @@ void Scene::initShaders()
 	simpleProgram.addShader(vShader);
 	simpleProgram.addShader(fShader);
 	simpleProgram.link();
-	if(!simpleProgram.isLinked())
+	if (!simpleProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << simpleProgram.log() << endl << endl;
@@ -500,13 +500,13 @@ void Scene::initShaders()
 	vShader.free();
 	fShader.free();
 	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
-	if(!vShader.isCompiled())
+	if (!vShader.isCompiled())
 	{
 		cout << "Vertex Shader Error" << endl;
 		cout << "" << vShader.log() << endl << endl;
 	}
 	fShader.initFromFile(FRAGMENT_SHADER, "shaders/texture.frag");
-	if(!fShader.isCompiled())
+	if (!fShader.isCompiled())
 	{
 		cout << "Fragment Shader Error" << endl;
 		cout << "" << fShader.log() << endl << endl;
@@ -515,7 +515,7 @@ void Scene::initShaders()
 	texProgram.addShader(vShader);
 	texProgram.addShader(fShader);
 	texProgram.link();
-	if(!texProgram.isLinked())
+	if (!texProgram.isLinked())
 	{
 		cout << "Shader Linking Error" << endl;
 		cout << "" << texProgram.log() << endl << endl;
@@ -537,89 +537,100 @@ void Scene::nextRoom() {
 	currentRoom++;
 	stopPowerUps();
 	switch (currentRoom) {
-		case 1:
-			map[0]->moveTileMap(glm::vec2(0, 560));
-			map[1]->moveTileMap(glm::vec2(0, 0));
-			map[2]->moveTileMap(glm::vec2(0, -560));
-			map[3]->moveTileMap(glm::vec2(0, -1120));
-			map[4]->moveTileMap(glm::vec2(0, -1680));
-			map[5]->moveTileMap(glm::vec2(0, -2240));
-			break;
-		case 2:
-			map[0]->moveTileMap(glm::vec2(0, 1120));
-			map[1]->moveTileMap(glm::vec2(0, 560));
-			map[2]->moveTileMap(glm::vec2(0, 0));
-			map[3]->moveTileMap(glm::vec2(0, -560));
-			map[4]->moveTileMap(glm::vec2(0, -1120));
-			map[5]->moveTileMap(glm::vec2(0, -1680));
-			break;
-		case 3:
-			map[0]->moveTileMap(glm::vec2(0, 1680));
-			map[1]->moveTileMap(glm::vec2(0, 1120));
-			map[2]->moveTileMap(glm::vec2(0, 560));
-			map[3]->moveTileMap(glm::vec2(0, 0));
-			map[4]->moveTileMap(glm::vec2(0, -560));
-			map[5]->moveTileMap(glm::vec2(0, -1120));
-			break;
-		case 4:
-			map[0]->moveTileMap(glm::vec2(0, 2240));
-			map[1]->moveTileMap(glm::vec2(0, 1680));
-			map[2]->moveTileMap(glm::vec2(0, 1120));
-			map[3]->moveTileMap(glm::vec2(0, 560));
-			map[4]->moveTileMap(glm::vec2(0, 0));
-			map[5]->moveTileMap(glm::vec2(0, -560));
-			if(currentBank < 3) startAnimFinalBank();
-			else {
-				if(!bossDefeated) startBossFight();
-				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
-				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
-				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-			}
-			break;
-		case 5:
-			if(currentBank < 3)	Game::instance().nextLevel();
-			else {
-				map[0]->moveTileMap(glm::vec2(0, 2800));
-				map[1]->moveTileMap(glm::vec2(0, 2240));
-				map[2]->moveTileMap(glm::vec2(0, 1680));
-				map[3]->moveTileMap(glm::vec2(0, 1120));
-				map[4]->moveTileMap(glm::vec2(0, 560));
-				map[5]->moveTileMap(glm::vec2(0, 0));
-				startAnimFinalGame();
+	case 1:
+		map[0]->moveTileMap(glm::vec2(0, 560));
+		map[1]->moveTileMap(glm::vec2(0, 0));
+		map[2]->moveTileMap(glm::vec2(0, -560));
+		map[3]->moveTileMap(glm::vec2(0, -1120));
+		map[4]->moveTileMap(glm::vec2(0, -1680));
+		map[5]->moveTileMap(glm::vec2(0, -2240));
+		break;
+	case 2:
+		map[0]->moveTileMap(glm::vec2(0, 1120));
+		map[1]->moveTileMap(glm::vec2(0, 560));
+		map[2]->moveTileMap(glm::vec2(0, 0));
+		map[3]->moveTileMap(glm::vec2(0, -560));
+		map[4]->moveTileMap(glm::vec2(0, -1120));
+		map[5]->moveTileMap(glm::vec2(0, -1680));
+		break;
+	case 3:
+		map[0]->moveTileMap(glm::vec2(0, 1680));
+		map[1]->moveTileMap(glm::vec2(0, 1120));
+		map[2]->moveTileMap(glm::vec2(0, 560));
+		map[3]->moveTileMap(glm::vec2(0, 0));
+		map[4]->moveTileMap(glm::vec2(0, -560));
+		map[5]->moveTileMap(glm::vec2(0, -1120));
+		break;
+	case 4:
+		map[0]->moveTileMap(glm::vec2(0, 2240));
+		map[1]->moveTileMap(glm::vec2(0, 1680));
+		map[2]->moveTileMap(glm::vec2(0, 1120));
+		map[3]->moveTileMap(glm::vec2(0, 560));
+		map[4]->moveTileMap(glm::vec2(0, 0));
+		map[5]->moveTileMap(glm::vec2(0, -560));
+		if (currentBank < 3) startAnimFinalBank();
+		else {
+			if (!bossDefeated) startBossFight();
+			glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+		}
+		break;
+	case 5:
+		if (currentBank < 3)	Game::instance().nextLevel();
+		else {
+			map[0]->moveTileMap(glm::vec2(0, 2800));
+			map[1]->moveTileMap(glm::vec2(0, 2240));
+			map[2]->moveTileMap(glm::vec2(0, 1680));
+			map[3]->moveTileMap(glm::vec2(0, 1120));
+			map[4]->moveTileMap(glm::vec2(0, 560));
+			map[5]->moveTileMap(glm::vec2(0, 0));
+			startAnimFinalGame();
 
-				glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-				glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f) };
-				geom[1] = glm::vec2(480.f, 480.f);
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f) };
+			geom[1] = glm::vec2(480.f, 480.f);
 
-				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-			}
-			break;
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+		}
+		break;
 	}
 	player->setTileMap(map[currentRoom]);
-	
+
 	player->setPosition(glm::ivec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	if (ball->getSticky() || currentRoom == 4) {
-		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize()+9, (INIT_PLAYER_Y_TILES-1.3) * map[0]->getTileSize() / 2));
+		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	}
 	else {
-		if (balls > 1) {
+		if (balls == 2) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
 				ball = ball2;
-			}
-			if (ball->getPosition().y > ball3->getPosition().y) {
-				ball = ball3;
+
 			}
 			ball->setDeadBall(false);
 			ball2 = NULL;
 			delete ball2;
-			ball3 = NULL;
-			delete ball3;
+		}
+		if (balls == 3) {
+			balls = 1;
+			if (ball->getPosition().y > ball2->getPosition().y) {
+				ball = ball2;
+				if (ball->getPosition().y > ball3->getPosition().y) {
+					ball = ball3;
+				}
+				ball->setDeadBall(false);
+				ball2 = NULL;
+				delete ball2;
+				ball3 = NULL;
+				delete ball3;
+			}
+
 		}
 		ball->setPosition(glm::ivec2(ball->getPosition().x, 480));
 	}
 	ball->setTileMap(map[currentRoom]);
-	
+
 	reloadRoom();
 }
 
@@ -628,99 +639,111 @@ void Scene::previousRoom() {
 	currentRoom--;
 	stopPowerUps();
 	switch (currentRoom) {
-		case 0:
-			map[0]->moveTileMap(glm::vec2(0, 0));
-			map[1]->moveTileMap(glm::vec2(0, -560));
-			map[2]->moveTileMap(glm::vec2(0, -1120));
-			map[3]->moveTileMap(glm::vec2(0, -1680));
-			map[4]->moveTileMap(glm::vec2(0, -2240));
-			map[5]->moveTileMap(glm::vec2(0, -2800));
-			break;
-		case 1:
-			map[0]->moveTileMap(glm::vec2(0, 560));
-			map[1]->moveTileMap(glm::vec2(0, 0));
-			map[2]->moveTileMap(glm::vec2(0, -560));
-			map[3]->moveTileMap(glm::vec2(0, -1120));
-			map[4]->moveTileMap(glm::vec2(0, -1680));
-			map[5]->moveTileMap(glm::vec2(0, -2240));
-			break;
-		case 2:
-			map[0]->moveTileMap(glm::vec2(0, 1120));
-			map[1]->moveTileMap(glm::vec2(0, 560));
-			map[2]->moveTileMap(glm::vec2(0, 0));
-			map[3]->moveTileMap(glm::vec2(0, -560));
-			map[4]->moveTileMap(glm::vec2(0, -1120));
-			map[5]->moveTileMap(glm::vec2(0, -1680));
-			break;
-		case 3:
-			map[0]->moveTileMap(glm::vec2(0, 1680));
-			map[1]->moveTileMap(glm::vec2(0, 1120));
-			map[2]->moveTileMap(glm::vec2(0, 560));
-			map[3]->moveTileMap(glm::vec2(0, 0));
-			map[4]->moveTileMap(glm::vec2(0, -560));
-			map[5]->moveTileMap(glm::vec2(0, -1120));
-			if (currentBank == 3) {
-				glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-				glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f) };
-				geom[1] = glm::vec2(480.f, 480.f);
+	case 0:
+		map[0]->moveTileMap(glm::vec2(0, 0));
+		map[1]->moveTileMap(glm::vec2(0, -560));
+		map[2]->moveTileMap(glm::vec2(0, -1120));
+		map[3]->moveTileMap(glm::vec2(0, -1680));
+		map[4]->moveTileMap(glm::vec2(0, -2240));
+		map[5]->moveTileMap(glm::vec2(0, -2800));
+		break;
+	case 1:
+		map[0]->moveTileMap(glm::vec2(0, 560));
+		map[1]->moveTileMap(glm::vec2(0, 0));
+		map[2]->moveTileMap(glm::vec2(0, -560));
+		map[3]->moveTileMap(glm::vec2(0, -1120));
+		map[4]->moveTileMap(glm::vec2(0, -1680));
+		map[5]->moveTileMap(glm::vec2(0, -2240));
+		break;
+	case 2:
+		map[0]->moveTileMap(glm::vec2(0, 1120));
+		map[1]->moveTileMap(glm::vec2(0, 560));
+		map[2]->moveTileMap(glm::vec2(0, 0));
+		map[3]->moveTileMap(glm::vec2(0, -560));
+		map[4]->moveTileMap(glm::vec2(0, -1120));
+		map[5]->moveTileMap(glm::vec2(0, -1680));
+		break;
+	case 3:
+		map[0]->moveTileMap(glm::vec2(0, 1680));
+		map[1]->moveTileMap(glm::vec2(0, 1120));
+		map[2]->moveTileMap(glm::vec2(0, 560));
+		map[3]->moveTileMap(glm::vec2(0, 0));
+		map[4]->moveTileMap(glm::vec2(0, -560));
+		map[5]->moveTileMap(glm::vec2(0, -1120));
+		if (currentBank == 3) {
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f) };
+			geom[1] = glm::vec2(480.f, 480.f);
 
-				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
-				endBossFight();
-			}
-			else {
-				resetPlayer();
-				ball->setAnimationBall(false);
-			}
-			break;
-		case 4:
-			map[0]->moveTileMap(glm::vec2(0, 2240));
-			map[1]->moveTileMap(glm::vec2(0, 1680));
-			map[2]->moveTileMap(glm::vec2(0, 1120));
-			map[3]->moveTileMap(glm::vec2(0, 560));
-			map[4]->moveTileMap(glm::vec2(0, 0));
-			map[5]->moveTileMap(glm::vec2(0, -560));
-			if (currentBank == 3) {
-				if(!bossDefeated) startBossFight();
-				glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
-				glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
-				mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
-			}
-			
-			break;
-		case 5:
-			map[0]->moveTileMap(glm::vec2(0, 2800));
-			map[1]->moveTileMap(glm::vec2(0, 2240));
-			map[2]->moveTileMap(glm::vec2(0, 1680));
-			map[3]->moveTileMap(glm::vec2(0, 1120));
-			map[4]->moveTileMap(glm::vec2(0, 560));
-			map[5]->moveTileMap(glm::vec2(0, 0));
+			endBossFight();
+		}
+		else {
+			resetPlayer();
+			ball->setAnimationBall(false);
+		}
+		break;
+	case 4:
+		map[0]->moveTileMap(glm::vec2(0, 2240));
+		map[1]->moveTileMap(glm::vec2(0, 1680));
+		map[2]->moveTileMap(glm::vec2(0, 1120));
+		map[3]->moveTileMap(glm::vec2(0, 560));
+		map[4]->moveTileMap(glm::vec2(0, 0));
+		map[5]->moveTileMap(glm::vec2(0, -560));
+		if (currentBank == 3) {
+			if (!bossDefeated) startBossFight();
+			glm::vec2 geom[2] = { glm::vec2(0.f, 40.f), glm::vec2(480.f, 480.f) };
+			glm::vec2 texCoords[2] = { glm::vec2(0.f, 40.f / 480.f), glm::vec2(1.f, 1.f) };
+			mesh = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+		}
+
+		break;
+	case 5:
+		map[0]->moveTileMap(glm::vec2(0, 2800));
+		map[1]->moveTileMap(glm::vec2(0, 2240));
+		map[2]->moveTileMap(glm::vec2(0, 1680));
+		map[3]->moveTileMap(glm::vec2(0, 1120));
+		map[4]->moveTileMap(glm::vec2(0, 560));
+		map[5]->moveTileMap(glm::vec2(0, 0));
 
 	}
 	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setTileMap(map[currentRoom]);
-	
+
 	if (ball->getSticky()) {
 		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	}
 	else {
-		if (balls > 1) {
+		if (balls == 2) {
 			balls = 1;
-			if (ball->getPosition().y < ball2->getPosition().y) {
+			if (ball->getPosition().y > ball2->getPosition().y) {
 				ball = ball2;
-			}
-			if (ball->getPosition().y < ball3->getPosition().y) {
-				ball = ball3;
+
 			}
 			ball->setDeadBall(false);
 			ball2 = NULL;
 			delete ball2;
-			ball3 = NULL;
-			delete ball3;
 		}
-		ball->setTileMap(map[currentRoom]);
-		ball->setPosition(glm::vec2(ball->getPosition().x, 0));
+		else if (balls == 3) {
+			balls = 1;
+			if (ball->getPosition().y > ball2->getPosition().y) {
+				ball = ball2;
+				if (ball->getPosition().y > ball3->getPosition().y) {
+					ball = ball3;
+				}
+				ball->setDeadBall(false);
+				ball2 = NULL;
+				delete ball2;
+				ball3 = NULL;
+				delete ball3;
+			}
+
+		}
+
 	}
+	ball->setPosition(glm::vec2(ball->getPosition().x, 0));
+	ball->setTileMap(map[currentRoom]);
 
 	reloadRoom();
 }
@@ -760,7 +783,7 @@ void Scene::loseLife() {
 		if (state == BOSS_FIGHT)
 			stopBossShooting();
 		state = LOSE_LIFE;
-		if(lives > 0)lives--;
+		if (lives > 0)lives--;
 		else dead = true;
 		reloadLives();
 		vigilant->reset();
@@ -770,7 +793,7 @@ void Scene::loseLife() {
 		stopPowerUps();
 		soundEngine->play2D("sounds/gameover.wav");
 		loseTime = currentTime;
-		
+
 	}
 }
 
@@ -793,7 +816,7 @@ void Scene::startBossFight() {
 	boss->setSoundEngine(soundEngine);
 	boss->init(glm::ivec2(0, 0), texProgram);
 	boss->setPosition(glm::vec2(180, -230));
-	boss->move(glm::vec2(180,40));
+	boss->move(glm::vec2(180, 40));
 
 	ball->setBoss(boss);
 
@@ -827,7 +850,7 @@ void Scene::startAnimFinalGame() {
 }
 
 
-void Scene::win(){
+void Scene::win() {
 	bossDefeated = true;
 	map[currentRoom]->openBossExit();
 	state = GAME_WIN;
@@ -854,19 +877,19 @@ void Scene::alarmOff() {
 
 void Scene::catchPowerup(int color) {
 	switch (color) {
-		case 1:
-			playerState = BATGUN;
-			break;
-		case 2:
-			playerState = STICKY;
-			break;
-		case 3:
-			playerState = LARGE;
-			break;
-		case 4:
-		case 5:
-			playerState = SMALL;
-			break;
+	case 1:
+		playerState = BATGUN;
+		break;
+	case 2:
+		playerState = STICKY;
+		break;
+	case 3:
+		playerState = LARGE;
+		break;
+	case 4:
+	case 5:
+		playerState = SMALL;
+		break;
 	}
 	powerupIsActive = false;
 	powerupTimer = 0;
@@ -899,14 +922,14 @@ void Scene::loseBall() {
 		ball3 = NULL;
 		delete ball3;
 	}
-	else if (balls == 2){
+	else if (balls == 2) {
 		if (ball->getPosition().y > 450) {
 			ball = ball2;
 			ball2 = ball3;
 		}
 		else if (ball2->getPosition().y > 450) {
 			ball2 = ball3;
-			
+
 		}
 		ball->setDeadBall(false);
 		ball2->setDeadBall(false);

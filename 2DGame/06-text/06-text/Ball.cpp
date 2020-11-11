@@ -39,8 +39,9 @@ void Ball::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 }
 
 void Ball::update(int deltaTime) {
-	sprite->update(deltaTime);
 	if (!deadBall) {
+		sprite->update(deltaTime);
+	
 		if (animation) {
 			if (tiempo < 2000) {
 				tiempo += deltaTime;
