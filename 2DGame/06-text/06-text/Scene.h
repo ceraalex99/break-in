@@ -8,6 +8,7 @@
 #include "TexturedQuad.h"
 #include "Text.h"
 #include "Player.h"
+#include "Princess.h"
 #include "Ball.h"
 #include "Vigilant.h"
 #include <irrKlang.h>
@@ -99,6 +100,7 @@ private:
 	glm::mat4 projection;
 	Text text;
 	Player *player;
+	Princess *princess;
 	TileMap *map[6];
 	bool haveKey[6];
 	Ball *ball, *ball2, *ball3;

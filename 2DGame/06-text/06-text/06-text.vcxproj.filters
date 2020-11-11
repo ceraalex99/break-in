@@ -24,6 +24,8 @@
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Vigilant.cpp" />
     <ClCompile Include="ShotPlayer.cpp" />
+    <ClCompile Include="Princess.cpp" />
+    <ClCompile Include="YouWon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
@@ -49,5 +51,7 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Vigilant.h" />
     <ClInclude Include="ShotPlayer.h" />
+    <ClInclude Include="Princess.h" />
+    <ClInclude Include="YouWon.h" />
   </ItemGroup>
 </Project>

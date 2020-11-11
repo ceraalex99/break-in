@@ -250,10 +250,15 @@ void Scene::update(int deltaTime)
 
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	ball->update(deltaTime);
-	if (balls > 1) {
-		ball2->update(deltaTime);
-		if (balls > 2) ball3->update(deltaTime);
+	if (state == FINAL_ANIMATION) {
+		princess->update(deltaTime);
+	}
+	else {
+		ball->update(deltaTime);
+		if (balls > 1) {
+			ball2->update(deltaTime);
+			if (balls > 2) ball3->update(deltaTime);
+		}
 	}
 	vigilant->update(deltaTime);
 	if (powerupIsActive)
@@ -302,6 +307,7 @@ void Scene::update(int deltaTime)
 				delete ball2;
 				delete ball3;
 			}
+			else nextRoom();
 		}
 	}
 	else if (Game::instance().getKey('o')) {
@@ -375,7 +381,10 @@ void Scene::render()
 
 
 	player->render();
-	if (state != FINAL_ANIMATION) {
+	if (state == FINAL_ANIMATION) {
+		princess->render();
+	}
+	else {
 		ball->render();
 		if (balls > 1 && !startTripleBall) {
 			ball2->render();
@@ -846,6 +855,12 @@ void Scene::startAnimFinalGame() {
 	ball->stop();
 	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setAnimationPlayer();
+	princess = new Princess();
+	princess->init(glm::ivec2(0, 0), texProgram);
+	princess->setTileMap(map[currentRoom]);
+	princess->setPlayer(player);
+	princess->setAnimation(true);
+	princess->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), ((24 - INIT_PLAYER_Y_TILES) * map[0]->getTileSize() / 2)));
 	state = FINAL_ANIMATION;
 }
 

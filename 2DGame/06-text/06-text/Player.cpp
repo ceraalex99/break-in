@@ -21,7 +21,7 @@ Player::~Player()
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram) {
 	texProgram = shaderProgram;
-	spritesheet.loadFromFile("images/playerSprites1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/playerSprites.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(48, 48), glm::vec2(0.20, 0.20), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(11);
 	

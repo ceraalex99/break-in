@@ -41,6 +41,9 @@ bool Game::update(int deltaTime)
 		case 5:
 			gameOver.update(deltaTime);
 			break;
+		case 6:
+			youWon.update(deltaTime);
+			break;
 	}
 	
 	return bPlay;
@@ -68,6 +71,9 @@ void Game::render()
 		break;
 	case 5:
 		gameOver.render();
+		break;
+	case 6:
+		youWon.render();
 		break;
 	}
 }
@@ -157,6 +163,12 @@ void Game::startAction(int action) {
 			soundEngine->setSoundVolume(0.2f);
 			soundEngine->play2D("sounds/gameOver.mp3", true);
 			gameOver.init();
+			break;
+		case 6:
+			soundEngine->stopAllSounds();
+			soundEngine->play2D("sounds/youWon.mp3", true);
+			soundEngine->setSoundVolume(0.2f);
+			youWon.init();
 			break;
 	}
 	gameState = action;
