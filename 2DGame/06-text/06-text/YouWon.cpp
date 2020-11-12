@@ -38,6 +38,8 @@ void YouWon::render() {
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	background->render(backgroundImage);
+
+	//text.render("PRESS ESC TO EXIT TO MENU SCREEN", glm::vec2(240, 450), 10, glm::vec4(1.f,1.f,1.f,1.f));
 }
 
 void YouWon::initShaders() {
