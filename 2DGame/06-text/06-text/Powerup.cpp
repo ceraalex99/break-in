@@ -85,6 +85,7 @@ void Powerup::update(int deltaTime)
 	
 	if (collisionPlayer()) {
 		Game::instance().catchPowerup(color);
+		soundEngine->play2D("sounds/powerup.wav");
 		switch (color) {
 			case WHITE:
 			case PINK:
@@ -162,3 +163,6 @@ void Powerup::setBall(Ball *pelota) {
 	ball = pelota;
 }
 
+void Powerup::setSoundEngine(irrklang::ISoundEngine* eng) {
+	soundEngine = eng;
+}

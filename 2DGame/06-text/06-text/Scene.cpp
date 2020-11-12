@@ -210,6 +210,7 @@ void Scene::update(int deltaTime)
 		powerup->init(glm::vec2(0, 0), texProgram);
 		powerup->setPosition(glm::ivec2(-30, 540));
 		powerup->setPlayer(player);
+		powerup->setSoundEngine(soundEngine);
 		powerup->setBall(ball);
 		powerupIsActive = true;
 	}

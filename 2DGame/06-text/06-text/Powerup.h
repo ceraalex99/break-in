@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Ball.h"
+#include <irrKlang.h>
 
 
 
@@ -23,7 +24,7 @@ public:
 
 	void setBall(Ball *pelota);
 
-	void stopPowerUps();
+	void setSoundEngine(irrklang::ISoundEngine * eng);
 
 private:
 	glm::ivec2 tileMapDispl, posPowerup;
@@ -32,6 +33,7 @@ private:
 	Player *player;
 	Ball *ball;
 	glm::vec2 direction;
+	irrklang::ISoundEngine* soundEngine;
 	int animTimer;
 	bool powerUpActive;
 	int tiempo;
