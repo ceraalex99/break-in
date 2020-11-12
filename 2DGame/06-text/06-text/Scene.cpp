@@ -619,25 +619,26 @@ void Scene::nextRoom() {
 		if (balls == 2) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
-				ball = ball2;
+				ball->setPosition(ball2->getPosition());
+				ball->setDirection(ball2->getDirection());
 
 			}
 			ball->setDeadBall(false);
-			ball2 = NULL;
-			delete ball2;
+			ball2->setDeadBall(true);
 		}
 		if (balls == 3) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
-				ball = ball2;
+				ball->setPosition(ball2->getPosition());
+				ball->setDirection(ball2->getDirection());
 				if (ball->getPosition().y > ball3->getPosition().y) {
-					ball = ball3;
+					ball->setPosition(ball3->getPosition());
+					ball->setDirection(ball3->getDirection());
 				}
 				ball->setDeadBall(false);
-				ball2 = NULL;
-				delete ball2;
-				ball3 = NULL;
-				delete ball3;
+				ball2->setDeadBall(true);
+				ball3->setDeadBall(true);
+
 			}
 
 		}
@@ -737,25 +738,25 @@ void Scene::previousRoom() {
 		if (balls == 2) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
-				ball = ball2;
+				ball->setPosition(ball2->getPosition());
+				ball->setDirection(ball2->getDirection());
 
 			}
 			ball->setDeadBall(false);
-			ball2 = NULL;
-			delete ball2;
+			ball2->setDeadBall(true);
 		}
 		else if (balls == 3) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
-				ball = ball2;
+				ball->setPosition(ball2->getPosition());
+				ball->setDirection(ball2->getDirection());
 				if (ball->getPosition().y > ball3->getPosition().y) {
-					ball = ball3;
+					ball->setPosition(ball3->getPosition());
+					ball->setDirection(ball3->getDirection());
 				}
 				ball->setDeadBall(false);
-				ball2 = NULL;
-				delete ball2;
-				ball3 = NULL;
-				delete ball3;
+				ball2->setDeadBall(true);
+				ball3->setDeadBall(true);
 			}
 
 		}
@@ -945,24 +946,28 @@ void Scene::loseBall() {
 		balls = 1;
 	}
 	else if (balls == 1) {
-		ball2 = NULL;
-		delete ball2;
-		ball3 = NULL;
-		delete ball3;
+		if (ball->getPosition().y > 450) {
+			ball->setPosition(glm::vec2(ball2->getPosition().x, ball2->getPosition().y));
+			ball->setDirection(ball2->getDirection());
+		}
+		ball->setDeadBall(false);
+		ball2->setDeadBall(true);
 	}
 	else if (balls == 2) {
 		if (ball->getPosition().y > 450) {
-			ball = ball2;
-			ball2 = ball3;
+			ball->setPosition(ball2->getPosition());
+			ball->setDirection(ball2->getDirection());
+			ball2->setPosition(glm::vec2(ball3->getPosition().x, ball3->getPosition().y));
+			ball2->setDirection(ball3->getDirection());
 		}
 		else if (ball2->getPosition().y > 450) {
-			ball2 = ball3;
+			ball2->setPosition(ball3->getPosition());
+			ball2->setDirection(ball3->getDirection());
 
 		}
 		ball->setDeadBall(false);
 		ball2->setDeadBall(false);
-		ball3 = NULL;
-		delete ball3;
+		ball3->setDeadBall(true);
 	}
 }
 

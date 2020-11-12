@@ -98,15 +98,11 @@ void Ball::update(int deltaTime) {
 						}
 						else {
 							Game::instance().loseBall();
-							if (Game::instance().getNumberBalls() > 1) {
-								deadBall = true;
-							}
 						}
 					}
 					else if (direction.y > 0) {
 						if (Game::instance().getNumberBalls() > 1) {
 							Game::instance().loseBall();
-							deadBall = true;
 						}
 						else Game::instance().previousRoom();
 					}
