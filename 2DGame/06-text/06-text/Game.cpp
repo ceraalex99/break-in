@@ -94,7 +94,7 @@ void Game::keyPressed(int key)
 	keys[key] = true;
 
 	if (key == 13) {
-		if (gameState == 5) {
+		if (gameState == 5 || gameState == 6) {
 			keyReleased(13);
 			startAction(3);
 		}

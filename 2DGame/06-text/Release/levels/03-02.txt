@@ -1,0 +1,29 @@
+TILEMAP
+12 24							-- Size of tile map in tiles
+40 40							-- Tile size & block size
+images/blocks3.png 	-- Tilesheet
+4 8								-- Number of tiles in tilesheet
+IIIIIIIIIIII
+M G  GG  G J
+M G      G J
+MGG      GGJ
+M          J
+M    FF    J
+ME  FCCF   J
+ME FCIICF  J
+MEFCER ECF J
+MFCCEV ECCFJ
+M FCEEEECFEJ
+M  FCCCCF EJ
+M   FCCF  EJ
+M    FF    J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+M          J
+IIII    IIII

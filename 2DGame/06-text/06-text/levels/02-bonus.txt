@@ -7,7 +7,7 @@ IIIIIIIIIIII
 M   CCCC   J
 MSCE    ECSJ
 MLC      CLJ
-MLC      CPJ
+MPC      CPJ
 IIC      CII
 MLB      BLJ
 MPB      BPJ
