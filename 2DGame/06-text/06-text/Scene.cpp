@@ -732,7 +732,7 @@ void Scene::previousRoom() {
 		ball->reset(glm::ivec2(INIT_PLAYER_X_TILES*map[0]->getTileSize() + 9, (INIT_PLAYER_Y_TILES - 1.3) * map[0]->getTileSize() / 2));
 	}
 	else {
-		ball->setPosition(glm::vec2(ball->getPosition().x, 0));
+		
 		if (balls == 2) {
 			balls = 1;
 			if (ball->getPosition().y > ball2->getPosition().y) {
@@ -758,6 +758,7 @@ void Scene::previousRoom() {
 			}
 
 		}
+		ball->setPosition(glm::vec2(ball->getPosition().x, 0));
 
 	}
 	

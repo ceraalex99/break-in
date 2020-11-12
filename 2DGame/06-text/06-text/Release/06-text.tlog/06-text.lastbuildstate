@@ -1,7 +1,2 @@
-<<<<<<< Updated upstream
-#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.16299.0
-Release|Win32|D:\vj\breakin\2DGame\06-text\|
-=======
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.17763.0
 Release|Win32|C:\Users\pablo\Desktop\break-in\2DGame\06-text\|
->>>>>>> Stashed changes
