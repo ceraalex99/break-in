@@ -121,7 +121,7 @@ private:
 	int powerupTimer;
 	Powerup *powerup;
 	bool powerupIsActive, powerActive;
-
+	bool bonusActive;
 	bool dead, bossDefeated;
 
 	int balls;

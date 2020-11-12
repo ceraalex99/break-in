@@ -42,6 +42,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	playerState = SMALL;
+	state = PLAYING;
 	soundEngine->stopAllSounds();
 	soundEngine->play2D("sounds/backgroundMusicLow.wav", true);
 
@@ -197,13 +198,14 @@ void Scene::init()
 
 	balls = 1;
 	startTripleBall = false;
+	bonusActive = true;
 }
 
 void Scene::update(int deltaTime)
 {
 	powerupTimer += deltaTime;
 
-	if (powerupTimer > 4000 && !powerupIsActive) {
+	if (powerupTimer > 4000 && !powerupIsActive && bonusActive) {
 		powerup = new Powerup();
 		powerup->init(glm::vec2(0, 0), texProgram);
 		powerup->setPosition(glm::ivec2(-30, 540));
@@ -261,7 +263,7 @@ void Scene::update(int deltaTime)
 		}
 	}
 	vigilant->update(deltaTime);
-	if (powerupIsActive)
+	if (powerupIsActive && bonusActive)
 		powerup->update(deltaTime);
 
 	if (state == BOSS_FIGHT) {
@@ -307,7 +309,6 @@ void Scene::update(int deltaTime)
 				delete ball2;
 				delete ball3;
 			}
-			else nextRoom();
 		}
 	}
 	else if (Game::instance().getKey('o')) {
@@ -392,7 +393,7 @@ void Scene::render()
 		}
 	}
 
-	if (powerupIsActive)
+	if (powerupIsActive && bonusActive)
 		powerup->render();
 	if (vigilant->getActivo()) {
 		vigilant->render();
@@ -553,6 +554,7 @@ void Scene::nextRoom() {
 		map[3]->moveTileMap(glm::vec2(0, -1120));
 		map[4]->moveTileMap(glm::vec2(0, -1680));
 		map[5]->moveTileMap(glm::vec2(0, -2240));
+		bonusActive = true;
 		break;
 	case 2:
 		map[0]->moveTileMap(glm::vec2(0, 1120));
@@ -561,6 +563,7 @@ void Scene::nextRoom() {
 		map[3]->moveTileMap(glm::vec2(0, -560));
 		map[4]->moveTileMap(glm::vec2(0, -1120));
 		map[5]->moveTileMap(glm::vec2(0, -1680));
+		bonusActive = true;
 		break;
 	case 3:
 		map[0]->moveTileMap(glm::vec2(0, 1680));
@@ -569,6 +572,7 @@ void Scene::nextRoom() {
 		map[3]->moveTileMap(glm::vec2(0, 0));
 		map[4]->moveTileMap(glm::vec2(0, -560));
 		map[5]->moveTileMap(glm::vec2(0, -1120));
+		bonusActive = true;
 		break;
 	case 4:
 		map[0]->moveTileMap(glm::vec2(0, 2240));
@@ -655,6 +659,7 @@ void Scene::previousRoom() {
 		map[3]->moveTileMap(glm::vec2(0, -1680));
 		map[4]->moveTileMap(glm::vec2(0, -2240));
 		map[5]->moveTileMap(glm::vec2(0, -2800));
+		bonusActive = true;
 		break;
 	case 1:
 		map[0]->moveTileMap(glm::vec2(0, 560));
@@ -663,6 +668,7 @@ void Scene::previousRoom() {
 		map[3]->moveTileMap(glm::vec2(0, -1120));
 		map[4]->moveTileMap(glm::vec2(0, -1680));
 		map[5]->moveTileMap(glm::vec2(0, -2240));
+		bonusActive = true;
 		break;
 	case 2:
 		map[0]->moveTileMap(glm::vec2(0, 1120));
@@ -671,6 +677,7 @@ void Scene::previousRoom() {
 		map[3]->moveTileMap(glm::vec2(0, -560));
 		map[4]->moveTileMap(glm::vec2(0, -1120));
 		map[5]->moveTileMap(glm::vec2(0, -1680));
+		bonusActive = true;
 		break;
 	case 3:
 		map[0]->moveTileMap(glm::vec2(0, 1680));
@@ -679,6 +686,7 @@ void Scene::previousRoom() {
 		map[3]->moveTileMap(glm::vec2(0, 0));
 		map[4]->moveTileMap(glm::vec2(0, -560));
 		map[5]->moveTileMap(glm::vec2(0, -1120));
+		bonusActive = true;
 		if (currentBank == 3) {
 			glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
 			glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(160.f, 16.f) };
@@ -829,7 +837,7 @@ void Scene::startBossFight() {
 	boss->move(glm::vec2(180, 40));
 
 	ball->setBoss(boss);
-
+	bonusActive = false;
 }
 
 void Scene::endBossFight() {
@@ -850,6 +858,7 @@ void Scene::startAnimFinalBank() {
 	player->reset(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), INIT_PLAYER_Y_TILES * map[0]->getTileSize() / 2));
 	player->setAnimationPlayer();
 	ball->setAnimationBall(true);
+	bonusActive = false;
 }
 
 void Scene::startAnimFinalGame() {
@@ -862,6 +871,7 @@ void Scene::startAnimFinalGame() {
 	princess->setPlayer(player);
 	princess->setAnimation(true);
 	princess->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map[0]->getTileSize(), ((24 - INIT_PLAYER_Y_TILES) * map[0]->getTileSize() / 2)));
+	bonusActive = false;
 	state = FINAL_ANIMATION;
 }
 
